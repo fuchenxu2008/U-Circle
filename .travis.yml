@@ -1,14 +1,12 @@
 language: node_js
 
 node_js:
-  - 7
-  - 6
-  - 5
+  - "stable"
 
 script:
   - yarn
-  # - node ./internals/scripts/generate-templates-for-linting
-  - yarn start:production
+  - yarn test
+  - yarn build
 
 before_install:
   - export CHROME_BIN=chromium-browser
