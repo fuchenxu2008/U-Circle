@@ -1,7 +1,6 @@
 /* eslint consistent-return:0 */
 
 const express = require('express');
-// const path = require('path');
 const HttpLogger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
