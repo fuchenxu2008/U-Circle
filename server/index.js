@@ -1,6 +1,11 @@
 /* eslint consistent-return:0 */
 
 const express = require('express');
+// const path = require('path');
+const HttpLogger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+// const mongoose = require('mongoose');
 const logger = require('./logger');
 
 const argv = require('./argv');
@@ -10,6 +15,23 @@ const isDev = process.env.NODE_ENV !== 'production';
 const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngrok') : false;
 const resolve = require('path').resolve;
 const app = express();
+
+app.use(HttpLogger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// To prevent errors from Cross Origin Resource Sharing, we will set our headers to allow CORS with middleware like so:
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+  // and remove cacheing so we get the most recent comments
+  res.setHeader('Cache-Control', 'no-cache');
+  next();
+});
+
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
