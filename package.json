@@ -1,16 +1,16 @@
 {
-  "name": "alumni-quora",
+  "name": "react.js-boilerplate",
   "version": "0.0.0",
-  "description": "CSE208 project source code.",
+  "description": "A advanced Scaffold for MERN.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/fuchenxu2008/AlumniQuora.git"
+    "url": "git://github.com/fuchenxu2008/MERN-Scaffold.git"
   },
   "engines": {
     "npm": ">=3",
     "node": ">=5"
   },
-  "author": "Chenxu Fu & Max Stoiber",
+  "author": "Max Stoiber",
   "license": "MIT",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
