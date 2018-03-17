@@ -36,11 +36,6 @@ module.exports = {
     message: 'Do you want an actions/constants/selectors/reducer tuple for this container?',
   }, {
     type: 'confirm',
-    name: 'wantMessages',
-    default: true,
-    message: 'Do you want i18n messages (i.e. will this component use text)?',
-  }, {
-    type: 'confirm',
     name: 'wantLoadable',
     default: true,
     message: 'Do you want to load resources asynchronously?',
@@ -70,16 +65,6 @@ module.exports = {
       templateFile: './container/test.js.hbs',
       abortOnFail: true,
     }];
-
-    // If component wants messages
-    if (data.wantMessages) {
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/messages.js',
-        templateFile: './container/messages.js.hbs',
-        abortOnFail: true,
-      });
-    }
 
     // If they want actions and a reducer, generate actions.js, constants.js,
     // reducer.js and the corresponding tests for actions and the reducer

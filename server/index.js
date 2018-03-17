@@ -1,7 +1,7 @@
 /* eslint consistent-return:0 */
 
 const express = require('express');
-const HttpLogger = require('morgan');
+const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 // const mongoose = require('mongoose');
@@ -15,7 +15,7 @@ const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngr
 const resolve = require('path').resolve;
 const app = express();
 
-app.use(HttpLogger('dev'));
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -58,7 +58,6 @@ app.listen(port, host, (err) => {
       if (innerErr) {
         return logger.error(innerErr);
       }
-
       logger.appStarted(port, prettyHost, url);
     });
   } else {
