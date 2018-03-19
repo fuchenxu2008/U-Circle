@@ -4,12 +4,15 @@ const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-// const mongoose = require('mongoose');
-const logger = require('./logger');
+const mongoose = require('mongoose');
+const chalk = require('chalk');
 
+const logger = require('./logger');
 const argv = require('./argv');
 const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
+const { MONGO_URL } = require('../shared/config');
+const apiRoutes = require('./routes');
 const isDev = process.env.NODE_ENV !== 'production';
 const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngrok') : false;
 const resolve = require('path').resolve;
@@ -31,9 +34,16 @@ app.use((req, res, next) => {
   next();
 });
 
+mongoose.connect(MONGO_URL, err => {
+  if (err) {
+    console.log(chalk.red('[MongoDB] NOT connected.\n'));
+    throw err;
+  }
+  console.log(chalk.green('[MongoDB] connected.\n'));
+});
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
-// app.use('/api', myApi);
+app.use('/api', apiRoutes);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
