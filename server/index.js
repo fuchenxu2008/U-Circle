@@ -34,7 +34,8 @@ app.use((req, res, next) => {
   next();
 });
 
-mongoose.connect(MONGO_URL, err => {
+/* eslint-disable no-console */
+mongoose.connect(MONGO_URL, (err) => {
   if (err) {
     console.log(chalk.red('[MongoDB] NOT connected.\n'));
     throw err;
