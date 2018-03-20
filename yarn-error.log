@@ -15,7 +15,7 @@ Platform:
 
 npm manifest: 
   {
-    "name": "react.js-boilerplate",
+    "name": "u-circle",
     "version": "0.0.0",
     "description": "A advanced Scaffold for MERN.",
     "repository": {
@@ -120,7 +120,7 @@ npm manifest:
       "rules": {
         "arrow-parens": [
           "error",
-          "always"
+          "as-needed"
         ],
         "arrow-body-style": [
           2,
@@ -156,7 +156,7 @@ npm manifest:
         "max-len": 0,
         "newline-per-chained-call": 0,
         "no-confusing-arrow": 0,
-        "no-console": 1,
+        "no-console": 0,
         "no-use-before-define": 0,
         "prefer-template": 2,
         "react/forbid-prop-types": 0,
@@ -207,10 +207,10 @@ npm manifest:
       ],
       "coverageThreshold": {
         "global": {
-          "statements": 98,
-          "branches": 91,
-          "functions": 98,
-          "lines": 98
+          "statements": 0,
+          "branches": 0,
+          "functions": 0,
+          "lines": 0
         }
       },
       "moduleDirectories": [
@@ -226,6 +226,7 @@ npm manifest:
     },
     "dependencies": {
       "babel-polyfill": "6.23.0",
+      "bcryptjs": "^2.4.3",
       "body-parser": "^1.18.2",
       "chalk": "^1.1.3",
       "compression": "1.6.2",
@@ -236,7 +237,6 @@ npm manifest:
       "history": "4.6.3",
       "hoist-non-react-statics": "2.1.1",
       "immutable": "3.8.1",
-      "intl": "1.2.5",
       "invariant": "2.2.2",
       "ip": "1.1.5",
       "jsonwebtoken": "^8.2.0",
@@ -245,11 +245,13 @@ npm manifest:
       "moment": "^2.21.0",
       "mongoose": "^5.0.9",
       "morgan": "^1.9.0",
+      "passport": "^0.4.0",
+      "passport-jwt": "^4.0.0",
+      "passport-local": "^1.0.0",
       "prop-types": "15.5.10",
       "react": "15.6.1",
       "react-dom": "15.6.1",
       "react-helmet": "5.1.3",
-      "react-intl": "2.3.0",
       "react-loadable": "4.0.3",
       "react-redux": "5.0.5",
       "react-router-dom": "4.1.1",
@@ -272,7 +274,6 @@ npm manifest:
       "babel-eslint": "7.2.3",
       "babel-loader": "7.1.0",
       "babel-plugin-dynamic-import-node": "1.0.2",
-      "babel-plugin-react-intl": "2.3.1",
       "babel-plugin-react-transform": "2.0.2",
       "babel-plugin-styled-components": "1.1.4",
       "babel-plugin-transform-es2015-modules-commonjs": "6.24.1",
@@ -977,14 +978,6 @@ Lockfile:
     version "20.0.3"
     resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-20.0.3.tgz#afedc853bd3f8dc3548ea671fbe69d03cc2c1767"
   
-  babel-plugin-react-intl@2.3.1:
-    version "2.3.1"
-    resolved "https://registry.yarnpkg.com/babel-plugin-react-intl/-/babel-plugin-react-intl-2.3.1.tgz#3d43912e824da005e08e8e8239d5ba784374bb00"
-    dependencies:
-      babel-runtime "^6.2.0"
-      intl-messageformat-parser "^1.2.0"
-      mkdirp "^0.5.1"
-  
   babel-plugin-react-transform@2.0.2:
     version "2.0.2"
     resolved "https://registry.yarnpkg.com/babel-plugin-react-transform/-/babel-plugin-react-transform-2.0.2.tgz#515bbfa996893981142d90b1f9b1635de2995109"
@@ -1496,7 +1489,7 @@ Lockfile:
       mkdirp "^0.5.1"
       source-map-support "^0.4.15"
   
-  babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+  babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
     version "6.26.0"
     resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
     dependencies:
@@ -1591,6 +1584,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.1.tgz#63bc5dcb61331b92bc05fd528953c33462a06f8d"
     dependencies:
       tweetnacl "^0.14.3"
+  
+  bcryptjs@^2.4.3:
+    version "2.4.3"
+    resolved "https://registry.yarnpkg.com/bcryptjs/-/bcryptjs-2.4.3.tgz#9ab5627b93e60621ff7cdac5da9733027df1d0cb"
   
   beeper@^1.0.0:
     version "1.1.1"
@@ -4764,35 +4761,7 @@ Lockfile:
     version "1.0.3"
     resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.3.tgz#cbc35c62eeee73f19ab7b10a801511401afc0f90"
   
-  intl-format-cache@^2.0.5:
-    version "2.0.5"
-    resolved "https://registry.yarnpkg.com/intl-format-cache/-/intl-format-cache-2.0.5.tgz#b484cefcb9353f374f25de389a3ceea1af18d7c9"
-  
-  intl-messageformat-parser@1.2.0:
-    version "1.2.0"
-    resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-1.2.0.tgz#5906b7f953ab7470e0dc8549097b648b991892ff"
-  
-  intl-messageformat-parser@^1.2.0:
-    version "1.3.0"
-    resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-1.3.0.tgz#c5d26ffb894c7d9c2b9fa444c67f417ab2594268"
-  
-  intl-messageformat@1.3.0, intl-messageformat@^1.3.0:
-    version "1.3.0"
-    resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-1.3.0.tgz#f7d926aded7a3ab19b2dc601efd54e99a4bd4eae"
-    dependencies:
-      intl-messageformat-parser "1.2.0"
-  
-  intl-relativeformat@^1.3.0:
-    version "1.3.0"
-    resolved "https://registry.yarnpkg.com/intl-relativeformat/-/intl-relativeformat-1.3.0.tgz#893dc7076fccd380cf091a2300c380fa57ace45b"
-    dependencies:
-      intl-messageformat "1.3.0"
-  
-  intl@1.2.5:
-    version "1.2.5"
-    resolved "https://registry.yarnpkg.com/intl/-/intl-1.2.5.tgz#82244a2190c4e419f8371f5aa34daa3420e2abde"
-  
-  invariant@2.2.2, invariant@^2.0.0, invariant@^2.1.1, invariant@^2.2.1, invariant@^2.2.2:
+  invariant@2.2.2, invariant@^2.0.0, invariant@^2.2.1, invariant@^2.2.2:
     version "2.2.2"
     resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
     dependencies:
@@ -7037,6 +7006,30 @@ Lockfile:
     version "0.1.1"
     resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   
+  passport-jwt@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/passport-jwt/-/passport-jwt-4.0.0.tgz#7f0be7ba942e28b9f5d22c2ebbb8ce96ef7cf065"
+    dependencies:
+      jsonwebtoken "^8.2.0"
+      passport-strategy "^1.0.0"
+  
+  passport-local@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/passport-local/-/passport-local-1.0.0.tgz#1fe63268c92e75606626437e3b906662c15ba6ee"
+    dependencies:
+      passport-strategy "1.x.x"
+  
+  passport-strategy@1.x.x, passport-strategy@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/passport-strategy/-/passport-strategy-1.0.0.tgz#b5539aa8fc225a3d1ad179476ddf236b440f52e4"
+  
+  passport@^0.4.0:
+    version "0.4.0"
+    resolved "https://registry.yarnpkg.com/passport/-/passport-0.4.0.tgz#c5095691347bd5ad3b5e180238c3914d16f05811"
+    dependencies:
+      passport-strategy "1.x.x"
+      pause "0.0.1"
+  
   path-browserify@0.0.0:
     version "0.0.0"
     resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-0.0.0.tgz#a0b870729aae214005b7d5032ec2cbbb0fb4451a"
@@ -7116,6 +7109,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/pause-stream/-/pause-stream-0.0.11.tgz#fe5a34b0cbce12b5aa6a2b403ee2e73b602f1445"
     dependencies:
       through "~2.3"
+  
+  pause@0.0.1:
+    version "0.0.1"
+    resolved "https://registry.yarnpkg.com/pause/-/pause-0.0.1.tgz#1d408b3fdb76923b9543d96fb4c9dfd535d9cb5d"
   
   pbkdf2@^3.0.3:
     version "3.0.14"
@@ -7638,15 +7635,6 @@ Lockfile:
       object-assign "^4.1.1"
       prop-types "^15.5.4"
       react-side-effect "^1.1.0"
-  
-  react-intl@2.3.0:
-    version "2.3.0"
-    resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-2.3.0.tgz#e1df6af5667fdf01cbe4aab20e137251e2ae5142"
-    dependencies:
-      intl-format-cache "^2.0.5"
-      intl-messageformat "^1.3.0"
-      intl-relativeformat "^1.3.0"
-      invariant "^2.1.1"
   
   react-loadable@4.0.3:
     version "4.0.3"
@@ -9701,8 +9689,8 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c npm run test:clean && npm run lint
-  Directory: /Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/JavaScript/FullStack/MERN-Scaffold
+  Arguments: -c cross-env NODE_ENV=test jest --coverage
+  Directory: /Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/Projects/U-Circle
   Output:
   
       at ProcessTermError.MessageError (/Users/fuchenxu/.yarn/lib/cli.js:186:110)

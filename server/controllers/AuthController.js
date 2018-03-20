@@ -1,0 +1,45 @@
+/* eslint consistent-return:0 */
+
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const bcrypt = require('bcryptjs');
+const User = require('../models/User');
+
+module.exports = {
+  // Register new user
+  register: (req, res) => {
+    const { email, nickname, password, role } = req.body;
+    // In case of register info is incomplete
+    if (!email || !nickname || !password || !role) return res.json({ message: 'Incomplete information!' });
+    // Check if there are duplicated user emails
+    User.findOne({ email: req.body.email }, (err, duplicateUser) => {
+      if (err) return res.json({ message: 'Unknown error occured!' });
+      if (duplicateUser) return res.json({ message: 'User with that email already existed!' });
+      // Salt and hash password
+      const hashedPassword = bcrypt.hashSync(password, 8);
+      User.create({
+        email,
+        nickname,
+        password: hashedPassword,
+        role,
+      },
+        (err2, user) => {
+          if (err2) return res.json({ message: 'Unknown error occured!' });
+          return res.send(user);
+        }
+      );
+    });
+  },
+
+  login: (req, res) => {
+    passport.authenticate('local', { session: false }, (err, user, info) => {
+      if (err) return res.status(400).json({ message: 'Unknown error occured. (Error code: 001)' });
+      if (!user) return res.status(400).json({ message: 'Invalid Credentials!' });
+      req.login(user, { session: false }, err2 => {
+        if (err2) return res.send(err2);
+      });
+      const token = jwt.sign({ user }, 'secret');
+      return res.json({ user, token, info });
+    })(req, res);
+  },
+};

@@ -36,6 +36,10 @@ const ReactBoilerplate = {
         'moment',
         'socket.io',
         'jsonwebtoken',
+        'passport',
+        'passport-local',
+        'passport-jwt',
+        'bcryptjs',
       ],
 
       /**
@@ -50,8 +54,10 @@ const ReactBoilerplate = {
 
     entry(pkg) {
       const dependencyNames = Object.keys(pkg.dependencies);
-      const exclude = pkg.dllPlugin.exclude || ReactBoilerplate.dllPlugin.defaults.exclude;
-      const include = pkg.dllPlugin.include || ReactBoilerplate.dllPlugin.defaults.include;
+      const exclude =
+        pkg.dllPlugin.exclude || ReactBoilerplate.dllPlugin.defaults.exclude;
+      const include =
+        pkg.dllPlugin.include || ReactBoilerplate.dllPlugin.defaults.include;
       const includeDependencies = uniq(dependencyNames.concat(include));
 
       return {

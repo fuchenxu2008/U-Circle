@@ -10,9 +10,6 @@ import { connect } from 'react-redux';
 {{#if wantHeaders}}
 import { Helmet } from 'react-helmet';
 {{/if}}
-{{#if wantActionsAndReducer}}
-import { createStructuredSelector } from 'reselect';
-{{/if}}
 import { compose } from 'redux';
 
 {{#if wantActionsAndReducer}}
@@ -40,8 +37,8 @@ function {{ properCase name }}() {
 };
 
 {{#if wantActionsAndReducer}}
-const mapStateToProps = createStructuredSelector({
-  {{ lowerCase name }}: makeSelect{{properCase name}}(),
+const mapStateToProps = state => ({
+  {{ lowerCase name }}: makeSelect{{properCase name}}(state),
 });
 {{/if}}
 

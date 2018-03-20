@@ -35,7 +35,7 @@ export class {{ properCase name }} extends React.{{{ component }}} { // eslint-d
 };
 
 {{#if wantActionsAndReducer}}
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   {{name}}: makeSelect{{properCase name}}(state),
 });
 {{/if}}

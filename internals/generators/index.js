@@ -9,10 +9,10 @@ const path = require('path');
 const componentGenerator = require('./component/index.js');
 const containerGenerator = require('./container/index.js');
 
-module.exports = (plop) => {
+module.exports = plop => {
   plop.setGenerator('component', componentGenerator);
   plop.setGenerator('container', containerGenerator);
-  plop.addHelper('directory', (comp) => {
+  plop.addHelper('directory', comp => {
     try {
       fs.accessSync(path.join(__dirname, `../../app/containers/${comp}`), fs.F_OK);
       return `containers/${comp}`;
