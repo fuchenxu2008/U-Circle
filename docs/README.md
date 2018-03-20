@@ -1,5 +1,7 @@
 # Documentation
 
+[![Build Status](https://travis-ci.org/fuchenxu2008/U-Circle.svg?branch=master)](https://travis-ci.org/fuchenxu2008/U-Circle)
+
 ## Table of Contents
 
 - [General](general)
