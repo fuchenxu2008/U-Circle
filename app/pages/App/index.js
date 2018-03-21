@@ -15,8 +15,12 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import NavBar from 'containers/NavBar';
 import LoginPage from 'pages/LoginPage';
 import HomePage from 'pages/HomePage';
+import ProfilePage from 'pages/ProfilePage';
+import AlumniPage from 'pages/AlumniPage';
+import PeerPage from 'pages/PeerPage';
 import NotFoundPage from 'pages/NotFoundPage/Loadable';
 import { setCurrentUser } from './actions';
 import './App.css';
@@ -31,12 +35,15 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
     const nickname = this.props.currentUser.nickname || false;
     return (
       <div>
+        <NavBar />
         <h1 className="userStat">{ nickname && nickname }</h1>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/auth" component={LoginPage} />
-          <Route path="/auth" component={LoginPage} />
-          <Route component={NotFoundPage} />
+          <Route path="/me" component={ProfilePage} />
+          <Route path="/alumni" component={AlumniPage} />
+          <Route path="/peer" component={PeerPage} />
+          <Route path="" component={NotFoundPage} />
         </Switch>
       </div>
     );

@@ -55,8 +55,6 @@ const render = () => {
   );
 };
 
-render();
-
 if (module.hot) {
   // Hot reloadable React components and translation json files
   // modules.hot.accept does not accept dynamic dependencies,
@@ -66,6 +64,8 @@ if (module.hot) {
     render();
   });
 }
+
+render();
 
 // Install ServiceWorker and AppCache in the end since
 // it's not most important operation and if main code fails,

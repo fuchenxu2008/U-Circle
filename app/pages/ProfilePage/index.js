@@ -10,25 +10,33 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import injectReducer from 'utils/injectReducer';
-import makeSelectProfilePage from './selectors';
+// import makeSelectProfilePage from './selectors';
 import reducer from './reducer';
 
 export class ProfilePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const user = this.props.currentUser;
     return (
       <div>
         ProfilePage
+        <ul>
+          <li>{user.nickname}</li>
+          <li>{user.email}</li>
+          <li>{user.role}</li>
+          <li>{user._id}</li>
+          <li>{user.token}</li>
+        </ul>
       </div>
     );
   }
 }
 
 ProfilePage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  currentUser: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  profilepage: makeSelectProfilePage(state),
+  currentUser: state.get('global').get('currentUser'),
 });
 
 function mapDispatchToProps(dispatch) {

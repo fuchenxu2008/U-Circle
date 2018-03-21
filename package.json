@@ -110,6 +110,7 @@
       }
     },
     "rules": {
+      "no-underscore-dangle": 0,
       "no-unused-expressions": [
         "error",
         {
