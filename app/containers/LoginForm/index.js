@@ -12,7 +12,7 @@ import { Form, Icon, Input, Button, Checkbox, Spin } from 'antd';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import { changeFormMode } from './actions';
-import { loginAction, registerAction } from '../App/actions';
+import { loginAction, registerAction } from '../../pages/App/actions';
 import './LoginForm.css';
 
 const FormItem = Form.Item;

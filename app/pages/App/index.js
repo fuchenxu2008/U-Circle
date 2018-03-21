@@ -15,8 +15,9 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import LoginPage from 'containers/LoginPage';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import LoginPage from 'pages/LoginPage';
+import HomePage from 'pages/HomePage';
+import NotFoundPage from 'pages/NotFoundPage/Loadable';
 import { setCurrentUser } from './actions';
 import './App.css';
 
@@ -32,7 +33,9 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
       <div>
         <h1 className="userStat">{ nickname && nickname }</h1>
         <Switch>
-          <Route exact path="/" component={LoginPage} />
+          <Route exact path="/" component={HomePage} />
+          <Route path="/auth" component={LoginPage} />
+          <Route path="/auth" component={LoginPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>
