@@ -12,7 +12,7 @@
  */
 
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import NavBar from 'containers/NavBar';
@@ -63,4 +63,6 @@ const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainApp);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(MainApp)
+);
