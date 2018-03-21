@@ -1,4 +1,5 @@
 /* eslint consistent-return:0 */
+/* eslint no-underscore-dangle: 0 */
 
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
@@ -32,14 +33,14 @@ module.exports = {
   },
 
   login: (req, res) => {
-    passport.authenticate('local', { session: false }, (err, user, info) => {
+    passport.authenticate('local', { session: false }, (err, user /* , info */) => {
       if (err) return res.status(400).json({ message: 'Unknown error occured. (Error code: 001)' });
       if (!user) return res.status(400).json({ message: 'Invalid Credentials!' });
       req.login(user, { session: false }, err2 => {
         if (err2) return res.status(400).send(err2);
       });
       const token = jwt.sign({ user }, 'secret');
-      return res.json({ user, token, info });
+      return res.json({ ...user._doc, token });
     })(req, res);
   },
 };

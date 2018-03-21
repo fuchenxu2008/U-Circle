@@ -3,9 +3,8 @@ import { combineReducers } from 'redux-immutable';
 
 import {
   LOGIN_FULFILLED,
-  // LOGIN_REJECTED,
   REGISTER_FULFILLED,
-  // REGISTER_REJECTED,
+  SET_USER,
 } from './constants';
 
 const initialState = fromJS({});
@@ -16,8 +15,11 @@ function currentUser(state = initialState, action) {
       console.log(action.payload.data);
       return state;
     case LOGIN_FULFILLED:
+      localStorage.setItem('currentUser', JSON.stringify(action.payload.data));
       console.log(action.payload.data);
       return action.payload.data;
+    case SET_USER:
+      return action.user;
     default:
       return state;
   }

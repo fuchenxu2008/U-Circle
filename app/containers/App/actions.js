@@ -1,4 +1,4 @@
-import { REGISTER, LOGIN } from './constants';
+import { REGISTER, LOGIN, SET_USER } from './constants';
 
 import * as api from './api';
 
@@ -13,5 +13,12 @@ export function loginAction(fields) {
   return {
     type: LOGIN,
     payload: api.login(fields),
+  };
+}
+
+export function setCurrentUser(user) {
+  return {
+    type: SET_USER,
+    user,
   };
 }
