@@ -5,6 +5,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
+import promiseMiddleware from 'redux-promise-middleware';
+import thunkMiddleware from 'redux-thunk';
 import createReducer from './reducers';
 
 export default function configureStore(initialState = {}, history) {
@@ -12,6 +14,8 @@ export default function configureStore(initialState = {}, history) {
   // 2. routerMiddleware: Syncs the location/URL path to the state
   const middlewares = [
     routerMiddleware(history),
+    thunkMiddleware,
+    promiseMiddleware(),
   ];
 
   const enhancers = [

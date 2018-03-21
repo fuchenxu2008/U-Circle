@@ -10,11 +10,11 @@ module.exports = {
   register: (req, res) => {
     const { email, nickname, password, role } = req.body;
     // In case of register info is incomplete
-    if (!email || !nickname || !password || !role) return res.json({ message: 'Incomplete information!' });
+    if (!email || !password) return res.status(400).json({ message: 'Incomplete information!' });
     // Check if there are duplicated user emails
     User.findOne({ email: req.body.email }, (err, duplicateUser) => {
-      if (err) return res.json({ message: 'Unknown error occured!' });
-      if (duplicateUser) return res.json({ message: 'User with that email already existed!' });
+      if (err) return res.status(400).json({ message: 'Unknown error occured!' });
+      if (duplicateUser) return res.status(400).json({ message: 'User with that email already existed!' });
       // Salt and hash password
       const hashedPassword = bcrypt.hashSync(password, 8);
       User.create({
@@ -24,7 +24,7 @@ module.exports = {
         role,
       },
         (err2, user) => {
-          if (err2) return res.json({ message: 'Unknown error occured!' });
+          if (err2) return res.status(400).json({ message: 'Unknown error occured!' });
           return res.send(user);
         }
       );
@@ -36,7 +36,7 @@ module.exports = {
       if (err) return res.status(400).json({ message: 'Unknown error occured. (Error code: 001)' });
       if (!user) return res.status(400).json({ message: 'Invalid Credentials!' });
       req.login(user, { session: false }, err2 => {
-        if (err2) return res.send(err2);
+        if (err2) return res.status(400).send(err2);
       });
       const token = jwt.sign({ user }, 'secret');
       return res.json({ user, token, info });

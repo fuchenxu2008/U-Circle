@@ -1,0 +1,30 @@
+.loginButtonStyle {
+    width: 100%;
+}
+
+.linkStyle {
+    color: #008FFA;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.loginFormStyle {
+    margin-top: 30%;
+    min-height: 80%;
+    min-width: 80%;
+}
+
+.loginFormStyle .ant-form-item {
+    margin-bottom: 15px;
+}
+
+.loginFormStyle .ant-form-item input {
+    font-size: 16px;
+    padding: 17px;
+}
+
+.loginFormStyle .ant-form-item button {
+    font-size: 17px;
+    height: 37px;
+}
+

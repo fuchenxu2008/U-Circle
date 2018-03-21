@@ -50,7 +50,15 @@
   "pre-commit": "lint:staged",
   "babel": {
     "plugins": [
-      "styled-components"
+      "styled-components",
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": "css"
+        }
+      ]
     ],
     "presets": [
       [
@@ -102,6 +110,12 @@
       }
     },
     "rules": {
+      "no-unused-expressions": [
+        "error",
+        {
+          "allowTernary": true
+        }
+      ],
       "arrow-parens": [
         "error",
         "as-needed"
@@ -209,6 +223,8 @@
     "testRegex": "tests/.*\\.test\\.js$"
   },
   "dependencies": {
+    "antd": "^3.3.1",
+    "axios": "^0.18.0",
     "babel-polyfill": "6.23.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
@@ -258,6 +274,7 @@
     "babel-eslint": "7.2.3",
     "babel-loader": "7.1.0",
     "babel-plugin-dynamic-import-node": "1.0.2",
+    "babel-plugin-import": "^1.6.7",
     "babel-plugin-react-transform": "2.0.2",
     "babel-plugin-styled-components": "1.1.4",
     "babel-plugin-transform-es2015-modules-commonjs": "6.24.1",

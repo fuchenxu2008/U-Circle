@@ -9,20 +9,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
-
+import LoginForm from 'containers/LoginForm';
 import injectReducer from 'utils/injectReducer';
 import makeSelectLoginPage from './selectors';
 import reducer from './reducer';
+import './LoginPage.css';
 
 export class LoginPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div>
+      <div className="LoginFormStyle">
         <Helmet>
           <title>LoginPage</title>
           <meta name="description" content="Description of LoginPage" />
         </Helmet>
-
+        <LoginForm mode="login" />
       </div>
     );
   }

@@ -2,25 +2,31 @@ import { injectGlobal } from 'styled-components';
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
-  html,
-  body {
-    height: 100%;
+  html {
     width: 100%;
-    margin: 20px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    background-color: #fafafa;
   }
 
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
-  body.fontLoaded {
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  }
-
   #app {
-    background-color: #fafafa;
     min-height: 100%;
     min-width: 100%;
+  }
+
+  body.fontLoaded {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
   p,
