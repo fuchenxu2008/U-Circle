@@ -10,7 +10,7 @@ import React from 'react';
 function PeerQuestion() {
   return (
     <div>
-
+      PeerQuestion
     </div>
   );
 }

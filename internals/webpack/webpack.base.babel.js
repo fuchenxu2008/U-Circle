@@ -99,7 +99,8 @@ module.exports = options => ({
     new webpack.NamedModulesPlugin(),
     // Fixes warning in moment-with-locales.min.js
     //   Module not found: Error: Can't resolve './locale' in ...
-    new webpack.IgnorePlugin(/\.\/locale$/),
+    // new webpack.IgnorePlugin(/\.\/locale$/),
+    new webpack.ContextReplacementPlugin(/\.\/locale$/, 'empty-module', false, /js$/),
   ]),
   resolve: {
     modules: ['app', 'node_modules'],
@@ -113,9 +114,9 @@ module.exports = options => ({
       'jsnext:main',
       'main',
     ],
-    alias: {
-      moment$: 'moment/moment.js',
-    },
+    // alias: {
+    //   moment$: 'moment/moment.js',
+    // },
   },
   devtool: options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window

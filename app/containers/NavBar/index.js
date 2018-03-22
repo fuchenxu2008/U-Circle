@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 
 import injectReducer from 'utils/injectReducer';
-import makeSelectNavBar from './selectors';
 import reducer from './reducer';
 
 const Item = Menu.Item;
@@ -30,23 +29,28 @@ class NavBar extends Component {  // eslint-disable-line react/prefer-stateless-
         <Item key="peer">
           <Link to="/peer">Peer</Link>
         </Item>
-        <Item key="auth">
-          <Link to="/auth">Login</Link>
-        </Item>
-        <Item key="profile">
-          <Link to="/me">Profile</Link>
-        </Item>
+        {
+          this.props.currentUser.token ? (
+            <Item key="profile">
+              <Link to="/me">{this.props.currentUser.nickname}</Link>
+            </Item>
+          ) : (
+            <Item key="auth">
+              <Link to="/auth">Login</Link>
+            </Item>
+          )
+        }
       </Menu>
     );
   }
 }
 
 NavBar.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  currentUser: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  navbar: makeSelectNavBar(state),
+  currentUser: state.get('global').get('currentUser'),
 });
 
 function mapDispatchToProps(dispatch) {

@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /Users/fuchenxu/.yarn/bin/yarn.js build
+  /usr/local/bin/node /Users/fuchenxu/.yarn/bin/yarn.js
 
 PATH: 
   /Users/fuchenxu/.yarn/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -66,7 +66,7 @@ npm manifest:
     "pre-commit": "lint:staged",
     "babel": {
       "plugins": [
-          "styled-components",
+        "styled-components",
         [
           "import",
           {
@@ -94,8 +94,7 @@ npm manifest:
           "plugins": [
             "transform-react-remove-prop-types",
             "transform-react-constant-elements",
-            "transform-react-inline-elements",
-            "antd"
+            "transform-react-inline-elements"
           ]
         },
         "test": {
@@ -308,6 +307,7 @@ npm manifest:
       "circular-dependency-plugin": "3.0.0",
       "coveralls": "2.13.1",
       "css-loader": "0.28.4",
+      "empty-module": "0.0.2",
       "enzyme": "2.8.2",
       "eslint": "3.19.0",
       "eslint-config-airbnb": "15.0.1",
@@ -10490,17 +10490,31 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
 
 Trace: 
-  Error: Command failed.
+  Error: /Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/Projects/U-Circle/node_modules/ngrok: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout
-  Directory: /Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/Projects/U-Circle
+  Arguments: -c node ./postinstall.js
+  Directory: /Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/Projects/U-Circle/node_modules/ngrok
   Output:
-  
+  ngrok - downloading binary https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-darwin-amd64.zip ...
+  ngrok - binary downloaded...
+  ngrok - error unpacking binary Error: Could not find the End of Central Directory Record
+      at DecompressZip.findEndOfDirectory (/Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/Projects/U-Circle/node_modules/decompress-zip/lib/decompress-zip.js:165:15)
+      at _fulfilled (/Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/Projects/U-Circle/node_modules/q/q.js:854:54)
+      at self.promiseDispatch.done (/Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/Projects/U-Circle/node_modules/q/q.js:883:30)
+      at Promise.promise.promiseDispatch (/Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/Projects/U-Circle/node_modules/q/q.js:816:13)
+      at /Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/Projects/U-Circle/node_modules/q/q.js:624:44
+      at runSingle (/Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/Projects/U-Circle/node_modules/q/q.js:137:13)
+      at flush (/Users/fuchenxu/Library/Mobile Documents/com~apple~CloudDocs/Develop/Projects/U-Circle/node_modules/q/q.js:125:13)
+      at _combinedTickCallback (internal/process/next_tick.js:131:7)
+      at process._tickCallback (internal/process/next_tick.js:180:9)
       at ProcessTermError.MessageError (/Users/fuchenxu/.yarn/lib/cli.js:186:110)
       at new ProcessTermError (/Users/fuchenxu/.yarn/lib/cli.js:226:113)
       at ChildProcess.<anonymous> (/Users/fuchenxu/.yarn/lib/cli.js:30281:17)
       at emitTwo (events.js:126:13)
       at ChildProcess.emit (events.js:214:7)
       at maybeClose (internal/child_process.js:925:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
+      at Socket.stream.socket.on (internal/child_process.js:346:11)
+      at emitOne (events.js:116:13)
+      at Socket.emit (events.js:211:7)
+      at Pipe._handle.close [as _onclose] (net.js:554:12)

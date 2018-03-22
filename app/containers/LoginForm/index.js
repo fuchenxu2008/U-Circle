@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Form, Icon, Input, Button, Checkbox, Spin } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, Spin, Radio } from 'antd';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import { changeFormMode } from './actions';
@@ -40,6 +40,7 @@ export class NormalLoginForm extends React.Component { // eslint-disable-line re
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { formMode } = this.props;
     return (
       <div className="loginFormStyle">
         <Spin spinning={this.props.loading}>
@@ -47,26 +48,46 @@ export class NormalLoginForm extends React.Component { // eslint-disable-line re
             <FormItem>
               {getFieldDecorator('email', {
                 rules: [{ required: true, message: 'Please input your email!' }],
-              })(<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />)}
+              })(<Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />)}
             </FormItem>
+            {
+              formMode === 'register' &&
+              <FormItem>
+                {getFieldDecorator('nickname', {
+                  rules: [{ required: true, message: 'Please input your nickname!' }],
+                })(<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Nickname" />)}
+              </FormItem>
+            }
             <FormItem>
               {getFieldDecorator('password', {
                 rules: [{ required: true, message: 'Please input your Password!' }],
               })(<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />)}
             </FormItem>
             {
-              this.props.formMode === 'register' &&
-              <FormItem>
-                {getFieldDecorator('re-password', {
-                  rules: [
-                    { required: true, message: 'Please input your Password again!' },
-                    { validator: this.compareToFirstPassword },
-                  ],
-                })(<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Re-enter Password" />)}
-              </FormItem>
+              formMode === 'register' &&
+              <div>
+                <FormItem>
+                  {getFieldDecorator('re-password', {
+                    rules: [
+                      { required: true, message: 'Please input your Password again!' },
+                      { validator: this.compareToFirstPassword },
+                    ],
+                  })(<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Re-enter Password" />)}
+                </FormItem>
+                <FormItem className="collection-create-form_last-form-item">
+                  {getFieldDecorator('role', {
+                    initialValue: 'peer',
+                  })(
+                    <Radio.Group>
+                      <Radio value="peer">Peer</Radio>
+                      <Radio value="alumni">Alumni</Radio>
+                    </Radio.Group>
+                  )}
+                </FormItem>
+              </div>
             }
             {
-              this.props.formMode === 'login' &&
+              formMode === 'login' &&
               <FormItem>
                 {getFieldDecorator('remember', {
                   valuePropName: 'checked',
@@ -80,10 +101,10 @@ export class NormalLoginForm extends React.Component { // eslint-disable-line re
             }
             <FormItem>
               <Button type="primary" htmlType="submit" className="login-form-button loginButtonStyle">
-                {this.props.formMode === 'login' ? 'Log In' : 'Sign Up'}
+                {formMode === 'login' ? 'Log In' : 'Sign Up'}
               </Button>
               Or <text onClick={this.handleChangeFormMode} className="linkStyle">
-                {this.props.formMode === 'login'
+                {formMode === 'login'
                   ? 'register now!'
                   : 'Login here'
                 }

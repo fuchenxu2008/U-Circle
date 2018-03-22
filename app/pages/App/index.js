@@ -32,26 +32,26 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
   }
 
   render() {
-    const nickname = this.props.currentUser.nickname || false;
     return (
       <div>
         <NavBar />
-        <h1 className="userStat">{ nickname && nickname }</h1>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/auth" component={LoginPage} />
-          <Route path="/me" component={ProfilePage} />
-          <Route path="/alumni" component={AlumniPage} />
-          <Route path="/peer" component={PeerPage} />
-          <Route path="" component={NotFoundPage} />
-        </Switch>
+        <div className="container">
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/auth" component={LoginPage} />
+            <Route path="/me" component={ProfilePage} />
+            <Route path="/alumni" component={AlumniPage} />
+            <Route path="/peer" component={PeerPage} />
+            <Route path="" component={NotFoundPage} />
+          </Switch>
+        </div>
       </div>
     );
   }
 }
 
 MainApp.propTypes = {
-  currentUser: PropTypes.object,
+  // currentUser: PropTypes.object,
   setCurrentUser: PropTypes.func,
 };
 

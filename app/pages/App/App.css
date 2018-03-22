@@ -1,3 +1,7 @@
+.container {
+    padding: 30px 30px 0 30px;
+}
+
 .userStat {
     text-align: center;
     margin-top: 1%;

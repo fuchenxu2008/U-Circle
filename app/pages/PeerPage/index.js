@@ -10,14 +10,28 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import PeerQuestionsList from 'components/PeerQuestionsList';
+import AddButton from 'components/AddButton';
+import NewQuestionForm from 'containers/NewQuestionForm';
 import injectReducer from 'utils/injectReducer';
 // import makeSelectPeerPage from './selectors';
 import reducer from './reducer';
 import { getPeerQuestion } from './actions';
 
 export class PeerPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  state = {
+    showAddForm: false,
+  }
+
   componentDidMount() {
     this.props.getPeerQuestions(this.props.currentUser.token);
+  }
+
+  showForm = () => {
+    this.setState({ showAddForm: true });
+  }
+
+  hideForm = () => {
+    this.setState({ showAddForm: false });
   }
 
   render() {
@@ -28,6 +42,12 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
           <meta name="description" content="Description of PeerPage" />
         </Helmet>
         PeerPage
+        <AddButton handleClick={this.showForm} />
+        <NewQuestionForm
+          visible={this.state.showAddForm}
+          handleCancel={this.hideForm}
+          handleSubmit={this.hideForm}
+        />
         <PeerQuestionsList peerQuestions={this.props.peerQuestions} />
       </div>
     );

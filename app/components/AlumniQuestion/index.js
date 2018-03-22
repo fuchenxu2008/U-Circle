@@ -10,7 +10,7 @@ import React from 'react';
 function AlumniQuestion() {
   return (
     <div>
-
+      AlumniQuestion
     </div>
   );
 }
