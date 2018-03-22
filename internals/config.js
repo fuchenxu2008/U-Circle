@@ -40,6 +40,7 @@ const ReactBoilerplate = {
         'passport-local',
         'passport-jwt',
         'bcryptjs',
+        'cors',
       ],
 
       /**

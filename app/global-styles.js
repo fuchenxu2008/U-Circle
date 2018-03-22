@@ -12,7 +12,7 @@ injectGlobal`
   body {
     width: 100%;
     height: 100%;
-    padding: 10px;
+    padding: 0;
     background-color: #fafafa;
   }
 

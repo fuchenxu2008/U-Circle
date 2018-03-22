@@ -35,7 +35,7 @@ module.exports = {
   login: (req, res) => {
     passport.authenticate('local', { session: false }, (err, user /* , info */) => {
       if (err) return res.status(400).json({ message: 'Unknown error occured. (Error code: 001)' });
-      if (!user) return res.status(400).json({ message: 'Invalid Credentials!' });
+      if (!user) return res.status(404).json({ message: 'Invalid Credentials!' });
       req.login(user, { session: false }, err2 => {
         if (err2) return res.status(400).send(err2);
       });

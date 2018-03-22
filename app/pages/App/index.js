@@ -26,7 +26,7 @@ import { setCurrentUser } from './actions';
 import './App.css';
 
 class MainApp extends Component { // eslint-disable-line react/prefer-stateless-function
-  componentDidMount() {
+  componentWillMount() {
     const user = localStorage.getItem('currentUser') || null;
     if (user) this.props.setCurrentUser(JSON.parse(user));
   }

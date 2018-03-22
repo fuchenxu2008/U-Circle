@@ -9,12 +9,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
-
+import PeerQuestionsList from 'components/PeerQuestionsList';
 import injectReducer from 'utils/injectReducer';
-import makeSelectPeerPage from './selectors';
+// import makeSelectPeerPage from './selectors';
 import reducer from './reducer';
+import { getPeerQuestion } from './actions';
 
 export class PeerPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  componentDidMount() {
+    this.props.getPeerQuestions(this.props.currentUser.token);
+  }
+
   render() {
     return (
       <div>
@@ -23,22 +28,26 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
           <meta name="description" content="Description of PeerPage" />
         </Helmet>
         PeerPage
+        <PeerQuestionsList peerQuestions={this.props.peerQuestions} />
       </div>
     );
   }
 }
 
 PeerPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  getPeerQuestions: PropTypes.func,
+  currentUser: PropTypes.object,
+  peerQuestions: PropTypes.arrayOf(PropTypes.object),
 };
 
 const mapStateToProps = state => ({
-  peerpage: makeSelectPeerPage(state),
+  currentUser: state.get('global').get('currentUser'),
+  peerQuestions: state.get('peerPage').get('questions').toJS(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getPeerQuestions: token => dispatch(getPeerQuestion(token)),
   };
 }
 

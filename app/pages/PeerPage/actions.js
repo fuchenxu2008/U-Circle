@@ -5,11 +5,13 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  GET_PEER_QUESTIONS,
 } from './constants';
+import * as api from './api';
 
-export function defaultAction() {
+export function getPeerQuestion(token) {
   return {
-    type: DEFAULT_ACTION,
+    type: GET_PEER_QUESTIONS,
+    payload: api.getPeerQuestions(token),
   };
 }
