@@ -15,25 +15,27 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectNavBar from './selectors';
 import reducer from './reducer';
 
+const Item = Menu.Item;
+
 class NavBar extends Component {  // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <Menu mode="horizontal">
-        <Menu.Item key="home">
+        <Item key="home">
           <Link to="/">HomePage</Link>
-        </Menu.Item>
-        <Menu.Item key="alumni">
+        </Item>
+        <Item key="alumni">
           <Link to="/alumni">Alumni</Link>
-        </Menu.Item>
-        <Menu.Item key="peer">
+        </Item>
+        <Item key="peer">
           <Link to="/peer">Peer</Link>
-        </Menu.Item>
-        <Menu.Item key="auth">
+        </Item>
+        <Item key="auth">
           <Link to="/auth">Login</Link>
-        </Menu.Item>
-        <Menu.Item key="profile">
+        </Item>
+        <Item key="profile">
           <Link to="/me">Profile</Link>
-        </Menu.Item>
+        </Item>
       </Menu>
     );
   }
