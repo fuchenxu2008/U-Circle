@@ -1,7 +1,12 @@
-const currentUser = localStorage.getItem('currentUser') || null;
-const token = currentUser ? JSON.parse(currentUser).token : null;
-export default {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-};
+export function getCurrentUser() {
+  return JSON.parse(localStorage.getItem('currentUser'));
+}
+
+export function getAuthToken() {
+  const user = getCurrentUser();
+  return user ? user.token : null;
+}
+
+export function getAuthHeader() {
+  return { headers: { Authorization: `Bearer ${getAuthToken()}` } };
+}

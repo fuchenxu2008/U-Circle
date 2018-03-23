@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Form, Icon, Input, Button, Checkbox, Spin, Radio } from 'antd';
@@ -16,6 +17,7 @@ import { loginAction, registerAction } from '../../pages/App/actions';
 import './LoginForm.css';
 
 const FormItem = Form.Item;
+const RadioGroup = Radio.Group;
 
 export class NormalLoginForm extends React.Component { // eslint-disable-line react/prefer-stateless-function
   handleChangeFormMode = () => {
@@ -40,7 +42,8 @@ export class NormalLoginForm extends React.Component { // eslint-disable-line re
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { formMode } = this.props;
+    const { formMode, currentUser } = this.props;
+    if (currentUser) return <Redirect to="/" />;
     return (
       <div className="loginFormStyle">
         <Spin spinning={this.props.loading}>
@@ -78,10 +81,10 @@ export class NormalLoginForm extends React.Component { // eslint-disable-line re
                   {getFieldDecorator('role', {
                     initialValue: 'peer',
                   })(
-                    <Radio.Group>
+                    <RadioGroup>
                       <Radio value="peer">Peer</Radio>
                       <Radio value="alumni">Alumni</Radio>
-                    </Radio.Group>
+                    </RadioGroup>
                   )}
                 </FormItem>
               </div>
@@ -124,11 +127,13 @@ NormalLoginForm.propTypes = {
   register: PropTypes.func,
   login: PropTypes.func,
   loading: PropTypes.bool,
+  currentUser: PropTypes.object,
 };
 
 const LoginForm = Form.create()(NormalLoginForm);
 
 const mapStateToProps = state => ({
+  currentUser: state.get('global').get('currentUser'),
   formMode: state.get('loginForm').get('formMode'),
   loading: state.get('loginForm').get('loading'),
 });

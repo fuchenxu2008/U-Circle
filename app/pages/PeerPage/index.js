@@ -9,30 +9,23 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
-import PeerQuestionsList from 'components/PeerQuestionsList';
+import { Row } from 'antd';
+import QuestionsList from 'containers/QuestionsList';
 import AddButton from 'components/AddButton';
 import NewQuestionForm from 'containers/NewQuestionForm';
 import injectReducer from 'utils/injectReducer';
-// import makeSelectPeerPage from './selectors';
 import reducer from './reducer';
-import { getPeerQuestion } from './actions';
+import { getPeerQuestions, deleteQuestion } from './actions';
 
 export class PeerPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  state = {
-    showAddForm: false,
-  }
+  state = { showAddForm: false }
 
   componentDidMount() {
-    this.props.getPeerQuestions(this.props.currentUser.token);
+    this.props.getPeerQuestions();
   }
 
-  showForm = () => {
-    this.setState({ showAddForm: true });
-  }
-
-  hideForm = () => {
-    this.setState({ showAddForm: false });
-  }
+  showForm = () => this.setState({ showAddForm: true });
+  hideForm = () => this.setState({ showAddForm: false });
 
   render() {
     return (
@@ -41,14 +34,20 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
           <title>PeerPage</title>
           <meta name="description" content="Description of PeerPage" />
         </Helmet>
-        PeerPage
-        <AddButton handleClick={this.showForm} />
+        <Row>
+          <h1 style={{ float: 'left' }}>PeerPage</h1>
+          <AddButton handleClick={this.showForm} align="right" />
+        </Row>
         <NewQuestionForm
           visible={this.state.showAddForm}
-          handleCancel={this.hideForm}
-          handleSubmit={this.hideForm}
+          onCancel={this.hideForm}
+          onSubmit={this.hideForm}
         />
-        <PeerQuestionsList peerQuestions={this.props.peerQuestions} />
+        <QuestionsList
+          type="peer"
+          questions={this.props.peerQuestions}
+          onDeleteQuestion={question => this.props.deleteQuestion(question)}
+        />
       </div>
     );
   }
@@ -56,18 +55,19 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
 
 PeerPage.propTypes = {
   getPeerQuestions: PropTypes.func,
-  currentUser: PropTypes.object,
-  peerQuestions: PropTypes.arrayOf(PropTypes.object),
+  deleteQuestion: PropTypes.func,
+  peerQuestions: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser'),
-  peerQuestions: state.get('peerPage').get('questions').toJS(),
+  // currentUser: state.get('global').get('currentUser'),
+  peerQuestions: state.get('peerPage').get('peerQuestions').toJS(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPeerQuestions: token => dispatch(getPeerQuestion(token)),
+    deleteQuestion: question => dispatch(deleteQuestion(question)),
+    getPeerQuestions: () => dispatch(getPeerQuestions()),
   };
 }
 

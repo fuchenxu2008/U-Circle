@@ -7,11 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
 import { Form, Icon, Input, Button, Modal } from 'antd';
-import injectReducer from 'utils/injectReducer';
-import makeSelectNewQuestionForm from './selectors';
-import reducer from './reducer';
 import { addQuestion } from './actions';
 
 const FormItem = Form.Item;
@@ -25,23 +21,23 @@ export class QuestionForm extends React.Component { // eslint-disable-line react
       if (!err) {
         this.props.addQuestion(values);
         form.resetFields();
-        this.props.handleSubmit();
+        this.props.onSubmit();
       }
     });
   }
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { visible, handleCancel } = this.props;
+    const { visible, onCancel } = this.props;
     return (
       <div>
         <Modal
           title="Ask New Qustion"
           visible={visible}
           onOk={this.handleSubmit}
-          onCancel={handleCancel}
+          onCancel={onCancel}
           footer={[
-            <Button key="cancel" onClick={handleCancel}>Cancel</Button>,
+            <Button key="cancel" onClick={onCancel}>Cancel</Button>,
             <Button key="submit" type="primary" onClick={this.handleSubmit}>
               Submit
             </Button>,
@@ -73,13 +69,9 @@ QuestionForm.propTypes = {
   form: PropTypes.object,
   addQuestion: PropTypes.func,
   visible: PropTypes.bool,
-  handleSubmit: PropTypes.func,
-  handleCancel: PropTypes.func,
+  onSubmit: PropTypes.func,
+  onCancel: PropTypes.func,
 };
-
-const mapStateToProps = state => ({
-  newquestionform: makeSelectNewQuestionForm(state),
-});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -89,11 +81,4 @@ function mapDispatchToProps(dispatch) {
 
 const NewQuestionForm = Form.create()(QuestionForm);
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
-
-const withReducer = injectReducer({ key: 'newQuestionForm', reducer });
-
-export default compose(
-  withReducer,
-  withConnect,
-)(NewQuestionForm);
+export default connect(null, mapDispatchToProps)(NewQuestionForm);

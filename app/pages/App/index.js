@@ -15,26 +15,30 @@ import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import NavBar from 'containers/NavBar';
+import NavBar from 'components/NavBar';
 import LoginPage from 'pages/LoginPage';
 import HomePage from 'pages/HomePage';
 import ProfilePage from 'pages/ProfilePage';
 import AlumniPage from 'pages/AlumniPage';
 import PeerPage from 'pages/PeerPage';
 import NotFoundPage from 'pages/NotFoundPage/Loadable';
-import { setCurrentUser } from './actions';
+import { setCurrentUser, logOut } from './actions';
 import './App.css';
 
 class MainApp extends Component { // eslint-disable-line react/prefer-stateless-function
   componentWillMount() {
-    const user = localStorage.getItem('currentUser') || null;
-    if (user) this.props.setCurrentUser(JSON.parse(user));
+    this.props.setCurrentUser();
+  }
+
+  onLogOut = () => {
+    this.props.logOut();
+    this.props.history.push('/auth');
   }
 
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar onLogOut={this.onLogOut} currentUser={this.props.currentUser} />
         <div className="container">
           <Switch>
             <Route exact path="/" component={HomePage} />
@@ -51,8 +55,10 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
 }
 
 MainApp.propTypes = {
-  // currentUser: PropTypes.object,
+  history: PropTypes.object,
+  currentUser: PropTypes.object,
   setCurrentUser: PropTypes.func,
+  logOut: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -60,7 +66,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  setCurrentUser: () => dispatch(setCurrentUser()),
+  logOut: () => dispatch(logOut()),
 });
 
 export default withRouter(

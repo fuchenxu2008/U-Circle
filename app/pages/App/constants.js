@@ -7,3 +7,4 @@ export const LOGIN_FULFILLED = 'app/LOGIN_FULFILLED';
 export const LOGIN_REJECTED = 'app/LOGIN_REJECTED';
 
 export const SET_USER = 'app/SET_USER';
+export const LOG_OUT = 'app/LOG_OUT';

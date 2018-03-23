@@ -1,4 +1,4 @@
-import { REGISTER, LOGIN, SET_USER } from './constants';
+import { REGISTER, LOGIN, SET_USER, LOG_OUT } from './constants';
 
 import * as api from './api';
 
@@ -16,9 +16,14 @@ export function loginAction(fields) {
   };
 }
 
-export function setCurrentUser(user) {
+export function setCurrentUser() {
   return {
     type: SET_USER,
-    user,
+  };
+}
+
+export function logOut() {
+  return {
+    type: LOG_OUT,
   };
 }

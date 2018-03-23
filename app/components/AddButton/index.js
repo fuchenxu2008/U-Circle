@@ -12,13 +12,21 @@ import PropTypes from 'prop-types';
 function AddButton(props) {
   return (
     <div>
-      <Button onClick={props.handleClick} type="ghost" shape="circle" icon="plus-circle-o" size="large" />
+      <Button
+        onClick={props.handleClick}
+        type="ghost"
+        shape="circle"
+        icon="plus-circle-o"
+        size="large"
+        style={{ float: props.align }}
+      />
     </div>
   );
 }
 
 AddButton.propTypes = {
   handleClick: PropTypes.func,
+  align: PropTypes.string,
 };
 
 export default AddButton;
