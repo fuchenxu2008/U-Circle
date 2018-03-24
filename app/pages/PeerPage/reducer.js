@@ -6,13 +6,16 @@
 
 import { fromJS } from 'immutable';
 import _ from 'lodash';
+
+import {
+  DELETE_QUESTION_FULFILLED,
+  DELETE_QUESTION_REJECTED,
+} from 'containers/QuestionDetail/constants';
 import {
   GET_PEER_QUESTIONS_FULFILLED,
   GET_PEER_QUESTIONS_REJECTED,
   SUBMIT_NEW_PEER_QUESTION_FULFILLED,
   SUBMIT_NEW_PEER_QUESTION_REJECTED,
-  DELETE_QUESTION_FULFILLED,
-  DELETE_QUESTION_REJECTED,
 } from './constants';
 
 const initialState = fromJS({

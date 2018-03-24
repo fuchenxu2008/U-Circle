@@ -13,13 +13,3 @@ export function addQuestion(question) {
     questionerID: getCurrentUser('id'),
   }, getAuthHeader());
 }
-
-export function deleteQuestion(question) {
-  return axios.delete(`${ROOT_URL}/api/question`, {
-    ...getAuthHeader(),
-    data: {
-      id: question._id,
-      type: question.type,
-    },
-  });
-}

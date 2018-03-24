@@ -16,7 +16,7 @@ import LoginHint from 'components/LoginHint';
 import NewQuestionForm from 'components/NewQuestionForm';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
-import { getPeerQuestions, addQuestion, deleteQuestion } from './actions';
+import { getPeerQuestions, addQuestion } from './actions';
 import './PeerPage.css';
 
 export class PeerPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -32,7 +32,6 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
   hideForm = () => this.setState({ showAddForm: false, showHint: false });
 
   handleAddQuestion = question => this.props.addQuestion(question);
-  handleDeleteQuestion = question => this.props.deleteQuestion(question);
 
   render() {
     return (
@@ -59,7 +58,6 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
         <QuestionsList
           type="peer"
           questions={this.props.peerQuestions}
-          onDeleteQuestion={this.handleDeleteQuestion}
         />
       </div>
     );
@@ -71,7 +69,6 @@ PeerPage.propTypes = {
   currentUser: PropTypes.object,
   getPeerQuestions: PropTypes.func,
   addQuestion: PropTypes.func,
-  deleteQuestion: PropTypes.func,
   peerQuestions: PropTypes.object,
 };
 
@@ -82,7 +79,6 @@ const mapStateToProps = state => ({
 
 function mapDispatchToProps(dispatch) {
   return {
-    deleteQuestion: question => dispatch(deleteQuestion(question)),
     getPeerQuestions: () => dispatch(getPeerQuestions()),
     addQuestion: fields => dispatch(addQuestion(fields)),
   };

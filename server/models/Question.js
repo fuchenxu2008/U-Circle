@@ -7,6 +7,7 @@ const QuestionSchema = Schema({
   created_at: Date,
   questioner: { type: Schema.Types.ObjectId, ref: 'User' },
   answer: [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
+  type: String,
 });
 
 const Question = mongoose.model('Question', QuestionSchema);

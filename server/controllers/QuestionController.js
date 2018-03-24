@@ -1,3 +1,5 @@
+/* eslint consistent-return:0 */
+
 const Question = require('../models/Question');
 const moment = require('moment');
 
@@ -9,6 +11,13 @@ module.exports = {
       return res.send(questions);
     });
   },
+  getQuestion: (req, res) => {
+    Question.findById(req.params.id).populate('questioner', ['nickname', 'avatar', 'role']).exec((err, question) => {
+      if (err) return res.status(400).json({ message: 'Unknown error occured!' });
+      if (!question) return res.status(404).json({ message: 'No question found!' });
+      return res.send(question);
+    });
+  },
   addQuestion: (req, res) => {
     Question.create(
       {
@@ -17,9 +26,14 @@ module.exports = {
         questioner: req.body.questionerID,
         created_at: moment().format('YYYY-MM-DD hh:mm:ss'),
       },
-      (err, question) => {
+      (err, newQuestion) => {
         if (err) return res.status(400).json({ message: 'Unknown error occured!' });
-        return res.send({ question, message: 'Post created!' });
+        Question.findById(newQuestion._id).populate('questioner', [
+          'nickname', 'avatar', 'role',
+        ]).exec((err2, question) => {
+          if (err2) return res.status(400).json({ message: 'Unknown error occured!' });
+          return res.send({ question, message: 'Post created!' });
+        });
       }
     );
   },

@@ -5,11 +5,21 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  GET_QUESTION,
+  DELETE_QUESTION,
 } from './constants';
+import * as api from './api';
 
-export function defaultAction() {
+export function getQuestion(id) {
   return {
-    type: DEFAULT_ACTION,
+    type: GET_QUESTION,
+    payload: api.getQuestion(id),
+  };
+}
+
+export function deleteQuestion(id) {
+  return {
+    type: DELETE_QUESTION,
+    payload: api.deleteQuestion(id),
   };
 }

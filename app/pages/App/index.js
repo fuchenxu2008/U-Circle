@@ -21,6 +21,7 @@ import HomePage from 'pages/HomePage';
 import ProfilePage from 'pages/ProfilePage';
 import AlumniPage from 'pages/AlumniPage';
 import PeerPage from 'pages/PeerPage';
+import QuestionDetail from 'containers/QuestionDetail';
 import NotFoundPage from 'pages/NotFoundPage/Loadable';
 import { setCurrentUser, logOut } from './actions';
 import './App.css';
@@ -46,6 +47,7 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
             <Route path="/me" component={ProfilePage} />
             <Route path="/alumni" component={AlumniPage} />
             <Route path="/peer" component={PeerPage} />
+            <Route path="/question/:id" component={QuestionDetail} />
             <Route path="" component={NotFoundPage} />
           </Switch>
         </div>
