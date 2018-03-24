@@ -18,7 +18,6 @@ function AddButton(props) {
         shape="circle"
         icon="plus-circle-o"
         size="large"
-        style={{ float: props.align }}
       />
     </div>
   );
@@ -26,7 +25,7 @@ function AddButton(props) {
 
 AddButton.propTypes = {
   handleClick: PropTypes.func,
-  align: PropTypes.string,
+  // align: PropTypes.string,
 };
 
 export default AddButton;

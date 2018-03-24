@@ -12,7 +12,7 @@ const logger = require('./logger');
 const argv = require('./argv');
 const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
-const passport = require('./middlewares/passport');
+// const passport = require('./middlewares/passport');
 const { MONGO_URL } = require('../shared/config');
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -41,7 +41,7 @@ mongoose.connect(MONGO_URL, err => {
 const authRoutes = require('./routes/AuthRoutes');
 const questionRoutes = require('./routes/QuestionRoutes');
 app.use('/api/auth', authRoutes);
-app.use('/api/question', passport.authenticate('jwt', { session: false }), questionRoutes);
+app.use('/api/question', questionRoutes);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

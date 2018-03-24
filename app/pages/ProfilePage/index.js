@@ -8,23 +8,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-
+import { Redirect } from 'react-router-dom';
 import injectReducer from 'utils/injectReducer';
-// import makeSelectProfilePage from './selectors';
 import reducer from './reducer';
 
 export class ProfilePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     const user = this.props.currentUser;
+    if (!user) return <Redirect to="/auth" />;
     return (
       <div>
         ProfilePage
+        <h2>{user.nickname}</h2>
         <ul>
-          <li>{user.nickname}</li>
-          <li>{user.email}</li>
-          <li>{user.role}</li>
-          <li>{user._id}</li>
-          <li>{user.token}</li>
+          <li>Email: {user.email}</li>
+          <li>Role: {user.role}</li>
+          <li>ID: {user._id}</li>
+          <li>Token: {user.token}</li>
         </ul>
       </div>
     );

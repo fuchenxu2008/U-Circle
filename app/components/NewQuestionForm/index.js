@@ -6,9 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Form, Icon, Input, Button, Modal } from 'antd';
-import { addQuestion } from './actions';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -19,9 +17,9 @@ export class QuestionForm extends React.Component { // eslint-disable-line react
     e.preventDefault();
     form.validateFields((err, values) => {
       if (!err) {
-        this.props.addQuestion(values);
+        this.props.onAddQuestion(values);
         form.resetFields();
-        this.props.onSubmit();
+        this.props.onOk();
       }
     });
   }
@@ -67,18 +65,10 @@ export class QuestionForm extends React.Component { // eslint-disable-line react
 
 QuestionForm.propTypes = {
   form: PropTypes.object,
-  addQuestion: PropTypes.func,
+  onAddQuestion: PropTypes.func,
   visible: PropTypes.bool,
-  onSubmit: PropTypes.func,
+  onOk: PropTypes.func,
   onCancel: PropTypes.func,
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addQuestion: fields => dispatch(addQuestion(fields)),
-  };
-}
-
-const NewQuestionForm = Form.create()(QuestionForm);
-
-export default connect(null, mapDispatchToProps)(NewQuestionForm);
+export default Form.create()(QuestionForm);

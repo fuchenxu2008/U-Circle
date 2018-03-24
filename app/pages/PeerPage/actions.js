@@ -5,6 +5,7 @@
  */
 
 import {
+  SUBMIT_NEW_PEER_QUESTION,
   GET_PEER_QUESTIONS,
   DELETE_QUESTION,
 } from './constants';
@@ -14,6 +15,13 @@ export function getPeerQuestions() {
   return {
     type: GET_PEER_QUESTIONS,
     payload: api.getPeerQuestions(),
+  };
+}
+
+export function addQuestion(question) {
+  return {
+    type: SUBMIT_NEW_PEER_QUESTION,
+    payload: api.addQuestion(question),
   };
 }
 

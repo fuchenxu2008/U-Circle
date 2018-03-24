@@ -11,7 +11,8 @@ import Question from 'components/Question';
 
 export class QuestionsList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const questionItems = _.map(this.props.questions, question => (
+    const questions = _.sortBy(this.props.questions, 'created_at');
+    const questionItems = _.map(questions, question => (
       <Question
         key={question._id}
         question={question}

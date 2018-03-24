@@ -7,6 +7,7 @@ import {
   SET_USER,
   LOG_OUT,
 } from './constants';
+import { setCurrentUser, getCurrentUser, clearCurrentUser } from '../../authMiddleware';
 
 const initialState = fromJS({});
 
@@ -15,12 +16,12 @@ function currentUser(state = initialState, action) {
     case REGISTER_FULFILLED:
       return state;
     case LOGIN_FULFILLED:
-      localStorage.setItem('currentUser', JSON.stringify(action.payload.data));
+      setCurrentUser(action.payload.data);
       return action.payload.data;
     case SET_USER:
-      return JSON.parse(localStorage.getItem('currentUser'));
+      return getCurrentUser();
     case LOG_OUT:
-      localStorage.clear();
+      clearCurrentUser();
       return null;
     default:
       return state;
