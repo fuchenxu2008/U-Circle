@@ -17,7 +17,7 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
   render() {
     return (
       <div>
-      
+        QuestionDetail
       </div>
     );
   }
