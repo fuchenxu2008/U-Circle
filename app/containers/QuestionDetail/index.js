@@ -1,39 +1,34 @@
 /**
  *
- * HomePage
+ * QuestionDetail
  *
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 
 import injectReducer from 'utils/injectReducer';
-import makeSelectHomePage from './selectors';
+import makeSelectQuestionDetail from './selectors';
 import reducer from './reducer';
 
-export class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class QuestionDetail extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div>
-        <Helmet>
-          <title>HomePage</title>
-          <meta name="description" content="Description of HomePage" />
-        </Helmet>
-        <h2>HomePage</h2>
+      
       </div>
     );
   }
 }
 
-HomePage.propTypes = {
+QuestionDetail.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  homepage: makeSelectHomePage(state),
+  questiondetail: makeSelectQuestionDetail(state),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -44,9 +39,9 @@ function mapDispatchToProps(dispatch) {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-const withReducer = injectReducer({ key: 'homePage', reducer });
+const withReducer = injectReducer({ key: 'questionDetail', reducer });
 
 export default compose(
   withReducer,
   withConnect,
-)(HomePage);
+)(QuestionDetail);

@@ -11,6 +11,8 @@ import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
+import './ProfilePage.css';
+import avatar from '../../assets/user.png';
 
 export class ProfilePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -18,13 +20,14 @@ export class ProfilePage extends React.Component { // eslint-disable-line react/
     if (!user) return <Redirect to="/auth" />;
     return (
       <div>
-        ProfilePage
-        <h2>{user.nickname}</h2>
+        <h2>ProfilePage</h2>
+        <div className="profile-avatar-container">
+          <img src={avatar} alt="avatar" className="profile-avatar" />
+        </div>
         <ul>
+          <li>Nickname: {user.nickname}</li>
           <li>Email: {user.email}</li>
           <li>Role: {user.role}</li>
-          <li>ID: {user._id}</li>
-          <li>Token: {user.token}</li>
         </ul>
       </div>
     );

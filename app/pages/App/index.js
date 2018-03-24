@@ -38,7 +38,7 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
   render() {
     return (
       <div>
-        <NavBar onLogOut={this.onLogOut} currentUser={this.props.currentUser} />
+        <NavBar onLogOut={this.onLogOut} />
         <div className="container">
           <Switch>
             <Route exact path="/" component={HomePage} />
@@ -56,7 +56,6 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
 
 MainApp.propTypes = {
   history: PropTypes.object,
-  currentUser: PropTypes.object,
   setCurrentUser: PropTypes.func,
   logOut: PropTypes.func,
 };

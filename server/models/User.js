@@ -6,6 +6,7 @@ const UserSchema = Schema({
   nickname: String,
   password: String,
   role: String,
+  avatar: String,
   question: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
 });
 

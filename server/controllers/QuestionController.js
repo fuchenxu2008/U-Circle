@@ -3,7 +3,7 @@ const moment = require('moment');
 
 module.exports = {
   getQuestions: (req, res) => {
-    Question.find({}, (err, questions) => {
+    Question.find({}).populate('questioner', ['nickname', 'avatar', 'role']).exec((err, questions) => {
       if (err) return res.status(400).json({ message: 'Unknown error occured!' });
       if (!questions) return res.status(404).json({ message: 'No question found!' });
       return res.send(questions);

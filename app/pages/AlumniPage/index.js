@@ -22,7 +22,7 @@ export class AlumniPage extends React.Component { // eslint-disable-line react/p
           <title>AlumniPage</title>
           <meta name="description" content="Description of AlumniPage" />
         </Helmet>
-        AlumniPage
+        <h2>AlumniPage</h2>
       </div>
     );
   }

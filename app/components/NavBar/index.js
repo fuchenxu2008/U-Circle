@@ -8,16 +8,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
+import { getCurrentUser } from '../../authMiddleware';
 
 const Item = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
 class NavBar extends Component {  // eslint-disable-line react/prefer-stateless-function
   render() {
+    const currentUser = getCurrentUser();
     return (
       <Menu mode="horizontal">
         <Item key="home">
-          <Link to="/">HomePage</Link>
+          <Link to="/">Home</Link>
         </Item>
         <Item key="alumni">
           <Link to="/alumni">Alumni</Link>
@@ -26,8 +28,8 @@ class NavBar extends Component {  // eslint-disable-line react/prefer-stateless-
           <Link to="/peer">Peer</Link>
         </Item>
         {
-          this.props.currentUser ? (
-            <SubMenu title={this.props.currentUser.nickname}>
+          currentUser ? (
+            <SubMenu title={currentUser.nickname}>
               <Item key="profile">
                 <Link to="/me">Profile</Link>
               </Item>
@@ -47,7 +49,6 @@ class NavBar extends Component {  // eslint-disable-line react/prefer-stateless-
 }
 
 NavBar.propTypes = {
-  currentUser: PropTypes.object,
   onLogOut: PropTypes.func,
 };
 
