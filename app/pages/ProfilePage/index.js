@@ -5,24 +5,25 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
+import AvatarUploader from 'containers/AvatarUploader';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
+import { getCurrentUser } from '../../authMiddleware';
 import './ProfilePage.css';
-import avatar from '../../assets/user.png';
 
 export class ProfilePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const user = this.props.currentUser;
+    const user = getCurrentUser();
     if (!user) return <Redirect to="/auth" />;
     return (
       <div>
         <h2>ProfilePage</h2>
         <div className="profile-avatar-container">
-          <img src={avatar} alt="avatar" className="profile-avatar" />
+          <AvatarUploader />
         </div>
         <ul>
           <li>Nickname: {user.nickname}</li>
@@ -35,11 +36,11 @@ export class ProfilePage extends React.Component { // eslint-disable-line react/
 }
 
 ProfilePage.propTypes = {
-  currentUser: PropTypes.object,
+  // currentUser: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser'),
+  currentUser: state.get('global').get('currentUser').toJS(),
 });
 
 function mapDispatchToProps(dispatch) {

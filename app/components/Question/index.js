@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Row } from 'antd';
+import { Button, Row, Avatar } from 'antd';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 // import styled from 'styled-components';
@@ -17,6 +17,7 @@ function Question(props) {
   return (
     <Row className="question">
       <Row className="question-info">
+        <Avatar className="question-user-avatar" src={questioner.avatar} />
         <text className="question-userinfo">{questioner.nickname}</text>
         <small className="question-time">{moment(created_at).fromNow()}</small>
       </Row>

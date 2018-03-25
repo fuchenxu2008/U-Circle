@@ -73,7 +73,7 @@ PeerPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser'),
+  currentUser: state.get('global').get('currentUser').toJS(),
   peerQuestions: state.get('peerPage').get('peerQuestions').toJS(),
 });
 

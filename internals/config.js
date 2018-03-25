@@ -41,6 +41,8 @@ const ReactBoilerplate = {
         'passport-jwt',
         'bcryptjs',
         'cors',
+        'multer',
+        'uuid',
       ],
 
       /**

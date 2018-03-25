@@ -19,6 +19,7 @@ export function loginAction(fields) {
 export function setCurrentUser() {
   return {
     type: SET_USER,
+    payload: api.getUser(),
   };
 }
 

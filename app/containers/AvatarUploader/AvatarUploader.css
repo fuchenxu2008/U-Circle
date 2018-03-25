@@ -1,0 +1,9 @@
+.avatar-display {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.ant-upload.ant-upload-select-picture-card {
+    /* border: none; */
+    border-radius: 50%;
+}

@@ -24,9 +24,9 @@
   flex: 1;
 }
 
-/* .question-time { */
-    /* flex: 1; */
-/* } */
+.question-user-avatar {
+  margin-right: 10px;
+}
 
 .question-title {
     flex: 1;

@@ -14,6 +14,7 @@ import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import { changeFormMode } from './actions';
 import { loginAction, registerAction } from '../../pages/App/actions';
+import { getCurrentUser } from '../../authMiddleware';
 import './LoginForm.css';
 
 const FormItem = Form.Item;
@@ -42,8 +43,8 @@ export class NormalLoginForm extends React.Component { // eslint-disable-line re
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { formMode, currentUser } = this.props;
-    if (currentUser) return <Redirect to="/me" />;
+    const { formMode } = this.props;
+    if (getCurrentUser()) return <Redirect to="/me" />;
     return (
       <div className="loginFormStyle">
         <Spin spinning={this.props.loading}>
@@ -127,13 +128,13 @@ NormalLoginForm.propTypes = {
   register: PropTypes.func,
   login: PropTypes.func,
   loading: PropTypes.bool,
-  currentUser: PropTypes.object,
+  // currentUser: PropTypes.object,
 };
 
 const LoginForm = Form.create()(NormalLoginForm);
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser'),
+  currentUser: state.get('global').get('currentUser').toJS(),
   formMode: state.get('loginForm').get('formMode'),
   loading: state.get('loginForm').get('loading'),
 });

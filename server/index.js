@@ -20,6 +20,7 @@ const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngr
 const resolve = require('path').resolve;
 const app = express();
 
+global.__root = __dirname;
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -39,8 +40,10 @@ mongoose.connect(MONGO_URL, err => {
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 const authRoutes = require('./routes/AuthRoutes');
+const userRoutes = require('./routes/UserRoutes');
 const questionRoutes = require('./routes/QuestionRoutes');
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/question', questionRoutes);
 
 // In production we need to pass these values in instead of relying on webpack
