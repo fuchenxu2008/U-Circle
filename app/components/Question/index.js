@@ -17,10 +17,10 @@ function Question(props) {
   return (
     <Row className="question">
       <Row className="question-info">
-        <text className="question-questioner">{questioner.nickname}</text>
+        <text className="question-userinfo">{questioner.nickname}</text>
         <small className="question-time">{moment(created_at).fromNow()}</small>
       </Row>
-      <Row className="question-content">
+      <Row className="question-content" onClick={() => props.history.push(`/question/${_id}`)}>
         <b className="question-title">{title}</b>
       </Row>
       <Row className="question-action">

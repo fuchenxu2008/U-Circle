@@ -10,6 +10,7 @@ import {
   GET_QUESTION_REJECTED,
   DELETE_QUESTION_FULFILLED,
   DELETE_QUESTION_REJECTED,
+  CLEAR_DETAIL_PAGE,
 } from './constants';
 
 const initialState = fromJS({});
@@ -21,10 +22,12 @@ function questionDetailReducer(state = initialState, action) {
     case GET_QUESTION_REJECTED:
       return state;
     case DELETE_QUESTION_FULFILLED:
-      return fromJS({});
+      return state;
     case DELETE_QUESTION_REJECTED:
       console.log(action.payload);
       return state;
+    case CLEAR_DETAIL_PAGE:
+      return fromJS({});
     default:
       return state;
   }

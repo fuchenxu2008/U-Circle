@@ -24,7 +24,7 @@ module.exports = {
         title: req.body.title,
         body: req.body.body,
         questioner: req.body.questionerID,
-        created_at: moment().format('YYYY-MM-DD hh:mm:ss'),
+        created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
       },
       (err, newQuestion) => {
         if (err) return res.status(400).json({ message: 'Unknown error occured!' });

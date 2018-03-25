@@ -9,11 +9,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import moment from 'moment';
-import { Button, Icon } from 'antd';
+import { Button, Icon, Divider } from 'antd';
+import 'animate.css';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
-import { getQuestion, deleteQuestion } from './actions';
+import { getQuestion, deleteQuestion, clearDetailPage } from './actions';
 import { getCurrentUser } from '../../authMiddleware';
+import './QuestionDetail.css';
 
 export class QuestionDetail extends React.Component { // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
@@ -21,8 +23,12 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
     this.props.getQuestion(id);
   }
 
-  handleDeleteQuestion = () => {
-    this.props.deleteQuestion(this.props.question._id);
+  componentWillUnmount() {
+    this.props.clearDetailPage();
+  }
+
+  handleDeleteQuestion = async () => {
+    await this.props.deleteQuestion(this.props.question._id);
     this.props.history.goBack();
   }
 
@@ -32,14 +38,14 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
     }
     const { title, body, created_at, questioner } = this.props.question;
     return (
-      <div>
-        <h2>QuestionDetail</h2>
+      <div className="animated fadeInRight">
+        <div className="detailed-userinfo"><b>{questioner.nickname}</b></div>
         <div>
-          <h3>{title}</h3>
-          <small>{questioner.nickname}</small>
-          <br />
-          <small>{moment(created_at).format('YYYY-MM-DD hh:mm:ss')}</small>
+          <h2><b>{title}</b></h2>
+          <Divider />
           <p>{body}</p>
+          <Divider />
+          <small>{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
           {
             getCurrentUser('id') === questioner._id &&
             <Button
@@ -62,6 +68,7 @@ QuestionDetail.propTypes = {
   match: PropTypes.object,
   getQuestion: PropTypes.func,
   deleteQuestion: PropTypes.func,
+  clearDetailPage: PropTypes.func,
   question: PropTypes.object,
   history: PropTypes.object,
 };
@@ -74,6 +81,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getQuestion: id => dispatch(getQuestion(id)),
     deleteQuestion: id => dispatch(deleteQuestion(id)),
+    clearDetailPage: () => dispatch(clearDetailPage()),
   };
 }
 

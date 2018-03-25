@@ -7,6 +7,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import PropTypes from 'prop-types';
+import './AddButton.css';
 // import styled from 'styled-components';
 
 function AddButton(props) {
@@ -18,6 +19,7 @@ function AddButton(props) {
         shape="circle"
         icon="plus-circle-o"
         size="large"
+        className="addBtn"
       />
     </div>
   );
