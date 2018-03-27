@@ -4,10 +4,12 @@
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import { fromJS } from 'immutable';
+import { throttle } from 'lodash';
 import { routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunkMiddleware from 'redux-thunk';
 import createReducer from './reducers';
+import { saveState, loadState } from './localStorage';
 
 export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
@@ -36,11 +38,16 @@ export default function configureStore(initialState = {}, history) {
       : compose;
   /* eslint-enable */
 
+  const persistedState = loadState();
   const store = createStore(
     createReducer(),
-    fromJS(initialState),
+    fromJS(persistedState),
     composeEnhancers(...enhancers)
   );
+
+  store.subscribe(throttle(() => {
+    saveState(store.getState().toJS());
+  }), 1000);
 
   // Extensions
   store.injectedReducers = {}; // Reducer registry

@@ -5,7 +5,7 @@
  */
 
 import { fromJS } from 'immutable';
-import _ from 'lodash';
+import { mapKeys, omit } from 'lodash';
 
 import {
   DELETE_QUESTION_FULFILLED,
@@ -25,7 +25,7 @@ const initialState = fromJS({
 function peerPageReducer(state = initialState, action) {
   switch (action.type) {
     case GET_PEER_QUESTIONS_FULFILLED: {
-      const peerQuestions = _.mapKeys(action.payload.data, '_id');
+      const peerQuestions = mapKeys(action.payload.data, '_id');
       return state.set('peerQuestions', fromJS(peerQuestions));
     }
     case GET_PEER_QUESTIONS_REJECTED:
@@ -42,7 +42,7 @@ function peerPageReducer(state = initialState, action) {
       return state;
     case DELETE_QUESTION_FULFILLED:
       return state.updateIn(['peerQuestions'], list => (
-        fromJS(_.omit(list.toJS(), action.payload.data.question._id))
+        fromJS(omit(list.toJS(), action.payload.data.question._id))
       ));
     case DELETE_QUESTION_REJECTED:
       console.log(action.payload);

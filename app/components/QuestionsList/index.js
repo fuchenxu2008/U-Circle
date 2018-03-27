@@ -6,13 +6,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { sortBy, map } from 'lodash';
 import Question from 'components/Question';
 
 export class QuestionsList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const questions = _.sortBy(this.props.questions, 'created_at').reverse();
-    const questionItems = _.map(questions, question => (
+    const questions = sortBy(this.props.questions, 'created_at').reverse();
+    const questionItems = map(questions, question => (
       <Question
         key={question._id}
         question={question}

@@ -1,3 +1,7 @@
+import { pick } from 'lodash';
+
+const preservedState = ['global'];
+
 export const loadState = () => {
   try {
     const serializedState = localStorage.getItem('state');
@@ -11,8 +15,10 @@ export const loadState = () => {
 };
 
 export const saveState = state => {
+  console.log(state);
   try {
-    localStorage.setItem('state', JSON.stringify(state));
+    const stateToSave = pick(state, preservedState);
+    localStorage.setItem('state', JSON.stringify(stateToSave));
   } catch (err) {
     console.log('Write state to localStorage failed');
   }
