@@ -12,6 +12,6 @@ export function login(fields) {
 }
 
 export function getUser() {
-  const id = getCurrentUser()._id;
+  const id = getCurrentUser('_id');
   return axios.get(`${ROOT_URL}/api/user/${id}`);
 }

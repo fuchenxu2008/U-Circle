@@ -14,7 +14,6 @@ import 'animate.css';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import { getQuestion, deleteQuestion, clearDetailPage } from './actions';
-import { getCurrentUser } from '../../authMiddleware';
 import './QuestionDetail.css';
 
 export class QuestionDetail extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -33,10 +32,12 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
   }
 
   render() {
-    if (!this.props.question.questioner) {
+    if (!this.props.question) {
       return <h3>Loading...</h3>;
     }
     const { title, body, created_at, questioner } = this.props.question;
+    const { currentUser } = this.props;
+    const isOwner = currentUser ? currentUser._id === questioner._id : false;
     return (
       <div className="animated fadeInRight">
         <div className="detailed-userinfo"><b>{questioner.nickname}</b></div>
@@ -47,7 +48,7 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
           <Divider />
           <small>{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
           {
-            getCurrentUser('_id') === questioner._id &&
+            isOwner &&
             <Button
               onClick={this.handleDeleteQuestion}
               type="danger"
@@ -71,10 +72,12 @@ QuestionDetail.propTypes = {
   clearDetailPage: PropTypes.func,
   question: PropTypes.object,
   history: PropTypes.object,
+  currentUser: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  question: state.get('questionDetail').toJS(),
+  question: state.get('questionDetail'),
+  currentUser: state.get('global').get('currentUser'),
 });
 
 function mapDispatchToProps(dispatch) {

@@ -6,16 +6,16 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
-import { getCurrentUser } from '../../authMiddleware';
 
 const Item = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
 class NavBar extends Component {  // eslint-disable-line react/prefer-stateless-function
   render() {
-    const currentUser = getCurrentUser();
+    const { currentUser } = this.props;
     return (
       <Menu mode="horizontal">
         <Item key="home">
@@ -50,6 +50,11 @@ class NavBar extends Component {  // eslint-disable-line react/prefer-stateless-
 
 NavBar.propTypes = {
   onLogOut: PropTypes.func,
+  currentUser: PropTypes.object,
 };
 
-export default NavBar;
+const mapStateToProps = state => ({
+  currentUser: state.get('global').get('currentUser'),
+});
+
+export default connect(mapStateToProps)(NavBar);

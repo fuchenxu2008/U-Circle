@@ -24,12 +24,11 @@ import PeerPage from 'pages/PeerPage';
 import QuestionDetail from 'containers/QuestionDetail';
 import NotFoundPage from 'pages/NotFoundPage/Loadable';
 import { setCurrentUser, logOut } from './actions';
-import { getCurrentUser } from '../../authMiddleware';
 import './App.css';
 
 class MainApp extends Component { // eslint-disable-line react/prefer-stateless-function
   componentWillMount() {
-    if (getCurrentUser()) {
+    if (this.props.currentUser) {
       this.props.setCurrentUser();
     }
   }
@@ -63,10 +62,11 @@ MainApp.propTypes = {
   history: PropTypes.object,
   setCurrentUser: PropTypes.func,
   logOut: PropTypes.func,
+  currentUser: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser').toJS(),
+  currentUser: state.get('global').get('currentUser'),
 });
 
 const mapDispatchToProps = dispatch => ({

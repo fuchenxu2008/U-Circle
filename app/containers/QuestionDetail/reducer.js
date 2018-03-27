@@ -4,7 +4,7 @@
  *
  */
 
-import { fromJS } from 'immutable';
+// import { fromJS } from 'immutable';
 import {
   GET_QUESTION_FULFILLED,
   GET_QUESTION_REJECTED,
@@ -13,12 +13,12 @@ import {
   CLEAR_DETAIL_PAGE,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = null;
 
 function questionDetailReducer(state = initialState, action) {
   switch (action.type) {
     case GET_QUESTION_FULFILLED:
-      return fromJS(action.payload.data);
+      return action.payload.data;
     case GET_QUESTION_REJECTED:
       return state;
     case DELETE_QUESTION_FULFILLED:
@@ -27,7 +27,7 @@ function questionDetailReducer(state = initialState, action) {
       console.log(action.payload);
       return state;
     case CLEAR_DETAIL_PAGE:
-      return fromJS({});
+      return null;
     default:
       return state;
   }

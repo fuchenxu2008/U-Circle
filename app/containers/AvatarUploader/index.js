@@ -77,7 +77,7 @@ AvatarUploader.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser').toJS(),
+  currentUser: state.get('global').get('currentUser'),
 });
 
 function mapDispatchToProps(dispatch) {

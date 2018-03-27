@@ -5,19 +5,18 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 import AvatarUploader from 'containers/AvatarUploader';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
-import { getCurrentUser } from '../../authMiddleware';
 import './ProfilePage.css';
 
 export class ProfilePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const user = getCurrentUser();
+    const user = this.props.currentUser;
     if (!user) return <Redirect to="/auth" />;
     return (
       <div>
@@ -36,11 +35,11 @@ export class ProfilePage extends React.Component { // eslint-disable-line react/
 }
 
 ProfilePage.propTypes = {
-  // currentUser: PropTypes.object,
+  currentUser: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser').toJS(),
+  currentUser: state.get('global').get('currentUser'),
 });
 
 function mapDispatchToProps(dispatch) {
