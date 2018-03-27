@@ -1,21 +1,24 @@
 export function setCurrentUser(user) {
-  localStorage.setItem('currentUser', JSON.stringify(user));
+  try {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  } catch (err) {
+    console.log('Set user to localStorage failed');
+  }
 }
 
-export function getCurrentUser(wanted = 'full') {
-  const user = JSON.parse(localStorage.getItem('currentUser'));
-  return (user && wanted === 'id') ? user._id : user;
+export function getCurrentUser(field = null) {
+  try {
+    const user = JSON.parse(localStorage.getItem('currentUser')) || undefined;
+    return user && field ? user[field] : user;
+  } catch (err) {
+    return undefined;
+  }
 }
 
 export function clearCurrentUser() {
   localStorage.clear();
 }
 
-export function getAuthToken() {
-  const user = getCurrentUser();
-  return user ? user.token : null;
-}
-
 export function getAuthHeader() {
-  return { headers: { Authorization: `Bearer ${getAuthToken()}` } };
+  return { headers: { Authorization: `Bearer ${getCurrentUser('token')}` } };
 }

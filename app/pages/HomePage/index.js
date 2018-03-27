@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 
 import injectReducer from 'utils/injectReducer';
-import makeSelectHomePage from './selectors';
+// import makeSelectHomePage from './selectors';
 import reducer from './reducer';
 
 export class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -33,7 +33,7 @@ HomePage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  homepage: makeSelectHomePage(state),
+  homepage: state,
 });
 
 function mapDispatchToProps(dispatch) {

@@ -43,6 +43,8 @@ const ReactBoilerplate = {
         'cors',
         'multer',
         'uuid',
+        'nodemailer',
+        'mailgen',
       ],
 
       /**

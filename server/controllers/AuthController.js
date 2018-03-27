@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const sendMail = require('../middlewares/nodemailer');
 
 module.exports = {
   // Register new user
@@ -17,6 +18,7 @@ module.exports = {
       if (err) return res.status(400).json({ message: 'Unknown error occured!' });
       if (duplicateUser) return res.status(400).json({ message: 'User with that email already existed!' });
       // Salt and hash password
+      sendMail(email, nickname);
       const hashedPassword = bcrypt.hashSync(password, 8);
       User.create({
         email,

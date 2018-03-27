@@ -10,6 +10,6 @@ export function getPeerQuestions() {
 export function addQuestion(question) {
   return axios.post(`${ROOT_URL}/api/question`, {
     ...question,
-    questionerID: getCurrentUser('id'),
+    questionerID: getCurrentUser('_id'),
   }, getAuthHeader());
 }

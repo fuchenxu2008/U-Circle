@@ -11,7 +11,6 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 
 import injectReducer from 'utils/injectReducer';
-import makeSelectAlumniPage from './selectors';
 import reducer from './reducer';
 
 export class AlumniPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -33,7 +32,7 @@ AlumniPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  alumnipage: makeSelectAlumniPage(state),
+  alumnipage: state,
 });
 
 function mapDispatchToProps(dispatch) {

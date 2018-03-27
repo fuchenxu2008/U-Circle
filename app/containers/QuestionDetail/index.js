@@ -47,7 +47,7 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
           <Divider />
           <small>{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
           {
-            getCurrentUser('id') === questioner._id &&
+            getCurrentUser('_id') === questioner._id &&
             <Button
               onClick={this.handleDeleteQuestion}
               type="danger"
