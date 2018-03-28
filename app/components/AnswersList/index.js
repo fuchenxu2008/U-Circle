@@ -11,12 +11,13 @@ import Answer from 'components/Answer';
 
 class AnswersList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { answers, onDeleteAnswer } = this.props;
     return (
       <div>
         <ul style={{ paddingLeft: '10px', listStyle: 'none', marginTop: '20px' }}>
           {
-            this.props.answers.map(answer => (
-              <Answer key={answer._id} answer={answer} />
+            answers.map(answer => (
+              <Answer key={answer._id} answer={answer} onDeleteAnswer={onDeleteAnswer} />
             ))
           }
         </ul>
@@ -27,6 +28,7 @@ class AnswersList extends React.Component { // eslint-disable-line react/prefer-
 
 AnswersList.propTypes = {
   answers: PropTypes.array,
+  onDeleteAnswer: PropTypes.func,
 };
 
 export default AnswersList;

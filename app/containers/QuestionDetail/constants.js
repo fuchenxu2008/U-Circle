@@ -20,3 +20,8 @@ export const ANSWER_QUESTION = 'app/QuestionDetail/ANSWER_QUESTION';
 export const ANSWER_QUESTION_PENDING = 'app/QuestionDetail/ANSWER_QUESTION_PENDING';
 export const ANSWER_QUESTION_FULFILLED = 'app/QuestionDetail/ANSWER_QUESTION_FULFILLED';
 export const ANSWER_QUESTION_REJECTED = 'app/QuestionDetail/ANSWER_QUESTION_REJECTED';
+
+export const DELETE_ANSWER = 'app/QuestionDetail/DELETE_ANSWER';
+export const DELETE_ANSWER_PENDING = 'app/QuestionDetail/DELETE_ANSWER_PENDING';
+export const DELETE_ANSWER_FULFILLED = 'app/QuestionDetail/DELETE_ANSWER_FULFILLED';
+export const DELETE_ANSWER_REJECTED = 'app/QuestionDetail/DELETE_ANSWER_REJECTED';

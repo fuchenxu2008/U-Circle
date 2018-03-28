@@ -17,3 +17,7 @@ export function deleteQuestion(id) {
 export function answerQuestion(fields) {
   return axios.post(`${ROOT_URL}/api/question/${fields.questionId}`, fields, getAuthHeader());
 }
+
+export function deleteAnswer(id) {
+  return axios.delete(`${ROOT_URL}/api/answer/${id}`, getAuthHeader());
+}

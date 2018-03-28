@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon, Input, Button, Modal } from 'antd';
-
+import ImgUploader from 'containers/ImgUploader';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
@@ -56,6 +56,7 @@ export class QuestionForm extends React.Component { // eslint-disable-line react
                 <TextArea prefix={<Icon type="form" style={{ color: 'rgba(0,0,0,.25)' }} />} rows={4} placeholder="Question Description" />
               )}
             </FormItem>
+            <ImgUploader />
           </Form>
         </Modal>
       </div>

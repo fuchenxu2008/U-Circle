@@ -5,6 +5,8 @@
  */
 
 // import { fromJS } from 'immutable';
+// import { mapKeys, omit } from 'lodash';
+
 import {
   GET_QUESTION_FULFILLED,
   GET_QUESTION_REJECTED,
@@ -12,6 +14,7 @@ import {
   DELETE_QUESTION_REJECTED,
   CLEAR_DETAIL_PAGE,
   ANSWER_QUESTION_FULFILLED,
+  DELETE_ANSWER_FULFILLED,
 } from './constants';
 
 const initialState = null;
@@ -30,11 +33,14 @@ function questionDetailReducer(state = initialState, action) {
     case CLEAR_DETAIL_PAGE:
       return null;
     case ANSWER_QUESTION_FULFILLED:
-      console.log(state);
-      console.log(action.payload.data.question);
       return {
         ...state,
         ...action.payload.data.question,
+      };
+    case DELETE_ANSWER_FULFILLED:
+      return {
+        ...state,
+        answer: state.answer.filter(a => a._id !== action.payload.data.answer._id),
       };
     default:
       return state;

@@ -15,7 +15,7 @@ import injectReducer from 'utils/injectReducer';
 import AnswerInput from 'components/AnswerInput';
 import AnswersList from 'components/AnswersList';
 import reducer from './reducer';
-import { getQuestion, deleteQuestion, clearDetailPage, answerQuestion } from './actions';
+import { getQuestion, deleteQuestion, clearDetailPage, answerQuestion, deleteAnswer } from './actions';
 import './QuestionDetail.css';
 
 export class QuestionDetail extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -41,6 +41,10 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
       answerer: currentUser._id,
       questionId: this.props.question._id,
     });
+  }
+
+  handleDeleteAnswer = id => {
+    this.props.deleteAnswer(id);
   }
 
   render() {
@@ -75,7 +79,7 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
             </Button>
           }
         </div>
-        <AnswersList answers={answer} />
+        <AnswersList answers={answer} onDeleteAnswer={this.handleDeleteAnswer} />
         <AnswerInput position="bottom" onAnswer={this.handleSubmitAnswer} />
       </div>
     );
@@ -91,6 +95,7 @@ QuestionDetail.propTypes = {
   question: PropTypes.object,
   history: PropTypes.object,
   currentUser: PropTypes.object,
+  deleteAnswer: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -104,6 +109,7 @@ function mapDispatchToProps(dispatch) {
     deleteQuestion: id => dispatch(deleteQuestion(id)),
     clearDetailPage: () => dispatch(clearDetailPage()),
     answerQuestion: fields => dispatch(answerQuestion(fields)),
+    deleteAnswer: id => dispatch(deleteAnswer(id)),
   };
 }
 
