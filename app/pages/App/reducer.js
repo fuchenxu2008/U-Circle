@@ -1,4 +1,4 @@
-// import { fromJS } from 'immutable';
+import { Iterable } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
 import { UPLOAD_AVATAR_FULFILLED } from 'containers/AvatarUploader/constants';
@@ -17,11 +17,14 @@ function currentUser(state = initialUserState, action) {
       return state;
     case LOGIN_FULFILLED:
       return action.payload.data;
-    case SET_USER_FULFILLED:
+    case SET_USER_FULFILLED: {
+      // App reload will initiate the state with `fromJS(loadState())`
+      const oldState = Iterable.isIterable(state) ? state.toJS() : state;
       return {
-        ...state,
+        ...oldState,
         ...action.payload.data,
       };
+    }
     case LOG_OUT:
       return null;
     case UPLOAD_AVATAR_FULFILLED:

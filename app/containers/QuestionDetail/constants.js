@@ -15,3 +15,8 @@ export const DELETE_QUESTION_FULFILLED = 'app/QuestionDetail/DELETE_QUESTION_FUL
 export const DELETE_QUESTION_REJECTED = 'app/QuestionDetail/DELETE_QUESTION_REJECTED';
 
 export const CLEAR_DETAIL_PAGE = 'app/QuestionDetail/CLEAR_DETAIL_PAGE';
+
+export const ANSWER_QUESTION = 'app/QuestionDetail/ANSWER_QUESTION';
+export const ANSWER_QUESTION_PENDING = 'app/QuestionDetail/ANSWER_QUESTION_PENDING';
+export const ANSWER_QUESTION_FULFILLED = 'app/QuestionDetail/ANSWER_QUESTION_FULFILLED';
+export const ANSWER_QUESTION_REJECTED = 'app/QuestionDetail/ANSWER_QUESTION_REJECTED';

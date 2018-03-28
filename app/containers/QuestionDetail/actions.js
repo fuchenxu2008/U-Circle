@@ -8,6 +8,7 @@ import {
   GET_QUESTION,
   DELETE_QUESTION,
   CLEAR_DETAIL_PAGE,
+  ANSWER_QUESTION,
 } from './constants';
 import * as api from './api';
 
@@ -28,5 +29,12 @@ export function deleteQuestion(id) {
 export function clearDetailPage() {
   return {
     type: CLEAR_DETAIL_PAGE,
+  };
+}
+
+export function answerQuestion(fields) {
+  return {
+    type: ANSWER_QUESTION,
+    payload: api.answerQuestion(fields),
   };
 }

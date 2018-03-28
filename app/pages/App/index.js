@@ -40,7 +40,7 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
 
   render() {
     return (
-      <div>
+      <div className="page">
         <NavBar onLogOut={this.onLogOut} />
         <div className="container">
           <Switch>

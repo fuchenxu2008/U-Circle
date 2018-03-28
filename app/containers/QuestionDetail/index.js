@@ -9,11 +9,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import moment from 'moment';
-import { Button, Icon, Divider } from 'antd';
+import { Button, Icon, Divider, message, Avatar } from 'antd';
 import 'animate.css';
 import injectReducer from 'utils/injectReducer';
+import AnswerInput from 'components/AnswerInput';
+import AnswersList from 'components/AnswersList';
 import reducer from './reducer';
-import { getQuestion, deleteQuestion, clearDetailPage } from './actions';
+import { getQuestion, deleteQuestion, clearDetailPage, answerQuestion } from './actions';
 import './QuestionDetail.css';
 
 export class QuestionDetail extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -31,16 +33,29 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
     this.props.history.goBack();
   }
 
+  handleSubmitAnswer = fields => {
+    const { currentUser } = this.props;
+    if (!currentUser) return message.info('Log in first');
+    return this.props.answerQuestion({
+      content: fields.content,
+      answerer: currentUser._id,
+      questionId: this.props.question._id,
+    });
+  }
+
   render() {
-    if (!this.props.question) {
+    const { question, currentUser } = this.props;
+    if (!question) {
       return <h3>Loading...</h3>;
     }
-    const { title, body, created_at, questioner } = this.props.question;
-    const { currentUser } = this.props;
+    const { title, body, created_at, questioner, answer } = question;
     const isOwner = currentUser ? currentUser._id === questioner._id : false;
     return (
       <div className="animated fadeInRight">
-        <div className="detailed-userinfo"><b>{questioner.nickname}</b></div>
+        <div className="detailed-userinfo">
+          <Avatar src={questioner.avatar} />
+          <b>{questioner.nickname}</b>
+        </div>
         <div>
           <h2><b>{title}</b></h2>
           <Divider />
@@ -60,6 +75,8 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
             </Button>
           }
         </div>
+        <AnswersList answers={answer} />
+        <AnswerInput position="bottom" onAnswer={this.handleSubmitAnswer} />
       </div>
     );
   }
@@ -70,6 +87,7 @@ QuestionDetail.propTypes = {
   getQuestion: PropTypes.func,
   deleteQuestion: PropTypes.func,
   clearDetailPage: PropTypes.func,
+  answerQuestion: PropTypes.func,
   question: PropTypes.object,
   history: PropTypes.object,
   currentUser: PropTypes.object,
@@ -85,6 +103,7 @@ function mapDispatchToProps(dispatch) {
     getQuestion: id => dispatch(getQuestion(id)),
     deleteQuestion: id => dispatch(deleteQuestion(id)),
     clearDetailPage: () => dispatch(clearDetailPage()),
+    answerQuestion: fields => dispatch(answerQuestion(fields)),
   };
 }
 

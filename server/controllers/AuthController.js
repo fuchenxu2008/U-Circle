@@ -28,7 +28,7 @@ module.exports = {
       },
         (err2, user) => {
           if (err2) return res.status(400).json({ message: 'Unknown error occured!' });
-          return res.send(user);
+          return res.json(user);
         }
       );
     });

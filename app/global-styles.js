@@ -20,9 +20,8 @@ injectGlobal`
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
-  #app {
-    min-height: 100%;
-    min-width: 100%;
+  html, body, #app, #app>div {
+    height: 100%;
   }
 
   body.fontLoaded {

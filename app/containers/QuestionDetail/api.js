@@ -13,3 +13,7 @@ export function deleteQuestion(id) {
     data: { id },
   });
 }
+
+export function answerQuestion(fields) {
+  return axios.post(`${ROOT_URL}/api/question/${fields.questionId}`, fields, getAuthHeader());
+}

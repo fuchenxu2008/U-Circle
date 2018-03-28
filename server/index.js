@@ -42,9 +42,11 @@ mongoose.connect(MONGO_URL, err => {
 const authRoutes = require('./routes/AuthRoutes');
 const userRoutes = require('./routes/UserRoutes');
 const questionRoutes = require('./routes/QuestionRoutes');
+const answerRoutes = require('./routes/AnswerRoutes');
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/question', questionRoutes);
+app.use('/api/answer', answerRoutes);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
