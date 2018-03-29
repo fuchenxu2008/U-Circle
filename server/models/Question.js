@@ -6,6 +6,7 @@ const QuestionSchema = Schema({
   body: String,
   created_at: Date,
   questioner: { type: Schema.Types.ObjectId, ref: 'User' },
+  images: Array,
   answer: [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
   type: String,
 });

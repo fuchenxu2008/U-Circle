@@ -13,7 +13,7 @@ import { withRouter } from 'react-router-dom';
 import './Question.css';
 
 function Question(props) {
-  const { title, created_at, questioner, _id } = props.question;
+  const { title, created_at, questioner, _id, images } = props.question;
   return (
     <Row className="question">
       <Row className="question-info">
@@ -21,9 +21,18 @@ function Question(props) {
         <text className="question-userinfo">{questioner.nickname}</text>
         <small className="question-time">{moment(created_at).fromNow()}</small>
       </Row>
-      <Row className="question-content" onClick={() => props.history.push(`/question/${_id}`)}>
-        <b className="question-title">{title}</b>
-      </Row>
+      <div className="question-content" onClick={() => props.history.push(`/question/${_id}`)}>
+        <Row>
+          <b className="question-title">{title}</b>
+        </Row>
+        <div className="question-content-img">
+          {
+            images.map(img => (
+              <img key={img} src={img} alt="" style={{ width: '30%' }} />
+            ))
+          }
+        </div>
+      </div>
       <Row className="question-action">
         <Button
           icon="bulb"

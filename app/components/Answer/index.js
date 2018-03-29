@@ -27,16 +27,16 @@ function Answer(props) {
         <p>{content}</p>
         <small>{moment(created_at).fromNow()}</small>
         {
-            isOwner &&
-            <Button
-              onClick={handleDeleteAnswer}
-              type="danger"
-              shape="circle"
-              style={{ float: 'right' }}
-            >
-              <Icon type="delete" />
-            </Button>
-          }
+          isOwner &&
+          <Button
+            onClick={handleDeleteAnswer}
+            type="danger"
+            shape="circle"
+            style={{ float: 'right' }}
+          >
+            <Icon type="delete" />
+          </Button>
+        }
       </li>
     </div>
   );

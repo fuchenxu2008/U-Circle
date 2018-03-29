@@ -1,3 +1,8 @@
 .detailed-userinfo {
     margin-bottom: 20px;
 }
+
+.question-detail-img {
+    width: 100%;
+    margin: 5px 0 5px 0;
+}

@@ -8,8 +8,14 @@ export function getPeerQuestions() {
 }
 
 export function addQuestion(question) {
-  return axios.post(`${ROOT_URL}/api/question`, {
-    ...question,
-    questionerID: getCurrentUser('_id'),
-  }, getAuthHeader());
+  const formData = new FormData();
+  formData.append('title', question.title);
+  formData.append('body', question.body);
+  formData.append('questioner', getCurrentUser('_id'));
+  if (question.postImg) {
+    question.postImg.forEach(img => {
+      formData.append('postImg', img);
+    });
+  }
+  return axios.post(`${ROOT_URL}/api/question`, formData, getAuthHeader());
 }

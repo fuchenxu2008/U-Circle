@@ -13,11 +13,18 @@
 }
 
 .question-content {
+  padding: 10px 20px 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.question-content-img {
+  margin: 10px 0 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgb(172, 172, 172);
-  padding: 10px 20px 10px 20px;
 }
 
 .question-userinfo {
@@ -34,6 +41,7 @@
 
 .question-action {
   display: flex;
+  border-top: 1px solid rgb(172, 172, 172);
   justify-content: space-between;
 }
 

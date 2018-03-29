@@ -15,7 +15,7 @@ module.exports = {
     if (!email || !password) return res.status(400).json({ message: 'Incomplete information!' });
     // Check if there are duplicated user emails
     User.findOne({ email: req.body.email }, (err, duplicateUser) => {
-      if (err) return res.status(400).json({ message: 'Unknown error occured!' });
+      if (err) return res.status(400).send(err);
       if (duplicateUser) return res.status(400).json({ message: 'User with that email already existed!' });
       // Salt and hash password
       sendMail(email, nickname);
@@ -27,7 +27,7 @@ module.exports = {
         role,
       },
         (err2, user) => {
-          if (err2) return res.status(400).json({ message: 'Unknown error occured!' });
+          if (err2) return res.status(400).send(err2);
           return res.json(user);
         }
       );
@@ -36,7 +36,7 @@ module.exports = {
 
   login: (req, res) => {
     passport.authenticate('local', { session: false }, (err, user /* , info */) => {
-      if (err) return res.status(400).json({ message: 'Unknown error occured. (Error code: 001)' });
+      if (err) return res.status(400).send(err);
       if (!user) return res.status(404).json({ message: 'Invalid Credentials!' });
       req.login(user, { session: false }, err2 => {
         if (err2) return res.status(400).send(err2);

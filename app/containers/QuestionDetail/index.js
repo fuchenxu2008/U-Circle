@@ -52,7 +52,7 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
     if (!question) {
       return <h3>Loading...</h3>;
     }
-    const { title, body, created_at, questioner, answer } = question;
+    const { title, body, created_at, questioner, answer, images } = question;
     const isOwner = currentUser ? currentUser._id === questioner._id : false;
     return (
       <div className="animated fadeInRight">
@@ -64,6 +64,13 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
           <h2><b>{title}</b></h2>
           <Divider />
           <p>{body}</p>
+          <div>
+            {
+              images.map(img => (
+                <img key={img} src={img} alt="" className="question-detail-img" />
+              ))
+            }
+          </div>
           <Divider />
           <small>{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
           {

@@ -8,7 +8,7 @@ const avatarStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
-    cb(null, `${uuidv4()}${ext}`);
+    cb(null, `avatar-${uuidv4()}${ext}`);
   },
 });
 
@@ -18,7 +18,7 @@ const postImgStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
-    cb(null, `${uuidv4()}${ext}`);
+    cb(null, `post-${uuidv4()}${ext}`);
   },
 });
 
