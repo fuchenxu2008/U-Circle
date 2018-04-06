@@ -9,7 +9,7 @@ import { routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunkMiddleware from 'redux-thunk';
 import createReducer from './reducers';
-import { saveState, loadState } from './localStorage';
+import { saveState, loadState } from './utils/localStorage';
 
 export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares

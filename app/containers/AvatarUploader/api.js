@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { ROOT_URL } from '../../../shared/config';
+import { ROOT_URL } from '../../config';
 import { getAuthHeader } from '../../authMiddleware';
 
 export function uploadAvatar(avatar) {

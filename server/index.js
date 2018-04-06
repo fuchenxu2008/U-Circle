@@ -3,7 +3,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const chalk = require('chalk');
@@ -13,10 +12,9 @@ const argv = require('./argv');
 const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
 // const passport = require('./middlewares/passport');
-const { MONGO_URL } = require('../shared/config');
+const { MONGO_URL } = require('./config');
+const setRouter = require('./routes');
 
-const isDev = process.env.NODE_ENV !== 'production';
-const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngrok') : false;
 const resolve = require('path').resolve;
 const app = express();
 
@@ -24,7 +22,6 @@ global.__root = __dirname;
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 // To prevent errors from Cross Origin Resource Sharing, we will set our headers to allow CORS with middleware like so:
 app.use(cors());
@@ -32,21 +29,14 @@ app.use(cors());
 /* eslint-disable no-console */
 mongoose.connect(MONGO_URL, err => {
   if (err) {
-    console.log(chalk.red('[MongoDB] NOT connected.\n'));
+    console.error(chalk.red('[MongoDB] NOT connected.\n'));
     throw err;
   }
   console.log(chalk.green('[MongoDB] connected.\n'));
 });
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
-const authRoutes = require('./routes/AuthRoutes');
-const userRoutes = require('./routes/UserRoutes');
-const questionRoutes = require('./routes/QuestionRoutes');
-const answerRoutes = require('./routes/AnswerRoutes');
-app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes);
-app.use('/api/question', questionRoutes);
-app.use('/api/answer', answerRoutes);
+setRouter(app);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
@@ -64,16 +54,5 @@ app.listen(port, host, err => {
   if (err) {
     return logger.error(err.message);
   }
-
-  // Connect to ngrok in dev mode
-  if (ngrok) {
-    ngrok.connect(port, (innerErr, url) => {
-      if (innerErr) {
-        return logger.error(innerErr);
-      }
-      logger.appStarted(port, prettyHost, url);
-    });
-  } else {
-    logger.appStarted(port, prettyHost);
-  }
+  logger.appStarted(port, prettyHost);
 });

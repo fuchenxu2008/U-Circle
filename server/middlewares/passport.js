@@ -8,36 +8,32 @@ const ExtractJWT = passportJWT.ExtractJwt;
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const config = require('../config');
 
-passport.use(
-  new LocalStrategy(
-    {
-      usernameField: 'email',
-      passwordField: 'password',
-    },
-    (email, password, cb) => {
-      User.findOne({ email })
-        .then(user => {
-          if (!user) return cb(null, false, { message: 'No user registered with this email!' });
-          if (!bcrypt.compareSync(password, user.password)) {
-            return cb(null, false, { message: 'Invalid credentials!' });
-          }
-          return cb(null, user, {
-            message: 'Logged In Successfully',
-          });
-        })
-        .catch(err => cb(err));
-    }
-  )
+passport.use(new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+},
+  (email, password, cb) => {
+    User.findOne({ email })
+      .then(user => {
+        if (!user) return cb(null, false);
+        if (!bcrypt.compareSync(password, user.password)) {
+          return cb(null, false);
+        }
+        return cb(null, user);
+      })
+      .catch(err => cb(err));
+  })
 );
 
 passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'secret',
+  secretOrKey: config.secret,
 },
   (jwtPayload, cb) => (
-    User.findById(jwtPayload.user._id)
-      .then(user => (cb(null, user)))
+    User.findById(jwtPayload.sub)
+      .then(user => cb(null, user))
       .catch(err => cb(err))
 )));
 

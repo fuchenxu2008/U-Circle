@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { ROOT_URL } from '../../../shared/config';
+import { ROOT_URL } from '../../config';
 import { getAuthHeader, getCurrentUser } from '../../authMiddleware';
 
 export function getPeerQuestions() {
