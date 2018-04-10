@@ -106,12 +106,12 @@ export class NormalLoginForm extends React.Component { // eslint-disable-line re
               <Button type="primary" htmlType="submit" className="login-form-button loginButtonStyle">
                 {formMode === 'login' ? 'Log In' : 'Sign Up'}
               </Button>
-              Or <text onClick={this.handleChangeFormMode} className="linkStyle">
+              Or <div onClick={this.handleChangeFormMode} className="linkStyle">
                 {formMode === 'login'
                   ? 'register now!'
                   : 'Login here'
                 }
-              </text>
+              </div>
             </FormItem>
           </Form>
         </Spin>

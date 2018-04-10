@@ -18,7 +18,7 @@ function Question(props) {
     <Row className="question">
       <Row className="question-info">
         <Avatar className="question-user-avatar" src={questioner.avatar} />
-        <text className="question-userinfo">{questioner.nickname}</text>
+        <div className="question-userinfo">{questioner.nickname}</div>
         <small className="question-time">{moment(created_at).fromNow()}</small>
       </Row>
       <div className="question-content" onClick={() => props.history.push(`/question/${_id}`)}>

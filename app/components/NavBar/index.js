@@ -34,7 +34,7 @@ class NavBar extends Component {  // eslint-disable-line react/prefer-stateless-
                 <Link to="/me">Profile</Link>
               </Item>
               <Item key="logout">
-                <text onClick={this.props.onLogOut}>Log Out</text>
+                <div onClick={this.props.onLogOut}>Log Out</div>
               </Item>
             </SubMenu>
           ) : (

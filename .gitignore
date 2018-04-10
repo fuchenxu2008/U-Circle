@@ -9,3 +9,7 @@ yarn-error.log
 .DS_Store
 npm-debug.log
 .idea
+
+# User assets
+server/storage/avatar/*
+server/storage/post-img/*
