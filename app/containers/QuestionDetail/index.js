@@ -55,7 +55,7 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
     const { title, body, created_at, questioner, answer, images } = question;
     const isOwner = currentUser ? currentUser._id === questioner._id : false;
     return (
-      <div className="animated fadeInRight">
+      <div className="question-detailed">
         <div className="detailed-userinfo">
           <Avatar src={questioner.avatar} />
           <b>{questioner.nickname}</b>

@@ -4,16 +4,17 @@ import { injectGlobal } from 'styled-components';
 injectGlobal`
   html {
     width: 100%;
-    height: 100%;
+
     margin: 0;
     padding: 0;
   }
 
   body {
     width: 100%;
-    height: 100%;
+
     padding: 0;
     background-color: #fafafa;
+    color: rgb(40, 40, 40);
   }
 
   body {
@@ -21,16 +22,11 @@ injectGlobal`
   }
 
   html, body, #app, #app>div {
-    height: 100%;
+
   }
 
   body.fontLoaded {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
-  p,
-  label {
-    font-family: Georgia, Times, 'Times New Roman', serif;
-    line-height: 1.5em;
-  }
 `;

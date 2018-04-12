@@ -7,8 +7,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Input, Form } from 'antd';
+import './AnswerInput.css';
 // import styled from 'styled-components';
 const FormItem = Form.Item;
+
 
 class AnswerInput extends React.Component { // eslint-disable-line react/prefer-stateless-function
   handleSubmit = e => {
@@ -23,14 +25,13 @@ class AnswerInput extends React.Component { // eslint-disable-line react/prefer-
   };
 
   render() {
-    const { inputBoxStyle } = style;
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} className="comment-box">
         <FormItem>
           {getFieldDecorator('content', {
-            rules: [{ required: true, message: 'Please input your answer!' }],
-          })(<Input placeholder="Answer here" style={inputBoxStyle} />)}
+            rules: [{ required: true }],
+          })(<Input placeholder="Answer here" />)}
         </FormItem>
       </Form>
     );
@@ -40,14 +41,6 @@ class AnswerInput extends React.Component { // eslint-disable-line react/prefer-
 AnswerInput.propTypes = {
   form: PropTypes.object,
   onAnswer: PropTypes.func,
-};
-
-const style = {
-  inputBoxStyle: {
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
-  },
 };
 
 export default Form.create()(AnswerInput);
