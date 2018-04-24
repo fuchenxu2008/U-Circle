@@ -25,7 +25,7 @@ module.exports = {
       // sendMail(email, nickname);
       // Salt and hash password
       const hashedPassword = bcrypt.hashSync(password, 8);
-      User.create({ email, password: hashedPassword, nickname, role }, (err2, user) => {
+      User.create({ email, password: hashedPassword, nickname, role, credit: 100 }, (err2, user) => {
         if (err2) return res.status(400).send(err2);
         const token = signToken(user);
         return res.json({ ...user._doc, token });
@@ -33,10 +33,16 @@ module.exports = {
     });
   },
 
-  login: (req, res) => {
+  login: async (req, res) => {
     // Already authed
-    const { user } = req;
-    const token = signToken(user);
-    return res.json({ ...user._doc, token });
+    let { user } = req;
+    // Initialize user credit on login if credit is not set
+    if (!user.credit) {
+      await User.findByIdAndUpdate(user.id, { credit: 200 }, { new: true }, (err, updatedUser) => {
+        if (err) return res.status(400).send(err);
+        user = Object.assign({}, updatedUser);
+      });
+    }
+    return res.json({ ...user._doc, token: signToken(user) });
   },
 };

@@ -4,6 +4,7 @@ const moment = require('moment');
 const path = require('path');
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
+const User = require('../models/User');
 const { uploadPostImg } = require('../middlewares/multer');
 
 module.exports = {
@@ -31,24 +32,28 @@ module.exports = {
 
   addQuestion: (req, res) => {
     uploadPostImg(req, res, err => {
-      console.log(req.files);
       if (err) return res.status(400).send(err);
       const { title, body, questioner } = req.body;
       if (!title || !body || !questioner) return res.json({ message: 'Incomplete question!' });
-      const imgList = req.files.map(img => `/api/question/img/${img.filename}`);
-      Question.create({
-        title,
-        body,
-        questioner,
-        images: imgList,
-        created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
-      }, (err1, newQuestion) => {
+      User.findById(questioner, (err1, questionerUser) => {
         if (err1) return res.status(400).send(err1);
-        Question.findById(newQuestion._id).populate('questioner', [
-          'nickname', 'avatar', 'role',
-        ]).exec((err2, question) => {
-          if (err2 || !question) return res.status(400).send(err2);
-          return res.json({ question, message: 'Post created!' });
+        /* eslint-disable no-param-reassign */
+        questionerUser.credit -= 10;
+        questionerUser.save(err2 => {
+          if (err2) return res.status(400).send(err2);
+          // Add question
+          const imgList = req.files.map(img => `/api/question/img/${img.filename}`);
+          Question.create({ title, body, questioner, images: imgList, created_at: moment().format('YYYY-MM-DD HH:mm:ss') },
+            (err3, newQuestion) => {
+              if (err3) return res.status(400).send(err3);
+              Question.findById(newQuestion._id)
+                .populate('questioner', ['nickname', 'avatar', 'role'])
+                .exec((err4, question) => {
+                  if (err4 || !question) return res.status(400).send(err4);
+                  return res.json({ question, message: 'Post created!' });
+                });
+            }
+          );
         });
       });
     });

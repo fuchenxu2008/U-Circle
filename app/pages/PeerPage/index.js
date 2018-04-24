@@ -27,7 +27,13 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
   }
 
   showForm = () => {
-    this.props.currentUser ? this.setState({ showAddForm: true }) : this.setState({ showHint: true });
+    if (this.props.currentUser) {
+      this.props.currentUser.credit >= 10
+      ? this.setState({ showAddForm: true })
+      : this.setState({ showHint: true });
+    } else {
+      this.setState({ showHint: true });
+    }
   }
   hideForm = () => this.setState({ showAddForm: false, showHint: false });
 

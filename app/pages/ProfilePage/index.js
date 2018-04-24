@@ -28,6 +28,7 @@ export class ProfilePage extends React.Component { // eslint-disable-line react/
           <li>Nickname: {user.nickname}</li>
           <li>Email: {user.email}</li>
           <li>Role: {user.role}</li>
+          <li><b>Credit: {user.credit}</b></li>
         </ul>
       </div>
     );
