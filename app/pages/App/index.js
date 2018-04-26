@@ -42,7 +42,7 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
     return (
       <div className="page">
         <NavBar onLogOut={this.onLogOut} />
-        <div className="container">
+        <div className="body-container">
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/auth" component={LoginPage} />

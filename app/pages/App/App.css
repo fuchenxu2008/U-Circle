@@ -1,12 +1,19 @@
+@import '../../assets/fonts/fonts.css';
+
+/* * {
+    font-family: 'GothamProMedium';
+} */
 .page {
     display: flex;
     flex-direction: column;
 }
 
-.container {
+.body-container {
     flex: 1;
     display: flex;
+    flex-direction: column;
     padding: 30px 15px 30px 15px;
+    /* padding-top: 30px; */
     margin-bottom: 30px;
 }
 

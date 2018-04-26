@@ -13,7 +13,7 @@ injectGlobal`
     width: 100%;
 
     padding: 0;
-    background-color: #fafafa;
+    background-color: white;
     color: rgb(40, 40, 40);
   }
 
