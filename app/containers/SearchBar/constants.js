@@ -4,6 +4,9 @@
  *
  */
 
+export const BEGIN_SEARCH = 'app/SearchBar/BEGIN_SEARCH';
+export const END_SEARCH = 'app/SearchBar/END_SEARCH';
+
 export const SEARCH_TYPE_CHANGE = 'app/SearchBar/SEARCH_TYPE_CHANGE';
 export const SEARCH_MAJOR_CHANGE = 'app/SearchBar/SEARCH_MAJOR_CHANGE';
 export const SEARCH_KEYWORD_CHANGE = 'app/SearchBar/SEARCH_KEYWORD_CHANGE';

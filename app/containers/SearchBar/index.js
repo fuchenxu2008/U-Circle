@@ -13,6 +13,8 @@ import { Input } from 'antd';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import {
+  beginSearch,
+  endSearch,
   searchTypeChange,
   searchMajorChange,
   searchKeywordChange,
@@ -34,8 +36,15 @@ export class SearchBar extends React.Component { // eslint-disable-line react/pr
 
   async onKeywordChange(keyword) {
     await this.props.onSearchKeywordChange(keyword);
-    console.log(this.props.searchPhrase);
-    this.search();
+    if (keyword !== '') {
+      if (this.props.searching === false) {
+        this.props.beginSearch();
+      }
+      console.log(this.props.searchPhrase);
+      this.search();
+    } else {
+      this.props.endSearch();
+    }
   }
 
   search = () => {
@@ -65,20 +74,26 @@ export class SearchBar extends React.Component { // eslint-disable-line react/pr
 }
 
 SearchBar.propTypes = {
+  searching: PropTypes.bool,
   searchType: PropTypes.string,
   searchQuestion: PropTypes.func,
   onSearchKeywordChange: PropTypes.func,
   onSearchTypeChange: PropTypes.func,
   searchPhrase: PropTypes.object,
+  beginSearch: PropTypes.func,
+  endSearch: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
+  searching: state.get('searchBar').get('searching'),
   searchPhrase: state.get('searchBar').get('searchPhrase').toJS(),
   location: state.get('route').get('location').get('pathname'),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
+    beginSearch: () => dispatch(beginSearch()),
+    endSearch: () => dispatch(endSearch()),
     searchQuestion: searchPhrase => dispatch(searchQuestion(searchPhrase)),
     onSearchTypeChange: type => dispatch(searchTypeChange(type)),
     onSearchMajorChange: major => dispatch(searchMajorChange(major)),

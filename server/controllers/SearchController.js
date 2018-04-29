@@ -6,7 +6,7 @@ module.exports = {
     Question.find({
       type,
       // major,
-      body: new RegExp(keyword, 'i'),
+      $or: [{ body: new RegExp(keyword, 'i') }, { title: new RegExp(keyword, 'i') }],
     }, (err, questions) => {
       if (err) return res.send(err);
       return res.send(questions);

@@ -26,6 +26,7 @@
   display: flex;
   justify-content: space-between;
   position: fixed;
+  width: 100%;
 }
 
 .mobile-navbar-collapse {

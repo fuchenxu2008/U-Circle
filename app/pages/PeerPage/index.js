@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { Row } from 'antd';
 import SearchBar from 'containers/SearchBar';
+import SearchResultCard from 'containers/SearchResultCard';
 import QuestionsList from 'components/QuestionsList';
 import AddButton from 'components/AddButton';
 import LoginHint from 'components/LoginHint';
@@ -46,6 +47,7 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
           <meta name="description" content="Description of PeerPage" />
         </Helmet>
         <SearchBar searchType="academic" />
+        <SearchResultCard key="key" />
         <br />
         <Row className="title-row">
           <h2 style={{ flex: 1 }}>PeerPage</h2>

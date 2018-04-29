@@ -5,6 +5,8 @@
  */
 
 import {
+  BEGIN_SEARCH,
+  END_SEARCH,
   SEARCH_TYPE_CHANGE,
   SEARCH_MAJOR_CHANGE,
   SEARCH_KEYWORD_CHANGE,
@@ -12,6 +14,17 @@ import {
 } from './constants';
 import * as api from './api';
 
+export function beginSearch() {
+  return {
+    type: BEGIN_SEARCH,
+  };
+}
+
+export function endSearch() {
+  return {
+    type: END_SEARCH,
+  };
+}
 
 export function searchTypeChange(searchType) {
   return {
