@@ -41,7 +41,7 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
   render() {
     return (
       <div className="page">
-        <NavBar onLogOut={this.onLogOut} />
+        <NavBar currentUser={this.props.currentUser} onLogOut={this.onLogOut} />
         <div className="body-container">
           <Switch>
             <Route exact path="/" component={HomePage} />

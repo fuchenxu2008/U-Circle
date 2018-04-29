@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { Row } from 'antd';
+import SearchBar from 'containers/SearchBar';
 import QuestionsList from 'components/QuestionsList';
 import AddButton from 'components/AddButton';
 import LoginHint from 'components/LoginHint';
@@ -28,9 +29,7 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
 
   showForm = () => {
     if (this.props.currentUser) {
-      this.props.currentUser.credit >= 10
-      ? this.setState({ showAddForm: true })
-      : this.setState({ showHint: true });
+      this.setState({ showAddForm: true });
     } else {
       this.setState({ showHint: true });
     }
@@ -46,6 +45,8 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
           <title>PeerPage</title>
           <meta name="description" content="Description of PeerPage" />
         </Helmet>
+        <SearchBar searchType="academic" />
+        <br />
         <Row className="title-row">
           <h2 style={{ flex: 1 }}>PeerPage</h2>
           <AddButton handleClick={this.showForm} />
@@ -60,6 +61,7 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
           onCancel={this.hideForm}
           onOk={this.hideForm}
           onAddQuestion={this.handleAddQuestion}
+          type="academic"
         />
         <QuestionsList
           type="peer"

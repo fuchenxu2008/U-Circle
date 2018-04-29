@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Avatar, Button, Icon } from 'antd';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import './Answer.css';
 
 function Answer(props) {
   const { _id, content, answerer, created_at } = props.answer;
@@ -20,25 +20,25 @@ function Answer(props) {
   };
 
   return (
-    <div style={{ marginBottom: '10px' }}>
-      <li>
-        <Avatar src={answerer.avatar} />
-        <small>{answerer.nickname}</small>
-        <p>{content}</p>
-        <small>{moment(created_at).fromNow()}</small>
-        {
-          isOwner &&
-          <Button
-            onClick={handleDeleteAnswer}
-            type="danger"
-            shape="circle"
-            style={{ float: 'right' }}
-          >
-            <Icon type="delete" />
-          </Button>
-        }
-      </li>
-    </div>
+    <li className="answer-wrapper">
+      <Avatar className="question-user-avatar" src={answerer.avatar} />
+      <div className="answer-detail">
+        <b>{answerer.nickname}</b>
+        <p className="answer-body">{content}</p>
+        <small className="answer-time">{moment(created_at).fromNow()}</small>
+      </div>
+      {
+        isOwner &&
+        <Button
+          onClick={handleDeleteAnswer}
+          type="danger"
+          shape="circle"
+          className="delete-btn"
+        >
+          <Icon type="delete" />
+        </Button>
+      }
+    </li>
   );
 }
 

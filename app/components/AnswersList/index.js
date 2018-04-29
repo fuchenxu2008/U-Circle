@@ -14,7 +14,7 @@ class AnswersList extends React.Component { // eslint-disable-line react/prefer-
     const { answers, onDeleteAnswer } = this.props;
     return (
       <div>
-        <ul style={{ paddingLeft: '10px', listStyle: 'none', marginTop: '20px' }}>
+        <ul style={{ paddingLeft: 0, listStyle: 'none', marginTop: '20px' }}>
           {
             answers.map(answer => (
               <Answer key={answer._id} answer={answer} onDeleteAnswer={onDeleteAnswer} />

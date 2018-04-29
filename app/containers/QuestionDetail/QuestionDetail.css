@@ -4,9 +4,21 @@
 
 .detailed-userinfo {
     margin-bottom: 20px;
+    display: flex;
+}
+
+.question-user-nickname {
+    /* color: rgb(3, 60, 124); */
+    font-size: 17px;
+    align-self: center;
+    flex: 1;
 }
 
 .question-detail-img {
     width: 100%;
     margin: 5px 0 5px 0;
+}
+
+.question-detail-body {
+    color: rgb(71, 71, 71);
 }

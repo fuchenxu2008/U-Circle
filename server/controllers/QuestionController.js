@@ -33,8 +33,8 @@ module.exports = {
   addQuestion: (req, res) => {
     uploadPostImg(req, res, err => {
       if (err) return res.status(400).send(err);
-      const { title, body, questioner } = req.body;
-      if (!title || !body || !questioner) return res.json({ message: 'Incomplete question!' });
+      const { type, title, body, questioner } = req.body;
+      if (!type || !title || !body || !questioner) return res.json({ message: 'Incomplete question!' });
       User.findById(questioner, (err1, questionerUser) => {
         if (err1) return res.status(400).send(err1);
         /* eslint-disable no-param-reassign */
@@ -43,7 +43,7 @@ module.exports = {
           if (err2) return res.status(400).send(err2);
           // Add question
           const imgList = req.files.map(img => `/api/question/img/${img.filename}`);
-          Question.create({ title, body, questioner, images: imgList, created_at: moment().format('YYYY-MM-DD HH:mm:ss') },
+          Question.create({ type, title, body, questioner, images: imgList, created_at: moment().format('YYYY-MM-DD HH:mm:ss') },
             (err3, newQuestion) => {
               if (err3) return res.status(400).send(err3);
               Question.findById(newQuestion._id)

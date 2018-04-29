@@ -9,6 +9,7 @@ export function getPeerQuestions() {
 
 export function addQuestion(question) {
   const formData = new FormData();
+  formData.append('type', question.type);
   formData.append('title', question.title);
   formData.append('body', question.body);
   formData.append('questioner', getCurrentUser('_id'));

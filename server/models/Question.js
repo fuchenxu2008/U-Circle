@@ -9,6 +9,7 @@ const QuestionSchema = Schema({
   images: Array,
   answer: [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
   type: String,
+  major: String,
 });
 
 const Question = mongoose.model('Question', QuestionSchema);

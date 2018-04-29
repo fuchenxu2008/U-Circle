@@ -17,7 +17,7 @@ export class QuestionForm extends React.Component { // eslint-disable-line react
     e.preventDefault();
     form.validateFields((err, values) => {
       if (!err) {
-        this.props.onAddQuestion(values);
+        this.props.onAddQuestion({ ...values, type: this.props.type });
         form.resetFields();
         this.props.onOk();
       }
@@ -94,6 +94,7 @@ QuestionForm.propTypes = {
   visible: PropTypes.bool,
   onOk: PropTypes.func,
   onCancel: PropTypes.func,
+  type: PropTypes.string,
 };
 
 export default Form.create()(QuestionForm);

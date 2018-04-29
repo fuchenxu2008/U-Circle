@@ -57,22 +57,8 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
     return (
       <div className="question-detailed">
         <div className="detailed-userinfo">
-          <Avatar src={questioner.avatar} />
-          <b>{questioner.nickname}</b>
-        </div>
-        <div>
-          <h2><b>{title}</b></h2>
-          <Divider />
-          <p>{body}</p>
-          <div>
-            {
-              images.map(img => (
-                <img key={img} src={img} alt="" className="question-detail-img" />
-              ))
-            }
-          </div>
-          <Divider />
-          <small>{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
+          <Avatar className="question-user-avatar" src={questioner.avatar} />
+          <b className="question-user-nickname">{questioner.nickname}</b>
           {
             isOwner &&
             <Button
@@ -85,6 +71,20 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
               <Icon type="delete" />
             </Button>
           }
+        </div>
+        <div>
+          <h4><b>{title}</b></h4>
+          <Divider />
+          <p className="question-detail-body">{body}</p>
+          <div>
+            {
+              images.map(img => (
+                <img key={img} src={img} alt="" className="question-detail-img" />
+              ))
+            }
+          </div>
+          <Divider />
+          <small>{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
         </div>
         <AnswersList answers={answer} onDeleteAnswer={this.handleDeleteAnswer} />
         <AnswerInput position="bottom" onAnswer={this.handleSubmitAnswer} />

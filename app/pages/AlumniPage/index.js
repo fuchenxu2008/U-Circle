@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
+import SearchBar from 'containers/SearchBar';
 
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
@@ -21,6 +22,8 @@ export class AlumniPage extends React.Component { // eslint-disable-line react/p
           <title>AlumniPage</title>
           <meta name="description" content="Description of AlumniPage" />
         </Helmet>
+        <SearchBar searchType="occupational" />
+        <br />
         <h2>AlumniPage</h2>
       </div>
     );
