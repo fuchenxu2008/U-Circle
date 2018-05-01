@@ -7,15 +7,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Avatar, Button, Icon } from 'antd';
+import { Avatar, Button } from 'antd';
 import PropTypes from 'prop-types';
 import './Answer.css';
 
 function Answer(props) {
   const { _id, content, answerer, created_at } = props.answer;
-  const { currentUser } = props;
-  const isOwner = currentUser ? currentUser._id === answerer._id : false;
-  const handleDeleteAnswer = () => {
+  const isOwner = props.currentUser ? props.currentUser._id === answerer._id : false;
+
+  const _handleDeleteAnswer = () => {
     props.onDeleteAnswer(_id);
   };
 
@@ -30,13 +30,12 @@ function Answer(props) {
       {
         isOwner &&
         <Button
-          onClick={handleDeleteAnswer}
+          onClick={_handleDeleteAnswer}
           type="danger"
           shape="circle"
           className="delete-btn"
-        >
-          <Icon type="delete" />
-        </Button>
+          icon="delete"
+        />
       }
     </li>
   );

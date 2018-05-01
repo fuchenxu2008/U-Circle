@@ -7,29 +7,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Divider, Button } from 'antd';
 
 import { endSearch } from 'containers/SearchBar/actions';
 import './SearchResultCard.css';
 
 export class SearchResultCard extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  render() {
-    const { searching, searchResult } = this.props;
-    if (!searching) return null;
+  state = { aniClass: 'hidden' }
 
-    // const aniClass = searching ? 'slideInUp' : 'slideOutDown';
+  componentWillReceiveProps(props) {
+    if (!props.searching && this.state.aniClass === 'slideInUp') {
+      this.setState({ aniClass: 'slideOutDown' });
+    } else if (props.searching) {
+      this.setState({ aniClass: 'slideInUp' });
+    }
+  }
+
+  render() {
+    const { searchResult } = this.props;
 
     const results = searchResult.length > 0
     ? searchResult.map(question => (
-      <div key={question._id} className="searchresult-item">
+      <Link to={`/question/${question._id}`} key={question._id} className="searchresult-item">
         <h3 className="searchresult-item-title">{question.title}</h3>
         <p className="searchresult-item-body">{question.body}</p>
-      </div>
+      </Link>
     ))
     : <h4 className="no-match-found">No Match Found</h4>;
 
     return (
-      <div className={'searchresult-card animated slideInUp'}>
+      <div className={`searchresult-card animated ${this.state.aniClass}`}>
         <div className="card-heading">
           <h2 className="card-heading-title">Search Results for <span className="searchresult-keyword">{this.props.searchPhrase.keyword}</span>
           </h2>

@@ -8,7 +8,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input, Form } from 'antd';
 import './AnswerInput.css';
-// import styled from 'styled-components';
 const FormItem = Form.Item;
 
 

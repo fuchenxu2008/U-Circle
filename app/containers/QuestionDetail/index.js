@@ -56,6 +56,8 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
     const isOwner = currentUser ? currentUser._id === questioner._id : false;
     return (
       <div className="question-detailed">
+        <Button onClick={() => history.go(-1)} icon="left-circle" type="primary" ghost>Back</Button>
+        <br /><br />
         <div className="detailed-userinfo">
           <Avatar className="question-user-avatar" src={questioner.avatar} />
           <b className="question-user-nickname">{questioner.nickname}</b>

@@ -49,7 +49,7 @@ class ResponsiveNav extends Component {
     return (
       <Menu mode="horizontal" className="mobile-navbar container">
         <Item key="logo">
-          <Link to="/">U-CIRCLE</Link>
+          <Link to="/"><p className="logo-brand">U-CIRCLE</p></Link>
         </Item>
         <Item key="more" className="mobile-navbar-collapse">
           <Popover

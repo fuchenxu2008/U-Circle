@@ -50,7 +50,7 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
         <SearchResultCard key="key" />
         <br />
         <Row className="title-row">
-          <h2 style={{ flex: 1 }}>PeerPage</h2>
+          <h2 className="big-title" style={{ flex: 1 }}>PeerPage</h2>
           <AddButton handleClick={this.showForm} />
           <LoginHint
             visible={this.state.showHint}

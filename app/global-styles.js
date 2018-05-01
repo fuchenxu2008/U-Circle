@@ -19,10 +19,6 @@ injectGlobal`
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
-  html, body, #app, #app>div {
-
-  }
-
   p {
     margin: 0;
   }

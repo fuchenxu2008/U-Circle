@@ -14,8 +14,7 @@ function AddButton(props) {
       onClick={props.handleClick}
       type="ghost"
       shape="circle"
-      icon="plus-circle-o"
-      size="large"
+      icon="plus"
       className="addBtn"
     />
   );

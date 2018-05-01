@@ -29,6 +29,14 @@
   width: 100%;
 }
 
+.mobile-navbar>li {
+  display: flex;
+}
+
+.mobile-navbar>li>a {
+  align-self: center;
+}
+
 .mobile-navbar-collapse {
   margin-left: auto;
 }
@@ -36,4 +44,11 @@
 .mobile-navigation {
   border-right: 0;
   z-index: 1000;
+}
+
+.logo-brand {
+  font-size: 18px;
+  font-family: 'Monoton', cursive;
+  margin-bottom: -4px;
+  /* color: rgb(61, 155, 249); */
 }

@@ -1,8 +1,10 @@
 @import '../../assets/fonts/fonts.css';
+@import url('https://fonts.googleapis.com/css?family=Monoton');
 
 /* * {
     font-family: 'GothamProMedium';
 } */
+
 .page {
     display: flex;
     flex-direction: column;
@@ -24,4 +26,13 @@
 .userStat {
     text-align: center;
     margin-top: 1%;
+}
+
+.big-title {
+  /* font-family: 'GothamProMedium'; */
+  /* font-weight: bold; */
+}
+
+.hidden {
+    display: none;
 }
