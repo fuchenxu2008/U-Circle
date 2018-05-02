@@ -17,8 +17,11 @@ const setRouter = require('./routes');
 
 const resolve = require('path').resolve;
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 global.__root = __dirname;
+app.set('socket', io);
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,7 +53,7 @@ const host = customHost || null; // Let http.Server use its default IPv6/4 host
 const prettyHost = customHost || 'localhost';
 
 // Start your app.
-app.listen(port, host, err => {
+server.listen(port, host, err => {
   if (err) {
     return logger.error(err.message);
   }

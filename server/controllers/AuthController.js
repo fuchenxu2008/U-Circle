@@ -27,8 +27,7 @@ module.exports = {
       const hashedPassword = bcrypt.hashSync(password, 8);
       User.create({ email, password: hashedPassword, nickname, role, credit: 100 }, (err2, user) => {
         if (err2) return res.status(400).send(err2);
-        const token = signToken(user);
-        return res.json({ ...user._doc, token });
+        return res.json({ ...user._doc, token: signToken(user) });
       });
     });
   },

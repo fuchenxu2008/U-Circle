@@ -1,7 +1,7 @@
 import axios from 'axios';
+import io from 'socket.io-client';
 
 import { ROOT_URL } from '../../config';
-import { getCurrentUser } from '../../authMiddleware';
 
 export function register(fields) {
   return axios.post(`${ROOT_URL}/api/auth/register`, fields);
@@ -11,7 +11,14 @@ export function login(fields) {
   return axios.post(`${ROOT_URL}/api/auth/login`, fields);
 }
 
-export function getUser() {
-  const id = getCurrentUser('_id');
+export function getUser(id) {
   return axios.get(`${ROOT_URL}/api/user/${id}`);
+}
+
+export function connectSocket() {
+  const socket = io.connect(ROOT_URL);
+  socket.on('data', data => {
+    console.log('data: ', data);
+  });
+  return socket;
 }

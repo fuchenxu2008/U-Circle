@@ -40,7 +40,10 @@ ProfilePage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser'),
+  currentUser:
+    state.get('global').get('currentUser') === null
+      ? null
+      : state.get('global').get('currentUser').toJS(),
 });
 
 function mapDispatchToProps(dispatch) {

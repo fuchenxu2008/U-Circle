@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
-// import { SectionsContainer, Section } from 'react-fullpage';
 
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
@@ -28,7 +27,7 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
         </div>
         {/* Info */}
         <div>
-          <div>DESIGN + DEVELOPMENT</div>
+          <div>DEVELOPMENT</div>
           <div>DEVELOPMENT
           ZIPL STUDIO IS A HIGH-QUALIFIED TEAM OF TALENTED DEVELOPERS AND DESIGNERS.
           EVERY PROJECT IS A CHALLENGE TO DO BETTER THAT ALL WE HAVE ALREADY DONE!

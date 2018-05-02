@@ -133,7 +133,10 @@ NormalLoginForm.propTypes = {
 const LoginForm = Form.create()(NormalLoginForm);
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser'),
+  currentUser:
+    state.get('global').get('currentUser') === null
+      ? null
+      : state.get('global').get('currentUser').toJS(),
   formMode: state.get('loginForm').get('formMode'),
   loading: state.get('loginForm').get('loading'),
 });

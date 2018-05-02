@@ -1,6 +1,6 @@
 import { pick } from 'lodash';
 
-const preservedState = ['global'];
+const preservedState = ['global.currentUser', 'global.token'];
 
 export const loadState = () => {
   try {
@@ -19,6 +19,6 @@ export const saveState = state => {
     const stateToSave = pick(state, preservedState);
     localStorage.setItem('state', JSON.stringify(stateToSave));
   } catch (err) {
-    console.log('Write state to localStorage failed');
+    console.log(`Write state to localStorage failed: ${err}`);
   }
 };

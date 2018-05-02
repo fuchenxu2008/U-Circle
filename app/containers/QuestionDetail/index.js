@@ -109,7 +109,10 @@ QuestionDetail.propTypes = {
 
 const mapStateToProps = state => ({
   question: state.get('questionDetail'),
-  currentUser: state.get('global').get('currentUser'),
+  currentUser:
+    state.get('global').get('currentUser') === null
+      ? null
+      : state.get('global').get('currentUser').toJS(),
 });
 
 function mapDispatchToProps(dispatch) {

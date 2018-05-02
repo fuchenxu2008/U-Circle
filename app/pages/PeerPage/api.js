@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { ROOT_URL } from '../../config';
-import { getAuthHeader, getCurrentUser } from '../../authMiddleware';
+import { getAuthHeader } from '../../authMiddleware';
 
 export function getPeerQuestions() {
   return axios.get(`${ROOT_URL}/api/question`);
@@ -12,7 +12,7 @@ export function addQuestion(question) {
   formData.append('type', question.type);
   formData.append('title', question.title);
   formData.append('body', question.body);
-  formData.append('questioner', getCurrentUser('_id'));
+  formData.append('questioner', question.questioner);
   if (question.postImg) {
     question.postImg.forEach(img => {
       formData.append('postImg', img);

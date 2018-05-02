@@ -2,7 +2,11 @@ const Question = require('../models/Question');
 
 module.exports = {
   searchPeerQuestion: (req, res) => {
-    const { type, /* major, */ keyword } = req.query;
+    const { type } = req.query;
+    let { /* major, */ keyword } = req.query;
+    // major = major.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    keyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    req.app.get('socket').emit('data', req.user._id);
     Question.find({
       type,
       // major,

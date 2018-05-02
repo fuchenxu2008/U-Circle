@@ -7,17 +7,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon, Input, Button, Modal, Upload } from 'antd';
-// import ImgUploader from 'containers/ImgUploader';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
 export class QuestionForm extends React.Component { // eslint-disable-line react/prefer-stateless-function
   handleSubmit = e => {
-    const { form } = this.props;
+    const { form, currentUser, type } = this.props;
     e.preventDefault();
     form.validateFields((err, values) => {
-      if (!err) {
-        this.props.onAddQuestion({ ...values, type: this.props.type });
+      if (!err && currentUser) {
+        this.props.onAddQuestion({ ...values, type, questioner: currentUser._id });
         form.resetFields();
         this.props.onOk();
       }
@@ -58,7 +57,6 @@ export class QuestionForm extends React.Component { // eslint-disable-line react
             </FormItem>
             <FormItem>
               {getFieldDecorator('postImg', {
-                // rules: [{ required: true, message: 'Please upload img!' }],
                 getValueFromEvent: e => {
                   console.log(e);
                   return e.fileList;
@@ -67,8 +65,6 @@ export class QuestionForm extends React.Component { // eslint-disable-line react
                 <Upload
                   name="postImg"
                   listType="picture-card"
-                  // onPreview={this.handlePreview}
-                  // onChange={this.handleChange}
                   multiple
                   beforeUpload={() => false}
                   headers={{ authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InF1ZXN0aW9uIjpbXSwiX2lkIjoiNWFiMGFkY2YwMjM5MTUxMWYwMWI0MzhhIiwiZW1haWwiOiJmdWNoZW54dTIwMDhAMTYzLmNvbSIsIm5pY2tuYW1lIjoiZnVjaGVueHUyMDA4IiwicGFzc3dvcmQiOiIkMmEkMDgkMTN3VVQwcFg0Zm80NDlFSDZpOWFQLkIvaVQyOGsvQ0ZnT0RGb2VOMFVzYjlDaW84dWhJa3UiLCJyb2xlIjoicGVlciIsIl9fdiI6MCwiYXZhdGFyIjoiL2FwaS91c2VyL2F2YXRhci8zMTkyNGFjZC0xNDEzLTQxZmYtYmY5YS03OWE4MmI0N2M0NGEucG5nIn0sImlhdCI6MTUyMjA1NjQ5OX0.q-pPcgnEhVpmYe-KsVFa5CBB4IlyR1QsjDK9hrGRsJ4' }}
@@ -78,7 +74,6 @@ export class QuestionForm extends React.Component { // eslint-disable-line react
                     <div className="ant-upload-text">Upload</div>
                   </div>
                 </Upload>
-                // <ImgUploader />
               )}
             </FormItem>
           </Form>
@@ -95,6 +90,7 @@ QuestionForm.propTypes = {
   onOk: PropTypes.func,
   onCancel: PropTypes.func,
   type: PropTypes.string,
+  currentUser: PropTypes.object,
 };
 
 export default Form.create()(QuestionForm);

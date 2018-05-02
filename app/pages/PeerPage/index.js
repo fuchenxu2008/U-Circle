@@ -64,6 +64,7 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
           onOk={this.hideForm}
           onAddQuestion={this.handleAddQuestion}
           type="academic"
+          currentUser={this.props.currentUser}
         />
         <QuestionsList
           type="peer"
@@ -83,7 +84,10 @@ PeerPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser'),
+  currentUser:
+    state.get('global').get('currentUser') === null
+      ? null
+      : state.get('global').get('currentUser').toJS(),
   peerQuestions: state.get('peerPage').get('peerQuestions').toJS(),
 });
 

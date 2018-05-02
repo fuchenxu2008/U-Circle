@@ -11,7 +11,6 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import LoginForm from 'containers/LoginForm';
 import injectReducer from 'utils/injectReducer';
-// import makeSelectLoginPage from './selectors';
 import reducer from './reducer';
 import './LoginPage.css';
 

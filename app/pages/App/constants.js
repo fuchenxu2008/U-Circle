@@ -11,4 +11,6 @@ export const SET_USER_FULFILLED = 'app/SET_USER_FULFILLED';
 export const SET_USER_PENDING = 'app/SET_USER_PENDING';
 export const SET_USER_REJECTED = 'app/SET_USER_REJECTED';
 
+export const ESTABLISH_SOCKET = 'app/ESTABLISH_SOCKET';
+
 export const LOG_OUT = 'app/LOG_OUT';

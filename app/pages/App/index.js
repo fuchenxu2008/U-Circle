@@ -23,13 +23,15 @@ import AlumniPage from 'pages/AlumniPage';
 import PeerPage from 'pages/PeerPage';
 import QuestionDetail from 'containers/QuestionDetail';
 import NotFoundPage from 'pages/NotFoundPage/Loadable';
-import { setCurrentUser, logOut } from './actions';
+import { setCurrentUser, establishSocket, logOut } from './actions';
 import './App.css';
 
 class MainApp extends Component { // eslint-disable-line react/prefer-stateless-function
   componentWillMount() {
-    if (this.props.currentUser) {
-      this.props.setCurrentUser();
+    const { currentUser } = this.props;
+    if (currentUser) {
+      this.props.setCurrentUser(currentUser._id);
+      this.props.establishSocket(currentUser._id);
     }
   }
 
@@ -61,16 +63,21 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
 MainApp.propTypes = {
   history: PropTypes.object,
   setCurrentUser: PropTypes.func,
+  establishSocket: PropTypes.func,
   logOut: PropTypes.func,
   currentUser: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser'),
+  currentUser:
+    state.get('global').get('currentUser') === null
+      ? null
+      : state.get('global').get('currentUser').toJS(),
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: () => dispatch(setCurrentUser()),
+  setCurrentUser: id => dispatch(setCurrentUser(id)),
+  establishSocket: () => dispatch(establishSocket()),
   logOut: () => dispatch(logOut()),
 });
 

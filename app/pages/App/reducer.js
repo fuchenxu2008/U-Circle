@@ -1,5 +1,4 @@
-import { Iterable } from 'immutable';
-import { combineReducers } from 'redux-immutable';
+import { fromJS } from 'immutable';
 
 import { UPLOAD_AVATAR_FULFILLED } from 'containers/AvatarUploader/constants';
 import {
@@ -7,36 +6,34 @@ import {
   REGISTER_FULFILLED,
   SET_USER_FULFILLED,
   LOG_OUT,
+  ESTABLISH_SOCKET,
 } from './constants';
 
-const initialUserState = null;
+const initialState = fromJS({
+  currentUser: null,
+  token: null,
+  socket: null,
+});
 
-function currentUser(state = initialUserState, action) {
+function globalReducer(state = initialState, action) {
   switch (action.type) {
+    case ESTABLISH_SOCKET:
+      return state.set('socket', fromJS(action.payload));
     case REGISTER_FULFILLED:
-      return state;
+      return state.set('currentUser', fromJS(action.payload.data));
     case LOGIN_FULFILLED:
-      return action.payload.data;
-    case SET_USER_FULFILLED: {
-      // App reload will initiate the state with `fromJS(loadState())`
-      const oldState = Iterable.isIterable(state) ? state.toJS() : state;
-      return {
-        ...oldState,
-        ...action.payload.data,
-      };
-    }
+      return state
+        .set('currentUser', fromJS(action.payload.data))
+        .set('token', action.payload.data.token);
+    case SET_USER_FULFILLED:
+      return state.set('currentUser', fromJS(action.payload.data));
     case LOG_OUT:
-      return null;
+      return state.set('currentUser', null);
     case UPLOAD_AVATAR_FULFILLED:
-      return {
-        ...state,
-        avatar: action.payload.data.avatar,
-      };
+      return state.updateIn(['currentUser', 'avatar'], () => action.payload.data.avatar);
     default:
       return state;
   }
 }
 
-export default combineReducers({
-  currentUser,
-});
+export default globalReducer;

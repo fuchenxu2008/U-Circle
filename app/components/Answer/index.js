@@ -48,7 +48,10 @@ Answer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  currentUser: state.get('global').get('currentUser'),
+  currentUser:
+    state.get('global').get('currentUser') === null
+      ? null
+      : state.get('global').get('currentUser').toJS(),
 });
 
 export default connect(mapStateToProps)(Answer);

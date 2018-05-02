@@ -1,4 +1,10 @@
-import { REGISTER, LOGIN, SET_USER, LOG_OUT } from './constants';
+import {
+  REGISTER,
+  LOGIN,
+  SET_USER,
+  ESTABLISH_SOCKET,
+  LOG_OUT,
+} from './constants';
 
 import * as api from './api';
 
@@ -16,10 +22,17 @@ export function loginAction(fields) {
   };
 }
 
-export function setCurrentUser() {
+export function setCurrentUser(id) {
   return {
     type: SET_USER,
-    payload: api.getUser(),
+    payload: api.getUser(id),
+  };
+}
+
+export function establishSocket() {
+  return {
+    type: ESTABLISH_SOCKET,
+    payload: api.connectSocket(),
   };
 }
 
