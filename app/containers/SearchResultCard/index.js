@@ -41,7 +41,7 @@ export class SearchResultCard extends React.Component { // eslint-disable-line r
         <div className="card-heading">
           <h2 className="card-heading-title">Search Results for <span className="searchresult-keyword">{this.props.searchPhrase.keyword}</span>
           </h2>
-          <Button type="default" icon="close" shape="circle" onClick={this.props.endSearch} />
+          <Button type="default" className="card-heading-closebtn" icon="close" shape="circle" onClick={this.props.endSearch} />
         </div>
         <Divider style={{ margin: 0 }} />
         <div className="card-body">

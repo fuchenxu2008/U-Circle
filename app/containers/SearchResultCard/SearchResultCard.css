@@ -21,6 +21,10 @@
     flex: 1;
 }
 
+.card-heading-closebtn {
+    min-width: 32px;
+}
+
 .card-body {
     padding: 10px 15px 10px 15px;
     flex: 1;

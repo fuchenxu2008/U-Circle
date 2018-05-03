@@ -52,6 +52,12 @@
   transform: translateY(2px);
 }
 
+.mobile-navigation>.ant-menu-item,
+.mobile-navigation>.ant-menu-submenu div {
+  padding-left: 8px !important;
+}
+
+
 .ant-menu-submenu-arrow {
   display: none;
 }
