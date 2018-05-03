@@ -23,7 +23,9 @@ function globalReducer(state = initialState, action) {
     case CLOSE_SOCKET:
       return state.set('socket', null);
     case REGISTER_FULFILLED:
-      return state.set('currentUser', fromJS(action.payload.data));
+      return state
+        .set('currentUser', fromJS(action.payload.data))
+        .set('token', action.payload.data.token);
     case LOGIN_FULFILLED:
       return state
         .set('currentUser', fromJS(action.payload.data))
@@ -31,7 +33,9 @@ function globalReducer(state = initialState, action) {
     case SET_USER_FULFILLED:
       return state.set('currentUser', fromJS(action.payload.data));
     case LOG_OUT:
-      return state.set('currentUser', null);
+      return state
+        .set('currentUser', null)
+        .set('token', null);
     case UPLOAD_AVATAR_FULFILLED:
       return state.updateIn(['currentUser', 'avatar'], () => action.payload.data.avatar);
     default:
