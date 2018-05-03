@@ -16,9 +16,9 @@ export function getUser(id) {
 }
 
 export function connectSocket() {
-  const socket = io.connect(ROOT_URL);
-  socket.on('data', data => {
-    console.log('data: ', data);
-  });
-  return socket;
+  return io(ROOT_URL);
+}
+
+export function closeSocket(socket) {
+  return socket.close();
 }

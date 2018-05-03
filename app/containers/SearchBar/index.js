@@ -20,6 +20,7 @@ import {
   searchKeywordChange,
   searchQuestion,
 } from './actions';
+import './SearchBar.css';
 
 const Search = Input.Search;
 const InputGroup = Input.Group;
@@ -59,9 +60,11 @@ export class SearchBar extends React.Component { // eslint-disable-line react/pr
             style={{ width: '30%' }}
             placeholder="Major"
             onChange={e => this.onMajorChange(e.target.value)}
+            className="searchbar-major"
           />
           <Search
             style={{ width: '70%' }}
+            className="searchbar-enter"
             placeholder="Keyword"
             onSearch={this.search}
             onChange={e => this.onKeywordChange(e.target.value)}

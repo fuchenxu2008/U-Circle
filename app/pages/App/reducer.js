@@ -7,6 +7,7 @@ import {
   SET_USER_FULFILLED,
   LOG_OUT,
   ESTABLISH_SOCKET,
+  CLOSE_SOCKET,
 } from './constants';
 
 const initialState = fromJS({
@@ -19,6 +20,8 @@ function globalReducer(state = initialState, action) {
   switch (action.type) {
     case ESTABLISH_SOCKET:
       return state.set('socket', fromJS(action.payload));
+    case CLOSE_SOCKET:
+      return state.set('socket', null);
     case REGISTER_FULFILLED:
       return state.set('currentUser', fromJS(action.payload.data));
     case LOGIN_FULFILLED:

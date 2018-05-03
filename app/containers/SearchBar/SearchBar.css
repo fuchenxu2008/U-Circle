@@ -1,0 +1,11 @@
+.searchbar-major {
+    border-radius: 15px 0 0 15px !important;
+}
+
+.searchbar-enter input {
+    border-radius: 0 15px 15px 0 !important;
+}
+
+.searchbar-enter button{
+  border-radius: 0 15px 15px 0 !important;
+}

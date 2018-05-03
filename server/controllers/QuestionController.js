@@ -6,6 +6,7 @@ const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 const User = require('../models/User');
 const { uploadPostImg } = require('../middlewares/multer');
+const { sendNotification } = require('./NotificationController');
 
 module.exports = {
   getQuestions: (req, res) => {
@@ -83,6 +84,7 @@ module.exports = {
   },
 
   answerQuestion: (req, res) => {
+    const socket = req.app.get('socket');
     const { content, answerer } = req.body;
     const { id } = req.params;
     if (!content || !answerer || !id) return res.json({ message: 'Incomplete answer details!' });
@@ -92,18 +94,30 @@ module.exports = {
       answerer,
       question: id,
     }, (err, answer) => {
-      if (err || !answer) return res.json(err);
-      Question.findById(id, (err2, oldQuestion) => {
-        if (err2 || !oldQuestion) return res.status(400).send(err2);
-        oldQuestion.set({ answer: oldQuestion.answer.concat(answer._id) });
-        oldQuestion.save((err3, updatedQuestion) => {
-          if (err3 || !updatedQuestion) return res.json(err3);
-          Question.findById(id)
-          .populate('questioner', ['nickname', 'avatar', 'role'])
-          .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
-          .exec((err4, question) => {
-            if (err4 || !question) return res.status(400).send(err4);
-            return res.json({ question, message: 'Answer submitted' });
+      User.findById(answerer, (err1, answererObj) => {
+        if (err1 || !answererObj) return res.status(400).send(err1);
+        if (err || !answer) return res.json(err);
+        Question.findById(id, (err2, oldQuestion) => {
+          if (err2 || !oldQuestion) return res.status(400).send(err2);
+          oldQuestion.set({ answer: oldQuestion.answer.concat(answer._id) });
+          oldQuestion.save((err3, updatedQuestion) => {
+            if (err3 || !updatedQuestion) return res.json(err3);
+            Question.findById(id)
+            .populate('questioner', ['nickname', 'avatar', 'role'])
+            .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
+            .exec((err4, question) => {
+              if (err4 || !question) return res.status(400).send(err4);
+              const notification = {
+                answerer: answererObj.nickname,
+                title: question.title,
+                questionId: question._id,
+              };
+              sendNotification({ target: question.questioner._id, notification, socket });
+              question.subscribers.forEach(subscriber => {
+                sendNotification({ target: subscriber, notification, socket });
+              });
+              return res.json({ question, message: 'Answer submitted' });
+            });
           });
         });
       });

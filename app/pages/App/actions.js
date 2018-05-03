@@ -3,6 +3,7 @@ import {
   LOGIN,
   SET_USER,
   ESTABLISH_SOCKET,
+  CLOSE_SOCKET,
   LOG_OUT,
 } from './constants';
 
@@ -33,6 +34,13 @@ export function establishSocket() {
   return {
     type: ESTABLISH_SOCKET,
     payload: api.connectSocket(),
+  };
+}
+
+export function closeSocket(socket) {
+  return {
+    type: CLOSE_SOCKET,
+    payload: api.closeSocket(socket),
   };
 }
 

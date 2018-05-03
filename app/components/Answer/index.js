@@ -35,6 +35,7 @@ function Answer(props) {
           shape="circle"
           className="delete-btn"
           icon="delete"
+          ghost
         />
       }
     </li>

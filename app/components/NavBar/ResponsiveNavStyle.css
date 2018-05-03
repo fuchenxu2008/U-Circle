@@ -49,6 +49,9 @@
 .logo-brand {
   font-size: 18px;
   font-family: 'Monoton', cursive;
-  margin-bottom: -4px;
-  /* color: rgb(61, 155, 249); */
+  transform: translateY(2px);
+}
+
+.ant-menu-submenu-arrow {
+  display: none;
 }

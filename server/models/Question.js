@@ -10,6 +10,7 @@ const QuestionSchema = Schema({
   answer: [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
   type: String,
   major: String,
+  subscribers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 const Question = mongoose.model('Question', QuestionSchema);

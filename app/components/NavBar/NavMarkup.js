@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Menu } from 'antd';
+import { Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 
 const Item = Menu.Item;
@@ -11,27 +11,33 @@ const NavMarkup = ({ currentUser, onLogOut, mobileVersion }) => (
     mode={mobileVersion ? 'vertical' : 'horizontal'}
     className="mobile-navigation"
   >
+    {
+      !mobileVersion &&
+      <Item key="logo">
+        <Link to="/" className="logo-brand">U-CIRCLE</Link>
+      </Item>
+    }
     <Item key="home">
-      <Link to="/">Home</Link>
+      <Link to="/"><Icon type="home" />Home</Link>
     </Item>
     <Item key="alumni">
-      <Link to="/alumni">Alumni</Link>
+      <Link to="/alumni"><Icon type="compass" />Alumni</Link>
     </Item>
     <Item key="peer">
-      <Link to="/peer">Peer</Link>
+      <Link to="/peer"><Icon type="bulb" />Peer</Link>
     </Item>
     {currentUser ? (
-      <SubMenu title={currentUser.nickname}>
+      <SubMenu key="user" title={<span><Icon type="user" />{currentUser.nickname}</span>}>
         <Item key="profile">
-          <Link to="/me">Profile</Link>
+          <Link to="/me"><Icon type="profile" />Profile</Link>
         </Item>
         <Item key="logout">
-          <div onClick={onLogOut}>Log Out</div>
+          <div onClick={onLogOut}><Icon type="logout" />Log Out</div>
         </Item>
       </SubMenu>
     ) : (
       <Item key="auth">
-        <Link to="/auth">Login</Link>
+        <Link to="/auth"><Icon type="login" />Login</Link>
       </Item>
     )}
   </Menu>
