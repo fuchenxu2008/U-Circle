@@ -7,43 +7,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import throttle from 'lodash.throttle';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
-
+import { Button } from 'antd';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import './HomePage.css';
 
 export class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  render() {
-    const firstSection = (
-      <section>
-        {/* Brand */}
-        <div>
-          <h1>U-CIRCLE</h1>
-        </div>
-        {/* Stripe photo */}
-        <div>
-        </div>
-        {/* Info */}
-        <div>
-          <div>DEVELOPMENT</div>
-          <div>DEVELOPMENT
-          ZIPL STUDIO IS A HIGH-QUALIFIED TEAM OF TALENTED DEVELOPERS AND DESIGNERS.
-          EVERY PROJECT IS A CHALLENGE TO DO BETTER THAT ALL WE HAVE ALREADY DONE!
-          </div>
-          <div>9+ AWARDS</div>
-        </div>
-      </section>
-    );
+  state = {
+    bgStyle: '',
+  }
 
+  componentDidMount() {
+    this.saveViewportDimensions();
+    window.addEventListener('resize', this.saveViewportDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.saveViewportDimensions);
+  }
+
+  saveViewportDimensions = throttle(() => {
+    this.setState({ bgStyle: document.body.clientWidth / document.body.clientHeight > 0.8 ? 'wideSize' : 'narrowSize' });
+  }, 250);
+
+  render() {
     return (
       <div>
         <Helmet>
           <title>HomePage</title>
           <meta name="description" content="Description of HomePage" />
         </Helmet>
-        {firstSection}
+        <div className="homepage"></div>
+        <div className="home-banner">
+          <h1 className="home-banner-title">U-CIRCLE</h1>
+          <p>This platform is dedicated to solving your occupational and academic problems. Just ask your question here and get answer from alumni and peer students. This may not be the most confirming, but the most considerable for XJTLUer.</p>
+        </div>
+        <div className="bottom-section">
+          <Button type="primary" size="large" className="start-btn">Get Started</Button>
+        </div>
       </div>
     );
   }

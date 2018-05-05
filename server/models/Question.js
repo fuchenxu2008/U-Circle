@@ -8,6 +8,7 @@ const QuestionSchema = Schema({
   questioner: { type: Schema.Types.ObjectId, ref: 'User' },
   images: Array,
   answer: [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
+  bestAnswer: { type: Schema.Types.ObjectId, ref: 'Answer' },
   type: String,
   major: String,
   subscribers: [{ type: Schema.Types.ObjectId, ref: 'User' }],

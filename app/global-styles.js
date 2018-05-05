@@ -2,15 +2,18 @@ import { injectGlobal } from 'styled-components';
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
-  html {
+  html, body {
+    height: 100%;
     width: 100%;
-    margin: 0;
     padding: 0;
+    overflow-x: hidden;
+  }
+
+  html {
+    margin: 0;
   }
 
   body {
-    width: 100%;
-    padding: 0;
     background-color: white;
     color: rgb(40, 40, 40);
   }

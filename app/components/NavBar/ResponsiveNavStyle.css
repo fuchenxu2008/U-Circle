@@ -57,11 +57,15 @@
   padding-left: 8px !important;
 }
 
-
 .ant-menu-submenu-arrow {
   display: none;
 }
 
 .ant-badge {
   color: inherit;
+}
+
+.transparent-bar {
+  background-color: transparent;
+  border: none;
 }

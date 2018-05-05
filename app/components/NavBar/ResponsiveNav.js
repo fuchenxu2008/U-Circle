@@ -40,13 +40,14 @@ class ResponsiveNav extends Component {
   }, this.props.applyViewportChange);
 
   render() {
-    const MenuMarkup = this.props.menuMarkup;
-    if (this.state.viewportWidth > this.props.mobileBreakPoint) {
-      return <MenuMarkup currentUser={this.props.currentUser} onLogOut={this.props.onLogOut} notiNum={this.props.notiNum} />;
+    const { menuMarkup, mobileBreakPoint, currentUser, onLogOut, notiNum, location } = this.props;
+    const MenuMarkup = menuMarkup;
+    if (this.state.viewportWidth > mobileBreakPoint) {
+      return <MenuMarkup currentUser={currentUser} onLogOut={onLogOut} notiNum={notiNum} />;
     }
 
     return (
-      <Menu mode="horizontal" className="mobile-navbar container">
+      <Menu mode="horizontal" className={`mobile-navbar container ${location === '/' && 'transparent-bar'}`}>
         <Item key="logo">
           <Link to="/"><p className="logo-brand">U-CIRCLE</p></Link>
         </Item>
@@ -85,12 +86,13 @@ ResponsiveNav.propTypes = {
     PropTypes.func,
     PropTypes.object,
   ]),
+  location: PropTypes.string,
 };
 
 ResponsiveNav.defaultProps = {
   mobileBreakPoint: 575,
   applyViewportChange: 250,
-  placement: 'bottom',
+  placement: 'bottomRight',
 };
 
 export default ResponsiveNav;
