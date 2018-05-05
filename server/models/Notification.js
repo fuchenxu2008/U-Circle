@@ -4,9 +4,8 @@ const Schema = mongoose.Schema;
 const NotificationSchema = Schema({
   targetUser: { type: Schema.Types.ObjectId, ref: 'User' },
   fromUser: { type: Schema.Types.ObjectId, ref: 'User' },
+  relatedQuestion: { type: Schema.Types.ObjectId, ref: 'Question' },
   created_at: Date,
-  content: String,
-  linkTo: String,
   markRead: Boolean,
 });
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ROOT_URL } from '../../config';
 import { getAuthHeader } from '../../authMiddleware';
 
-export function getPeerQuestions() {
+export function getStudentQuestions() {
   return axios.get(`${ROOT_URL}/api/question`);
 }
 

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('../middlewares/passport');
-const { searchPeerQuestion } = require('../controllers/SearchController');
+const { searchStudentQuestion } = require('../controllers/SearchController');
 
-router.get('', passport.authenticate('jwt', { session: false }), searchPeerQuestion);
+router.get('', passport.authenticate('jwt', { session: false }), searchStudentQuestion);
 
 module.exports = router;

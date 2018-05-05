@@ -1,6 +1,6 @@
 /**
 *
-* PeerQuestion
+* StudentQuestion
 *
 */
 
@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import { Button, Row, Avatar, Modal } from 'antd';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
-// import styled from 'styled-components';
 import './Question.css';
 
 class Question extends Component {  // eslint-disable-line react/prefer-stateless-function

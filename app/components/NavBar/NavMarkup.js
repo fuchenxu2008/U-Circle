@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Badge } from 'antd';
 import { Link } from 'react-router-dom';
 
 const Item = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
-const NavMarkup = ({ currentUser, onLogOut, mobileVersion }) => (
+const NavMarkup = ({ currentUser, onLogOut, mobileVersion, notiNum }) => (
   <Menu
     mode={mobileVersion ? 'vertical' : 'horizontal'}
     className="mobile-navigation"
@@ -23,9 +23,18 @@ const NavMarkup = ({ currentUser, onLogOut, mobileVersion }) => (
     <Item key="alumni">
       <Link to="/alumni"><Icon type="compass" />Alumni</Link>
     </Item>
-    <Item key="peer">
-      <Link to="/peer"><Icon type="bulb" />Peer</Link>
+    <Item key="student">
+      <Link to="/student"><Icon type="bulb" />Student</Link>
     </Item>
+    {currentUser &&
+      <Item key="notification">
+        <Link to="/notification">
+          <Badge count={notiNum}>
+            <Icon type="notification" />Notification
+          </Badge>
+        </Link>
+      </Item>
+    }
     {currentUser ? (
       <SubMenu key="user" title={<span><Icon type="user" />{currentUser.nickname}</span>}>
         <Item key="profile">
@@ -47,6 +56,7 @@ NavMarkup.propTypes = {
   onLogOut: PropTypes.func,
   currentUser: PropTypes.object,
   mobileVersion: PropTypes.bool,
+  notiNum: PropTypes.number,
 };
 
 NavMarkup.defaultProps = {

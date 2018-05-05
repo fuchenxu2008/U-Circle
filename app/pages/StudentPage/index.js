@@ -1,6 +1,6 @@
 /**
  *
- * PeerPage
+ * StudentPage
  *
  */
 
@@ -18,14 +18,14 @@ import LoginHint from 'components/LoginHint';
 import NewQuestionForm from 'components/NewQuestionForm';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
-import { getPeerQuestions, addQuestion } from './actions';
-import './PeerPage.css';
+import { getStudentQuestions, addQuestion } from './actions';
+import './StudentPage.css';
 
-export class PeerPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class StudentPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = { showAddForm: false, showHint: false };
 
   componentDidMount() {
-    this.props.getPeerQuestions();
+    this.props.getStudentQuestions();
   }
 
   showForm = () => {
@@ -43,14 +43,14 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
     return (
       <div>
         <Helmet>
-          <title>PeerPage</title>
-          <meta name="description" content="Description of PeerPage" />
+          <title>StudentPage</title>
+          <meta name="description" content="Description of StudentPage" />
         </Helmet>
         <SearchBar searchType="academic" />
         <SearchResultCard key="key" />
         <br />
         <Row className="title-row">
-          <h2 className="big-title" style={{ flex: 1 }}>PeerPage</h2>
+          <h2 className="big-title" style={{ flex: 1 }}>StudentPage</h2>
           <AddButton handleClick={this.showForm} />
           <LoginHint
             visible={this.state.showHint}
@@ -67,20 +67,20 @@ export class PeerPage extends React.Component { // eslint-disable-line react/pre
           currentUser={this.props.currentUser}
         />
         <QuestionsList
-          type="peer"
-          questions={this.props.peerQuestions}
+          type="student"
+          questions={this.props.studentQuestions}
         />
       </div>
     );
   }
 }
 
-PeerPage.propTypes = {
+StudentPage.propTypes = {
   history: PropTypes.object,
   currentUser: PropTypes.object,
-  getPeerQuestions: PropTypes.func,
+  getStudentQuestions: PropTypes.func,
   addQuestion: PropTypes.func,
-  peerQuestions: PropTypes.object,
+  studentQuestions: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
@@ -88,21 +88,21 @@ const mapStateToProps = state => ({
     state.get('global').get('currentUser') === null
       ? null
       : state.get('global').get('currentUser').toJS(),
-  peerQuestions: state.get('peerPage').get('peerQuestions').toJS(),
+  studentQuestions: state.get('studentPage').get('studentQuestions').toJS(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPeerQuestions: () => dispatch(getPeerQuestions()),
+    getStudentQuestions: () => dispatch(getStudentQuestions()),
     addQuestion: fields => dispatch(addQuestion(fields)),
   };
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-const withReducer = injectReducer({ key: 'peerPage', reducer });
+const withReducer = injectReducer({ key: 'studentPage', reducer });
 
 export default compose(
   withReducer,
   withConnect,
-)(PeerPage);
+)(StudentPage);

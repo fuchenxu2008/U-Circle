@@ -4,7 +4,7 @@ const preservedState = ['global.currentUser', 'global.token'];
 
 export const loadState = () => {
   try {
-    const serializedState = localStorage.getItem('state');
+    const serializedState = localStorage.getItem('globalState');
     if (serializedState === null) {
       return undefined;
     }
@@ -16,8 +16,8 @@ export const loadState = () => {
 
 export const saveState = state => {
   try {
-    const stateToSave = pick(state, preservedState);
-    localStorage.setItem('state', JSON.stringify(stateToSave));
+    const stateToSave = { ...pick(state, preservedState).global };
+    localStorage.setItem('globalState', JSON.stringify(stateToSave));
   } catch (err) {
     console.log(`Write state to localStorage failed: ${err}`);
   }

@@ -84,9 +84,8 @@ module.exports = {
   },
 
   answerQuestion: (req, res) => {
-    const socket = req.app.get('socket');
-    const { content, answerer } = req.body;
-    const { id } = req.params;
+    const { content, answerer } = req.body; // Answer info
+    const { id } = req.params;  // Question id
     if (!content || !answerer || !id) return res.json({ message: 'Incomplete answer details!' });
     Answer.create({
       content,
@@ -94,27 +93,38 @@ module.exports = {
       answerer,
       question: id,
     }, (err, answer) => {
+      if (err || !answer) return res.status(400).send(err);
+      // Dumb populate answerer info
       User.findById(answerer, (err1, answererObj) => {
         if (err1 || !answererObj) return res.status(400).send(err1);
-        if (err || !answer) return res.json(err);
+        // Insert answer to the question
         Question.findById(id, (err2, oldQuestion) => {
           if (err2 || !oldQuestion) return res.status(400).send(err2);
+          // Update answers array of the question
           oldQuestion.set({ answer: oldQuestion.answer.concat(answer._id) });
           oldQuestion.save((err3, updatedQuestion) => {
             if (err3 || !updatedQuestion) return res.json(err3);
+            // Dumb populate various detail info of the question
             Question.findById(id)
             .populate('questioner', ['nickname', 'avatar', 'role'])
             .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
             .exec((err4, question) => {
               if (err4 || !question) return res.status(400).send(err4);
-              const notification = {
-                answerer: answererObj.nickname,
-                title: question.title,
-                questionId: question._id,
-              };
-              sendNotification({ target: question.questioner._id, notification, socket });
-              question.subscribers.forEach(subscriber => {
-                sendNotification({ target: subscriber, notification, socket });
+              // Send notification to all subscribers and question owner
+              sendNotification({
+                notification: {
+                  targetUsers: [
+                    question.questioner._id,  // Questioner id
+                    ...question.subscribers.filter(subscriber => subscriber.toString() !== answerer),  // Subscibers id
+                  ],
+                  fromUser: answererObj,  // Answerer model (front need nickname, db need id)
+                  relatedQuestion: { // Related question
+                    title: question.title,
+                    id: question._id,
+                    questioner: question.questioner,  // Questioner model
+                  },
+                },
+                socket: req.app.get('socket'),
               });
               return res.json({ question, message: 'Answer submitted' });
             });

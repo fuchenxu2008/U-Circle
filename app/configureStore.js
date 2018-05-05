@@ -9,7 +9,7 @@ import { routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunkMiddleware from 'redux-thunk';
 import createReducer from './reducers';
-import { saveState, loadState } from './utils/localStorage';
+import { saveState } from './utils/localStorage';
 
 export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
@@ -38,10 +38,9 @@ export default function configureStore(initialState = {}, history) {
       : compose;
   /* eslint-enable */
 
-  const persistedState = loadState();
   const store = createStore(
-    createReducer(),
-    fromJS(persistedState),
+    createReducer(null),
+    fromJS(initialState),
     composeEnhancers(...enhancers)
   );
 

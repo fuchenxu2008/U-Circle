@@ -61,3 +61,7 @@
 .ant-menu-submenu-arrow {
   display: none;
 }
+
+.ant-badge {
+  color: inherit;
+}

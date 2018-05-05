@@ -1,7 +1,7 @@
 const Question = require('../models/Question');
 
 module.exports = {
-  searchPeerQuestion: (req, res) => {
+  searchStudentQuestion: (req, res) => {
     const { type } = req.query;
     let { /* major, */ keyword } = req.query;
     // major = major.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

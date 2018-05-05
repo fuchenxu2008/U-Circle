@@ -41,9 +41,8 @@ class ResponsiveNav extends Component {
 
   render() {
     const MenuMarkup = this.props.menuMarkup;
-
     if (this.state.viewportWidth > this.props.mobileBreakPoint) {
-      return <MenuMarkup currentUser={this.props.currentUser} onLogOut={this.props.onLogOut} />;
+      return <MenuMarkup currentUser={this.props.currentUser} onLogOut={this.props.onLogOut} notiNum={this.props.notiNum} />;
     }
 
     return (
@@ -56,6 +55,7 @@ class ResponsiveNav extends Component {
             content={
               <MenuMarkup
                 currentUser={this.props.currentUser}
+                notiNum={this.props.notiNum}
                 onLogOut={this.props.onLogOut}
                 onLinkClick={() => this.handleMenuVisibility(false)}
                 mobileVersion
@@ -76,6 +76,7 @@ class ResponsiveNav extends Component {
 
 ResponsiveNav.propTypes = {
   currentUser: PropTypes.object,
+  notiNum: PropTypes.number,
   onLogOut: PropTypes.func,
   mobileBreakPoint: PropTypes.number,
   applyViewportChange: PropTypes.number,

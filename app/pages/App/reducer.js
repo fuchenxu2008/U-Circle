@@ -8,12 +8,18 @@ import {
   LOG_OUT,
   ESTABLISH_SOCKET,
   CLOSE_SOCKET,
+  GET_NOTIFICATION_FULFILLED,
 } from './constants';
+
+import { loadState } from '../../utils/localStorage';
+const persistedGlobalState = loadState();
 
 const initialState = fromJS({
   currentUser: null,
   token: null,
   socket: null,
+  notifications: [],
+  ...persistedGlobalState,
 });
 
 function globalReducer(state = initialState, action) {
@@ -22,6 +28,8 @@ function globalReducer(state = initialState, action) {
       return state.set('socket', fromJS(action.payload));
     case CLOSE_SOCKET:
       return state.set('socket', null);
+    case GET_NOTIFICATION_FULFILLED:
+      return state.set('notifications', fromJS(action.payload.data));
     case REGISTER_FULFILLED:
       return state
         .set('currentUser', fromJS(action.payload.data))
@@ -35,7 +43,8 @@ function globalReducer(state = initialState, action) {
     case LOG_OUT:
       return state
         .set('currentUser', null)
-        .set('token', null);
+        .set('token', null)
+        .set('notifications', fromJS([]));
     case UPLOAD_AVATAR_FULFILLED:
       return state.updateIn(['currentUser', 'avatar'], () => action.payload.data.avatar);
     default:

@@ -79,10 +79,10 @@ export class NormalLoginForm extends React.Component { // eslint-disable-line re
                 </FormItem>
                 <FormItem className="collection-create-form_last-form-item">
                   {getFieldDecorator('role', {
-                    initialValue: 'peer',
+                    initialValue: 'student',
                   })(
                     <RadioGroup>
-                      <Radio value="peer">Peer</Radio>
+                      <Radio value="student">Student</Radio>
                       <Radio value="alumni">Alumni</Radio>
                     </RadioGroup>
                   )}

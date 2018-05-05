@@ -1,6 +1,6 @@
 export function getAuthToken() {
   try {
-    const token = JSON.parse(localStorage.getItem('state')).global.token;
+    const token = JSON.parse(localStorage.getItem('globalState')).token;
     return token;
   } catch (err) {
     console.log(err);
