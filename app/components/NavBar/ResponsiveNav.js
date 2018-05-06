@@ -42,12 +42,15 @@ class ResponsiveNav extends Component {
   render() {
     const { menuMarkup, mobileBreakPoint, currentUser, onLogOut, notiNum, location } = this.props;
     const MenuMarkup = menuMarkup;
+
     if (this.state.viewportWidth > mobileBreakPoint) {
       return <MenuMarkup currentUser={currentUser} onLogOut={onLogOut} notiNum={notiNum} />;
     }
 
+    const navStyle = (location === '/' || location === '/me') ? 'transparent-bar' : '';
+
     return (
-      <Menu mode="horizontal" className={`mobile-navbar container ${location === '/' && 'transparent-bar'}`}>
+      <Menu mode="horizontal" className={`mobile-navbar container ${navStyle}`}>
         <Item key="logo">
           <Link to="/"><p className="logo-brand">U-CIRCLE</p></Link>
         </Item>

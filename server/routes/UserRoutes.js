@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('../middlewares/passport');
-const { changeAvatar, getAvatar, getUser } = require('../controllers/UserController');
+const { changeAvatar, getAvatar, getUser, getMyQuestions, getMyAnswers } = require('../controllers/UserController');
 
 router.post('/avatar', passport.authenticate('jwt', { session: false }), changeAvatar);
 router.get('/avatar/:id', getAvatar);
 router.get('/:id', getUser);
+router.get('/:id/questions', getMyQuestions);
+router.get('/:id/answers', getMyAnswers);
 
 module.exports = router;

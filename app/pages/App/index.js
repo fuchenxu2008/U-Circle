@@ -105,18 +105,16 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
           onLogOut={this.onLogOut}
           notiNum={notifications.filter(noti => noti.markRead === false).length}
         />
-        <div className="body-container">
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/auth" component={LoginPage} />
-            <Route path="/me" component={ProfilePage} />
-            <Route path="/alumni" component={AlumniPage} />
-            <Route path="/student" component={StudentPage} />
-            <Route path="/notification" component={NotificationPage} />
-            <Route path="/question/:id" component={QuestionDetail} />
-            <Route path="" component={NotFoundPage} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/auth" component={LoginPage} />
+          <Route path="/me" component={ProfilePage} />
+          <Route path="/alumni" component={AlumniPage} />
+          <Route path="/student" component={StudentPage} />
+          <Route path="/notification" component={NotificationPage} />
+          <Route path="/question/:id" component={QuestionDetail} />
+          <Route path="" component={NotFoundPage} />
+        </Switch>
       </div>
     );
   }

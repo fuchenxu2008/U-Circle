@@ -1,9 +1,11 @@
-.avatar-display {
-    width: 100%;
+.avatar-uploader>.ant-upload.ant-upload-select-picture-card {
+
+    border: none;
     border-radius: 50%;
+    background: none;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.411);
 }
 
-.ant-upload.ant-upload-select-picture-card {
-    /* border: none; */
-    border-radius: 50%;
+.avatar-uploader.ant-upload.ant-upload-select-picture-card.ant-upload span {
+  padding: 0;
 }

@@ -17,7 +17,7 @@ import reducer from './reducer';
 export class AlumniPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div>
+      <div className="body-container">
         <Helmet>
           <title>AlumniPage</title>
           <meta name="description" content="Description of AlumniPage" />

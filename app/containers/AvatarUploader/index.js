@@ -51,22 +51,25 @@ export class AvatarUploader extends React.Component { // eslint-disable-line rea
     if (!currentUser) return <h1>Loading...</h1>;
     const { avatar } = currentUser;
     const uploadButton = (
-      <div>
+      <div style={{ color: 'rgb(200, 200, 200)' }}>
         <Icon type={this.state.loading ? 'loading' : 'plus'} />
         <div className="ant-upload-text">Upload</div>
       </div>
     );
     return (
-      <Upload
-        name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        beforeUpload={beforeUpload}
-        customRequest={this.handleUpload}
-      >
-        {avatar ? <img src={avatar} alt="" className="avatar-display" /> : uploadButton}
-      </Upload>
+      <div>
+        <Upload
+          name="avatar"
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          beforeUpload={beforeUpload}
+          customRequest={this.handleUpload}
+          style={{ backgroundImage: `url(${avatar})`, backgroundSize: 'cover', borderRadius: '100%', backgroundPosition: 'top' }}
+        >
+          {avatar ? <div></div> : uploadButton}
+        </Upload>
+      </div>
     );
   }
 }

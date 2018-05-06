@@ -55,41 +55,43 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
     const { title, body, created_at, questioner, answer, images } = question;
     const isOwner = currentUser ? currentUser._id === questioner._id : false;
     return (
-      <div className="question-detailed">
-        <Button onClick={() => history.go(-1)} icon="left-circle" type="primary" ghost>Back</Button>
-        <br /><br />
-        <div className="detailed-userinfo">
-          <Avatar className="question-user-avatar" src={questioner.avatar} />
-          <b className="question-user-nickname">{questioner.nickname}</b>
-          {
-            isOwner &&
-            <Button
-              onClick={this.handleDeleteQuestion}
-              type="danger"
-              shape="circle"
-              ghost
-              style={{ float: 'right' }}
-            >
-              <Icon type="delete" />
-            </Button>
-          }
-        </div>
-        <div>
-          <h4><b>{title}</b></h4>
-          <Divider />
-          <p className="question-detail-body">{body}</p>
-          <div>
+      <div className="body-container">
+        <div className="question-detailed">
+          <Button onClick={() => history.go(-1)} icon="left-circle" type="primary" ghost>Back</Button>
+          <br /><br />
+          <div className="detailed-userinfo">
+            <Avatar className="question-user-avatar" src={questioner.avatar} />
+            <b className="question-user-nickname">{questioner.nickname}</b>
             {
-              images.map(img => (
-                <img key={img} src={img} alt="" className="question-detail-img" />
-              ))
+              isOwner &&
+              <Button
+                onClick={this.handleDeleteQuestion}
+                type="danger"
+                shape="circle"
+                ghost
+                style={{ float: 'right' }}
+              >
+                <Icon type="delete" />
+              </Button>
             }
           </div>
-          <Divider />
-          <small>{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
+          <div>
+            <h4><b>{title}</b></h4>
+            <Divider />
+            <p className="question-detail-body">{body}</p>
+            <div>
+              {
+                images.map(img => (
+                  <img key={img} src={img} alt="" className="question-detail-img" />
+                ))
+              }
+            </div>
+            <Divider />
+            <small>{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
+          </div>
+          <AnswersList answers={answer} onDeleteAnswer={this.handleDeleteAnswer} />
+          <AnswerInput position="bottom" onAnswer={this.handleSubmitAnswer} />
         </div>
-        <AnswersList answers={answer} onDeleteAnswer={this.handleDeleteAnswer} />
-        <AnswerInput position="bottom" onAnswer={this.handleSubmitAnswer} />
       </div>
     );
   }

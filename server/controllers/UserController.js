@@ -3,6 +3,8 @@
 const path = require('path');
 const { unlink } = require('fs');
 const User = require('../models/User');
+const Question = require('../models/Question');
+const Answer = require('../models/Answer');
 const { uploadAvatar } = require('../middlewares/multer');
 
 module.exports = {
@@ -32,4 +34,19 @@ module.exports = {
       res.status(400).send(err);
     }
   },
+
+  getMyQuestions: (req, res) => {
+    const { id } = req.params;
+    Question.find({ questioner: id })
+      .then(questions => res.json(questions))
+      .catch(err => res.status(400).send(err));
+  },
+
+  getMyAnswers: (req, res) => {
+    const { id } = req.params;
+    Answer.find({ answerer: id })
+      .then(answers => res.json(answers))
+      .catch(err => res.status(400).send(err));
+  },
+
 };

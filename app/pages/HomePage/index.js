@@ -35,7 +35,7 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
 
   render() {
     return (
-      <div>
+      <div className="body-container">
         <Helmet>
           <title>HomePage</title>
           <meta name="description" content="Description of HomePage" />

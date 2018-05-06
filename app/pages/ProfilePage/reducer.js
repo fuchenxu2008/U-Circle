@@ -6,15 +6,21 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  GET_MY_QUESTIONS_FULFILLED,
+  GET_MY_ANSWERS_FULFILLED,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  myQuestions: [],
+  myAnswers: [],
+});
 
 function profilePageReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case GET_MY_QUESTIONS_FULFILLED:
+      return state.set('myQuestions', fromJS(action.payload.data));
+    case GET_MY_ANSWERS_FULFILLED:
+      return state.set('myAnswers', fromJS(action.payload.data));
     default:
       return state;
   }

@@ -17,12 +17,14 @@ import './LoginPage.css';
 export class LoginPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div className="LoginFormStyle">
+      <div className="body-container">
         <Helmet>
           <title>LoginPage</title>
           <meta name="description" content="Description of LoginPage" />
         </Helmet>
-        <LoginForm mode="login" />
+        <div className="LoginFormStyle">
+          <LoginForm mode="login" />
+        </div>
       </div>
     );
   }

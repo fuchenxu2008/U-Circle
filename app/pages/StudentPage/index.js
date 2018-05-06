@@ -41,7 +41,7 @@ export class StudentPage extends React.Component { // eslint-disable-line react/
 
   render() {
     return (
-      <div>
+      <div className="body-container">
         <Helmet>
           <title>StudentPage</title>
           <meta name="description" content="Description of StudentPage" />

@@ -27,7 +27,7 @@ export class NotificationPage extends React.Component { // eslint-disable-line r
     )).sort((x, y) => (x === y) ? 0 : x ? 1 : -1);  /* eslint no-nested-ternary: 0 */
 
     return (
-      <div>
+      <div className="body-container">
         <Helmet>
           <title>Notification Center</title>
           <meta name="description" content="Description of NotificationCenter" />
