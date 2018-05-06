@@ -78,7 +78,14 @@ module.exports = {
       (err, question) => {
         if (err) return res.status(400).send(err);
         if (!question) return res.status(404).json({ message: 'Question not found!' });
-        return res.json({ question, message: 'Post deleted!' });
+        Answer.find({ question: question._id }, (err1, answer) => {
+          if (err1) return res.status(400).send(err1);
+          if (!answer) return res.status(404).json({ message: 'Answer not found!' });
+          Notification.find({ relatedQuestion: question._id }, (err2, noti) => {
+            if (err2) return res.status(400).send(err2);
+            if (!noti) return res.status(404).json({ message: 'Notification not found!' });
+          });
+        });
       }
     );
   },
