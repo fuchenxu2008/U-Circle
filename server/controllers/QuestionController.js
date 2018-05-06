@@ -5,6 +5,7 @@ const path = require('path');
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 const User = require('../models/User');
+const Notification = require('../models/Notification');
 const { uploadPostImg } = require('../middlewares/multer');
 const { sendNotification } = require('./NotificationController');
 
