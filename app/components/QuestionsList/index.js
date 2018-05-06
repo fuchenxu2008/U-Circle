@@ -16,6 +16,8 @@ export class QuestionsList extends React.Component { // eslint-disable-line reac
       <Question
         key={question._id}
         question={question}
+        onSubscribeQuestion={this.props.onSubscribeQuestion}
+        currentUser={this.props.currentUser}
       />
     ));
 
@@ -31,6 +33,8 @@ export class QuestionsList extends React.Component { // eslint-disable-line reac
 
 QuestionsList.propTypes = {
   questions: PropTypes.object,
+  onSubscribeQuestion: PropTypes.func,
+  currentUser: PropTypes.object,
 };
 
 export default QuestionsList;

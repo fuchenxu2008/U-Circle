@@ -24,7 +24,7 @@ export class AlumniPage extends React.Component { // eslint-disable-line react/p
         </Helmet>
         <SearchBar searchType="occupational" />
         <br />
-        <h2>AlumniPage</h2>
+        <h2 className="big-title">Alumni Page</h2>
       </div>
     );
   }

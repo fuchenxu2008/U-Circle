@@ -16,6 +16,7 @@ import {
   GET_STUDENT_QUESTIONS_REJECTED,
   SUBMIT_NEW_STUDENT_QUESTION_FULFILLED,
   SUBMIT_NEW_STUDENT_QUESTION_REJECTED,
+  SUBSCRIBE_QUESTION_FULFILLED,
 } from './constants';
 
 const initialState = fromJS({
@@ -47,6 +48,12 @@ function studentPageReducer(state = initialState, action) {
     case DELETE_QUESTION_REJECTED:
       console.log(action.payload);
       return state;
+    case SUBSCRIBE_QUESTION_FULFILLED:
+      return state.updateIn(['studentQuestions'], list =>
+        list.merge({
+          [action.payload.data._id]: action.payload.data,
+        })
+      );
     default:
       return state;
   }

@@ -30,8 +30,20 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
     this.setState({ showPreview: false });
   }
 
+  handleSubscribeQuestion = () => {
+    const { onSubscribeQuestion, history, currentUser, question } = this.props;
+    if (currentUser) {
+      onSubscribeQuestion({ userId: currentUser._id, questionId: question._id });
+    } else {
+      history.push('/auth');
+    }
+  }
+
   render() {
-    const { title, created_at, questioner, _id, images } = this.props.question;
+    const { history, question, currentUser } = this.props;
+    const { title, created_at, questioner, _id, images, subscribers } = question;
+    const showAsSubscribed = currentUser ? subscribers.includes(currentUser._id) : false;
+
     return (
       <Row className="question">
         <Row className="question-info">
@@ -62,13 +74,16 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
               footer={null}
               onCancel={this.handleCancelPreview}
             >
-              <img alt="example" style={{ width: '100%' }} src={this.state.previewImg} />
+              <img alt="" style={{ width: '100%' }} src={this.state.previewImg} />
             </Modal>
           </div>
         </div>
         <Row className="question-action">
-          <Button ghost icon="bulb" className="question-action-btn" onClick={() => this.props.history.push(`/question/${_id}`)}>Answer</Button>
-          <Button ghost icon="star-o" className="question-action-btn" onClick={() => {}}>Subscribe</Button>
+          <Button ghost icon="bulb" className="question-action-btn" onClick={() => history.push(`/question/${_id}`)}>Answer</Button>
+          {
+            !showAsSubscribed &&
+            <Button ghost icon="star-o" className="question-action-btn" onClick={this.handleSubscribeQuestion}>Subscribe</Button>
+          }
         </Row>
       </Row>
     );
@@ -78,6 +93,8 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
 Question.propTypes = {
   question: PropTypes.object,
   history: PropTypes.object,
+  onSubscribeQuestion: PropTypes.func,
+  currentUser: PropTypes.object,
 };
 
 export default withRouter(Question);

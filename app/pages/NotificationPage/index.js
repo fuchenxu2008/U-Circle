@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import Notification from 'components/Notification';
 import { markNotiAsRead } from '../App/actions';
+import './NotificationPage.css';
 
 export class NotificationPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -32,7 +33,7 @@ export class NotificationPage extends React.Component { // eslint-disable-line r
           <title>Notification Center</title>
           <meta name="description" content="Description of NotificationCenter" />
         </Helmet>
-        <h2>Notification Center</h2>
+        <h2 className="big-title mb-20">Notification Center</h2>
         { myNotifications }
       </div>
     );

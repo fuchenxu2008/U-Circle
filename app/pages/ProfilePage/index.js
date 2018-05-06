@@ -15,7 +15,7 @@ import MyQuestion from 'components/MyQuestion';
 import MyAnswer from 'components/MyAnswer';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
-import { getMyQuestions, getMyAnswers } from './actions';
+import { getMyQuestions, getMyAnswers, getMySubscription } from './actions';
 import './ProfilePage.css';
 
 export class ProfilePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -24,11 +24,12 @@ export class ProfilePage extends React.Component { // eslint-disable-line react/
     if (currentUser) {
       this.props.getMyQuestions(currentUser._id);
       this.props.getMyAnswers(currentUser._id);
+      this.props.getMySubscription(currentUser._id);
     }
   }
 
   render() {
-    const { currentUser, myQuestions, myAnswers } = this.props;
+    const { currentUser, myQuestions, myAnswers, mySubscription, notifications, history } = this.props;
     if (!currentUser) return <Redirect to="/auth" />;
 
     const myQuestionsList = myQuestions.map(question => <MyQuestion key={question._id} question={question} />);
@@ -46,33 +47,39 @@ export class ProfilePage extends React.Component { // eslint-disable-line react/
               <li className="profile-list-item">
                 <Icon type="question-circle-o" className="profile-list-item-icon" /><br />
                 <small>Questions</small><br />
-                <span>1</span>
+                <span>{myQuestions.length}</span>
               </li>
               <li className="profile-list-item">
                 <Icon type="solution" className="profile-list-item-icon" /><br />
                 <small>Answers</small><br />
-                <span>1</span>
+                <span>{myAnswers.length}</span>
               </li>
-              <li className="profile-list-item">
+              <li className="profile-list-item" onClick={() => history.push('/notification')}>
                 <Icon type="notification" className="profile-list-item-icon" /><br />
                 <small>Alerts</small><br />
-                <span>1</span>
+                <span>{notifications.filter(noti => !noti.markRead).length}</span>
               </li>
               <li className="profile-list-item">
                 <Icon type="star-o" className="profile-list-item-icon" /><br />
                 <small>Subscribed</small><br />
-                <span>1</span>
+                <span>{mySubscription.length}</span>
               </li>
             </ul>
           </div>
         </div>
         <div className="profile-detail-container">
-          <div className="profile-about">
-            <h3>MY QUESTIONS</h3>
+          <div className="profile-my-questions">
+            <div className="profile-detail-title-row">
+              <h3>MY QUESTIONS</h3>
+              <div>See All &gt;</div>
+            </div>
             {myQuestionsList}
           </div>
-          <div className="profile-my-questions">
-            <h3>MY ANSWERS</h3>
+          <div className="profile-my-answers">
+            <div className="profile-detail-title-row">
+              <h3>MY ANSWERS</h3>
+              <div>See All &gt;</div>
+            </div>
             {myAnswersList}
           </div>
         </div>
@@ -83,10 +90,14 @@ export class ProfilePage extends React.Component { // eslint-disable-line react/
 
 ProfilePage.propTypes = {
   currentUser: PropTypes.object,
+  notifications: PropTypes.arrayOf(PropTypes.object),
   myQuestions: PropTypes.arrayOf(PropTypes.object),
   myAnswers: PropTypes.arrayOf(PropTypes.object),
+  mySubscription: PropTypes.arrayOf(PropTypes.object),
+  getMySubscription: PropTypes.func,
   getMyQuestions: PropTypes.func,
   getMyAnswers: PropTypes.func,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
@@ -94,14 +105,17 @@ const mapStateToProps = state => ({
     state.get('global').get('currentUser') === null
       ? null
       : state.get('global').get('currentUser').toJS(),
+  notifications: state.get('global').get('notifications').toJS(),
   myQuestions: state.get('profilePage').get('myQuestions').toJS(),
   myAnswers: state.get('profilePage').get('myAnswers').toJS(),
+  mySubscription: state.get('profilePage').get('mySubscription').toJS(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     getMyQuestions: id => dispatch(getMyQuestions(id)),
     getMyAnswers: id => dispatch(getMyAnswers(id)),
+    getMySubscription: id => dispatch(getMySubscription(id)),
   };
 }
 

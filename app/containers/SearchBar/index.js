@@ -55,7 +55,7 @@ export class SearchBar extends React.Component { // eslint-disable-line react/pr
   render() {
     return (
       <div>
-        <InputGroup compact>
+        <InputGroup compact className="searchbar">
           <Input
             style={{ width: '30%' }}
             placeholder="Major"

@@ -7,10 +7,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import './MyAnswer.css';
 
 function MyAnswer({ answer }) {
   return (
-    <div>
+    <div className="my-answer-card">
       {answer.content}
     </div>
   );

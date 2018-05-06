@@ -29,6 +29,10 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
     window.removeEventListener('resize', this.saveViewportDimensions);
   }
 
+  onGetStarted = () => {
+    this.props.history.push('/auth');
+  }
+
   saveViewportDimensions = throttle(() => {
     this.setState({ bgStyle: document.body.clientWidth / document.body.clientHeight > 0.8 ? 'wideSize' : 'narrowSize' });
   }, 250);
@@ -46,7 +50,7 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
           <p>This platform is dedicated to solving your occupational and academic problems. Just ask your question here and get answer from alumni and peer students. This may not be the most confirming, but the most considerable for XJTLUer.</p>
         </div>
         <div className="bottom-section">
-          <Button type="primary" size="large" className="start-btn">Get Started</Button>
+          <Button type="primary" size="large" className="start-btn" onClick={this.onGetStarted}>Get Started</Button>
         </div>
       </div>
     );
@@ -54,7 +58,7 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
 }
 
 HomePage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = state => ({

@@ -18,7 +18,7 @@ import LoginHint from 'components/LoginHint';
 import NewQuestionForm from 'components/NewQuestionForm';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
-import { getStudentQuestions, addQuestion } from './actions';
+import { getStudentQuestions, addQuestion, subscribeQuestion } from './actions';
 import './StudentPage.css';
 
 export class StudentPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -39,9 +39,13 @@ export class StudentPage extends React.Component { // eslint-disable-line react/
 
   handleAddQuestion = question => this.props.addQuestion(question);
 
+  handleSubscribeQuestion = ({ userId, questionId }) => {
+    this.props.subscribeQuestion({ userId, questionId });
+  }
+
   render() {
     return (
-      <div className="body-container">
+      <div className="body-container studentpage-bg">
         <Helmet>
           <title>StudentPage</title>
           <meta name="description" content="Description of StudentPage" />
@@ -50,7 +54,7 @@ export class StudentPage extends React.Component { // eslint-disable-line react/
         <SearchResultCard key="key" />
         <br />
         <Row className="title-row">
-          <h2 className="big-title" style={{ flex: 1 }}>StudentPage</h2>
+          <h2 className="big-title" style={{ flex: 1 }}>Student Page</h2>
           <AddButton handleClick={this.showForm} />
           <LoginHint
             visible={this.state.showHint}
@@ -69,6 +73,8 @@ export class StudentPage extends React.Component { // eslint-disable-line react/
         <QuestionsList
           type="student"
           questions={this.props.studentQuestions}
+          onSubscribeQuestion={this.handleSubscribeQuestion}
+          currentUser={this.props.currentUser}
         />
       </div>
     );
@@ -80,6 +86,7 @@ StudentPage.propTypes = {
   currentUser: PropTypes.object,
   getStudentQuestions: PropTypes.func,
   addQuestion: PropTypes.func,
+  subscribeQuestion: PropTypes.func,
   studentQuestions: PropTypes.object,
 };
 
@@ -95,6 +102,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getStudentQuestions: () => dispatch(getStudentQuestions()),
     addQuestion: fields => dispatch(addQuestion(fields)),
+    subscribeQuestion: info => dispatch(subscribeQuestion(info)),
   };
 }
 

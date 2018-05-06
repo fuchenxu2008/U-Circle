@@ -20,3 +20,7 @@ export function addQuestion(question) {
   }
   return axios.post(`${ROOT_URL}/api/question`, formData, getAuthHeader());
 }
+
+export function subscribeQuestion({ userId, questionId }) {
+  return axios.put(`${ROOT_URL}/api/question/subscribe/${questionId}`, { userId }, getAuthHeader());
+}

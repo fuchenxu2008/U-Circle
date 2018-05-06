@@ -49,4 +49,11 @@ module.exports = {
       .catch(err => res.status(400).send(err));
   },
 
+  getMySubscription: (req, res) => {
+    const { id } = req.params;
+    Question.find({ subscribers: id })
+      .then(questions => res.json(questions))
+      .catch(err => res.status(400).send(err));
+  },
+
 };

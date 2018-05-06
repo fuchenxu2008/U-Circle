@@ -5,9 +5,9 @@ import { getAuthHeader } from '../../authMiddleware';
 
 export function searchQuestion(searchPhrase) {
   return axios.get(
-    `${ROOT_URL}/api/search?type=${escape(searchPhrase.type)}&major=${escape(
+    `${ROOT_URL}/api/search?type=${encodeURIComponent(searchPhrase.type)}&major=${encodeURIComponent(
       searchPhrase.major
-    )}&keyword=${escape(searchPhrase.keyword)}`,
+    )}&keyword=${encodeURIComponent(searchPhrase.keyword)}`,
     getAuthHeader()
   );
 }

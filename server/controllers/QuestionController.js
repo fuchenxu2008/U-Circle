@@ -134,6 +134,39 @@ module.exports = {
     });
   },
 
+  subscribeQuestion: (req, res) => {
+    const { userId } = req.body;
+    Question.findById(req.params.id)
+      .then(question => {
+        question.set({
+          subscribers: question.subscribers.concat(userId),
+        });
+        question
+          .save()
+          .then(updatedQuestion => res.json(updatedQuestion))
+          .catch(err => res.status(400).send(err));
+      })
+      .catch(err => res.status(400).send(err));
+  },
+
+  pickBestAnswer: (req, res) => {
+    const { answerId } = req.body;
+    Question.findById(req.params.id)
+      .then(question => {
+        if (question.bestAnswer) {
+          return res.status(400).json({ message: 'Best answer already selected!' });
+        }
+        question.set({
+          bestAnswer: answerId,
+        });
+        question
+          .save()
+          .then(updatedQuestion => res.json(updatedQuestion))
+          .catch(err => res.status(400).send(err));
+      })
+      .catch(err => res.status(400).send(err));
+  },
+
   getQuestionImages: (req, res) => {
     try {
       res.sendFile(path.join(global.__root, `storage/post-img/${req.params.id}`));
