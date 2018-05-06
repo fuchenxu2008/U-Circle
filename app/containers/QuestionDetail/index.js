@@ -21,7 +21,8 @@ import './QuestionDetail.css';
 export class QuestionDetail extends React.Component { // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
     const id = this.props.match.params.id;
-    this.props.getQuestion(id);
+    this.props.getQuestion(id)
+      .catch(() => this.props.history.goBack());
   }
 
   componentWillUnmount() {
@@ -36,15 +37,18 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
   handleSubmitAnswer = fields => {
     const { currentUser } = this.props;
     if (!currentUser) return message.info('Log in first');
-    return this.props.answerQuestion({
-      content: fields.content,
-      answerer: currentUser._id,
-      questionId: this.props.question._id,
-    });
+    return this.props
+      .answerQuestion({
+        content: fields.content,
+        answerer: currentUser._id,
+        questionId: this.props.question._id,
+      })
+      .catch(() => this.props.history.goBack());
   }
 
   handleDeleteAnswer = id => {
-    this.props.deleteAnswer(id);
+    this.props.deleteAnswer(id)
+      .catch(() => this.props.history.goBack());
   }
 
   render() {

@@ -26,6 +26,7 @@ export class StudentPage extends React.Component { // eslint-disable-line react/
 
   componentDidMount() {
     this.props.getStudentQuestions();
+    this.props.socket.on('data', () => this.props.getStudentQuestions());
   }
 
   showForm = () => {
@@ -88,6 +89,7 @@ StudentPage.propTypes = {
   addQuestion: PropTypes.func,
   subscribeQuestion: PropTypes.func,
   studentQuestions: PropTypes.object,
+  socket: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
@@ -96,6 +98,7 @@ const mapStateToProps = state => ({
       ? null
       : state.get('global').get('currentUser').toJS(),
   studentQuestions: state.get('studentPage').get('studentQuestions').toJS(),
+  socket: state.get('global').get('socket'),
 });
 
 function mapDispatchToProps(dispatch) {

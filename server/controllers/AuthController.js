@@ -39,6 +39,7 @@ module.exports = {
     if (!user.credit) {
       await User.findByIdAndUpdate(user.id, { credit: 200 }, { new: true }, (err, updatedUser) => {
         if (err) return res.status(400).send(err);
+        if (!updatedUser) return res.status(404).json({ message: 'No user found!' });
         user = Object.assign({}, updatedUser);
       });
     }

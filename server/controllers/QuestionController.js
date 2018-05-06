@@ -39,6 +39,7 @@ module.exports = {
       if (!type || !title || !body || !questioner) return res.json({ message: 'Incomplete question!' });
       User.findById(questioner, (err1, questionerUser) => {
         if (err1) return res.status(400).send(err1);
+        if (!questionerUser) return res.status(404).json({ message: 'No user found!' });
         /* eslint-disable no-param-reassign */
         questionerUser.credit -= 10;
         questionerUser.save(err2 => {
@@ -51,7 +52,12 @@ module.exports = {
               Question.findById(newQuestion._id)
                 .populate('questioner', ['nickname', 'avatar', 'role'])
                 .exec((err4, question) => {
-                  if (err4 || !question) return res.status(400).send(err4);
+                  if (err4) return res.status(400).send(err4);
+                  if (!question) return res.status(404).json({ message: 'No question found!' });
+
+                  // Emit socket to force refetch
+                  req.app.get('socket').emit('data', 'New question!');
+
                   return res.json({ question, message: 'Post created!' });
                 });
             }
@@ -75,20 +81,17 @@ module.exports = {
   },
 
   deleteQuestion: (req, res) => {
-    Question.findByIdAndRemove(req.body.id,
-      (err, question) => {
-        if (err) return res.status(400).send(err);
-        if (!question) return res.status(404).json({ message: 'Question not found!' });
-        Answer.find({ question: question._id }, (err1, answer) => {
-          if (err1) return res.status(400).send(err1);
-          if (!answer) return res.status(404).json({ message: 'Answer not found!' });
-          Notification.find({ relatedQuestion: question._id }, (err2, noti) => {
-            if (err2) return res.status(400).send(err2);
-            if (!noti) return res.status(404).json({ message: 'Notification not found!' });
-          });
+    Question.findByIdAndRemove(req.body.id, (err, question) => {
+      if (err) return res.status(400).send(err);
+      if (!question) return res.status(404).json({ message: 'Question not found!' });
+      Answer.remove({ question: question._id }, err1 => {
+        if (err1) return res.status(400).send(err1);
+        Notification.remove({ relatedQuestion: question._id }, err2 => {
+          if (err2) return res.status(400).send(err2);
+          return res.json({ message: 'Question deleted.', question });
         });
-      }
-    );
+      });
+    });
   },
 
   answerQuestion: (req, res) => {
@@ -104,20 +107,23 @@ module.exports = {
       if (err || !answer) return res.status(400).send(err);
       // Dumb populate answerer info
       User.findById(answerer, (err1, answererObj) => {
-        if (err1 || !answererObj) return res.status(400).send(err1);
+        if (err1) return res.status(400).send(err1);
+        if (!answererObj) return res.status(404).json({ message: 'No answerer found!' });
         // Insert answer to the question
         Question.findById(id, (err2, oldQuestion) => {
-          if (err2 || !oldQuestion) return res.status(400).send(err2);
+          if (err2) return res.status(400).send(err2);
+          if (!oldQuestion) return res.status(404).json({ message: 'No question found!' });
           // Update answers array of the question
           oldQuestion.set({ answer: oldQuestion.answer.concat(answer._id) });
-          oldQuestion.save((err3, updatedQuestion) => {
-            if (err3 || !updatedQuestion) return res.json(err3);
+          oldQuestion.save(err3 => {
+            if (err3) return res.json(err3);
             // Dumb populate various detail info of the question
             Question.findById(id)
             .populate('questioner', ['nickname', 'avatar', 'role'])
             .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
             .exec((err4, question) => {
-              if (err4 || !question) return res.status(400).send(err4);
+              if (err4) return res.status(400).send(err4);
+              if (!question) return res.status(404).json({ message: 'No question found!' });
               // Send notification to all subscribers and question owner
               sendNotification({
                 notification: {
@@ -146,6 +152,7 @@ module.exports = {
     const { userId } = req.body;
     Question.findById(req.params.id)
       .then(question => {
+        if (!question) return res.status(404).json({ message: 'No question found!' });
         question.set({
           subscribers: question.subscribers.concat(userId),
         });
@@ -161,6 +168,7 @@ module.exports = {
     const { answerId } = req.body;
     Question.findById(req.params.id)
       .then(question => {
+        if (!question) return res.status(404).json({ message: 'No question found!' });
         if (question.bestAnswer) {
           return res.status(400).json({ message: 'Best answer already selected!' });
         }

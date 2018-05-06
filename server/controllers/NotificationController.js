@@ -32,7 +32,8 @@ module.exports = {
       .populate('fromUser', ['nickname', 'avatar', 'role'])
       .populate({ path: 'relatedQuestion', populate: { path: 'questioner', select: ['avatar', 'nickname', 'id'] } })
       .then(notifications => {
-        res.json(notifications);
+        if (!notifications) return res.status(404).json({ message: 'No notification found!' });
+        return res.json(notifications);
       })
       .catch(err => res.status(400).send(err));
   },
@@ -41,12 +42,13 @@ module.exports = {
     const { userId, questionId } = req.body;
     return Notification.find({ targetUser: userId, relatedQuestion: questionId })
       .then(notifications => {
+        if (!notifications) return res.status(404).json({ message: 'No notification found!' });
         notifications.forEach(notification => {
           notification.set({ markRead: true });
           notification.save()
             .catch(err => res.status(400).send(err));
         });
-        res.json({ userId, questionId, notifications });
+        return res.json({ userId, questionId, notifications });
       })
       .catch(err => res.status(400).send(err));
   },
