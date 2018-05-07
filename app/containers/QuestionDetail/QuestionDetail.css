@@ -22,3 +22,12 @@
 .question-detail-body {
     color: rgb(71, 71, 71);
 }
+
+.bestanswer-card {
+    border: none;
+    border-radius: 15px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding: 5px 20px 5px 20px;
+    box-shadow: 0 3px 25px rgb(232, 232, 232);
+}

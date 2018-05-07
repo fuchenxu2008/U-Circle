@@ -44,13 +44,19 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
           <title>HomePage</title>
           <meta name="description" content="Description of HomePage" />
         </Helmet>
-        <div className="homepage"></div>
+        <div className="homepage" />
         <div className="home-banner">
           <h1 className="home-banner-title">U-CIRCLE</h1>
-          <p>This platform is dedicated to solving your occupational and academic problems. Just ask your question here and get answer from alumni and peer students. This platform may not be the most confirming, but is the most considerable for XJTLUer.</p>
+          <p>
+            This platform is dedicated to answering your enquirers regarding
+            academic studies and occupational queries. Share your questions
+            and answers with our alumni and students.{' '}
+          </p>
         </div>
         <div className="bottom-section">
-          <Button type="primary" size="large" className="start-btn" onClick={this.onGetStarted}>Get Started</Button>
+          <Button type="primary" size="large" className="start-btn" onClick={this.onGetStarted}>
+            Get Started
+          </Button>
         </div>
       </div>
     );

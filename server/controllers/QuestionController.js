@@ -23,6 +23,7 @@ module.exports = {
 
   getQuestion: (req, res) => {
     Question.findById(req.params.id)
+    .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
     .populate('questioner', ['nickname', 'avatar', 'role'])
     .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
     .exec((err, question) => {
@@ -119,6 +120,7 @@ module.exports = {
             if (err3) return res.json(err3);
             // Dumb populate various detail info of the question
             Question.findById(id)
+            .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
             .populate('questioner', ['nickname', 'avatar', 'role'])
             .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
             .exec((err4, question) => {
@@ -153,12 +155,27 @@ module.exports = {
     Question.findById(req.params.id)
       .then(question => {
         if (!question) return res.status(404).json({ message: 'No question found!' });
-        question.set({
-          subscribers: question.subscribers.concat(userId),
-        });
+        // Judge if already subscribed, if not => subscribe, else => unsubcribe!
+        const subscribed = question.subscribers.map(subscriber => subscriber.toString()).includes(userId);
+        if (subscribed) {
+          question.set({
+            subscribers: question.subscribers.filter(subscriber => subscriber.toString() !== userId),
+          });
+        } else {
+          question.set({
+            subscribers: question.subscribers.concat(userId),
+          });
+        }
         question
           .save()
-          .then(updatedQuestion => res.json(updatedQuestion))
+          .then(updatedQuestion => {
+            Question.populate(updatedQuestion, {
+              path: 'questioner',
+              select: ['avatar', 'nickname', 'role', '_id'],
+            })
+              .then(populatedQuestion => res.json(populatedQuestion))
+              .catch(err => res.status(400).send(err));
+          })
           .catch(err => res.status(400).send(err));
       })
       .catch(err => res.status(400).send(err));
@@ -169,6 +186,7 @@ module.exports = {
     Question.findById(req.params.id)
       .then(question => {
         if (!question) return res.status(404).json({ message: 'No question found!' });
+        // If best answer picked already, abort and alert user
         if (question.bestAnswer) {
           return res.status(400).json({ message: 'Best answer already selected!' });
         }
@@ -177,7 +195,14 @@ module.exports = {
         });
         question
           .save()
-          .then(updatedQuestion => res.json(updatedQuestion))
+          .then(updatedQuestion => {
+            Question.findById(updatedQuestion._id)
+              .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
+              .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
+              .populate({ path: 'questioner', select: ['avatar', 'nickname', 'role', '_id'] })
+              .then(populatedQuestion => res.json(populatedQuestion))
+              .catch(err => res.status(400).send(err));
+          })
           .catch(err => res.status(400).send(err));
       })
       .catch(err => res.status(400).send(err));

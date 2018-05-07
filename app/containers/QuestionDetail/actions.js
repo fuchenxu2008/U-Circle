@@ -10,6 +10,7 @@ import {
   CLEAR_DETAIL_PAGE,
   ANSWER_QUESTION,
   DELETE_ANSWER,
+  PICK_ANSWER,
 } from './constants';
 import * as api from './api';
 
@@ -44,5 +45,12 @@ export function deleteAnswer(id) {
   return {
     type: DELETE_ANSWER,
     payload: api.deleteAnswer(id),
+  };
+}
+
+export function pickAnswer(questionId, answerId) {
+  return {
+    type: PICK_ANSWER,
+    payload: api.pickAnswer(questionId, answerId),
   };
 }

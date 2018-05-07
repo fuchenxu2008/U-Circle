@@ -15,7 +15,7 @@ import injectReducer from 'utils/injectReducer';
 import AnswerInput from 'components/AnswerInput';
 import AnswersList from 'components/AnswersList';
 import reducer from './reducer';
-import { getQuestion, deleteQuestion, clearDetailPage, answerQuestion, deleteAnswer } from './actions';
+import { getQuestion, deleteQuestion, clearDetailPage, answerQuestion, deleteAnswer, pickAnswer } from './actions';
 import './QuestionDetail.css';
 
 export class QuestionDetail extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -51,12 +51,17 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
       .catch(() => this.props.history.goBack());
   }
 
+  handlePickAnswer = (questionId, answerId) => {
+    this.props.pickAnswer(questionId, answerId)
+      .catch(() => this.props.history.goBack());
+  }
+
   render() {
     const { question, currentUser } = this.props;
     if (!question) {
       return <h3>Loading...</h3>;
     }
-    const { title, body, created_at, questioner, answer, images } = question;
+    const { title, body, created_at, questioner, answer, images, bestAnswer } = question;
     const isOwner = currentUser ? currentUser._id === questioner._id : false;
     return (
       <div className="body-container">
@@ -84,16 +89,34 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
             <Divider />
             <p className="question-detail-body">{body}</p>
             <div>
-              {
-                images.map(img => (
-                  <img key={img} src={img} alt="" className="question-detail-img" />
-                ))
-              }
+              {images.map(img => (
+                <img key={img} src={img} alt="" className="question-detail-img" />
+              ))}
             </div>
             <Divider />
             <small>{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
           </div>
-          <AnswersList answers={answer} onDeleteAnswer={this.handleDeleteAnswer} />
+          {
+            bestAnswer &&
+            <div className="bestanswer-card">
+              <h3>Best Answer</h3>
+              <div className="answer-wrapper" style={{ marginBottom: 0 }}>
+                <Avatar className="question-user-avatar" src={bestAnswer.answerer.avatar} />
+                <div className="answer-detail">
+                  <b>{bestAnswer.answerer.nickname}</b>
+                  <p className="answer-body">{bestAnswer.content}</p>
+                </div>
+              </div>
+            </div>
+          }
+          <AnswersList
+            bestAnswer={bestAnswer}
+            answers={answer}
+            onDeleteAnswer={this.handleDeleteAnswer}
+            currentQuestion={question}
+            currentUser={currentUser}
+            onPickAnswer={this.handlePickAnswer}
+          />
           <AnswerInput position="bottom" onAnswer={this.handleSubmitAnswer} />
         </div>
       </div>
@@ -107,6 +130,7 @@ QuestionDetail.propTypes = {
   deleteQuestion: PropTypes.func,
   clearDetailPage: PropTypes.func,
   answerQuestion: PropTypes.func,
+  pickAnswer: PropTypes.func,
   question: PropTypes.object,
   history: PropTypes.object,
   currentUser: PropTypes.object,
@@ -128,6 +152,7 @@ function mapDispatchToProps(dispatch) {
     clearDetailPage: () => dispatch(clearDetailPage()),
     answerQuestion: fields => dispatch(answerQuestion(fields)),
     deleteAnswer: id => dispatch(deleteAnswer(id)),
+    pickAnswer: (questionId, answerId) => dispatch(pickAnswer(questionId, answerId)),
   };
 }
 

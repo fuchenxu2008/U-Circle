@@ -21,3 +21,7 @@ export function answerQuestion(fields) {
 export function deleteAnswer(id) {
   return axios.delete(`${ROOT_URL}/api/answer/${id}`, getAuthHeader());
 }
+
+export function pickAnswer(questionId, answerId) {
+  return axios.put(`${ROOT_URL}/api/question/pickbest/${questionId}`, { answerId }, getAuthHeader());
+}

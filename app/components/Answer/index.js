@@ -5,18 +5,23 @@
 */
 
 import React from 'react';
-import { connect } from 'react-redux';
 import moment from 'moment';
 import { Avatar, Button } from 'antd';
 import PropTypes from 'prop-types';
 import './Answer.css';
 
 function Answer(props) {
-  const { _id, content, answerer, created_at } = props.answer;
-  const isOwner = props.currentUser ? props.currentUser._id === answerer._id : false;
+  const { answer, onDeleteAnswer, onPickAnswer, currentQuestion, currentUser, bestAnswer } = props;
+  const { _id, content, answerer, created_at } = answer;
+  const isOwner = currentUser ? currentUser._id === answerer._id : false;
+  const isQuestioner = currentUser ? currentUser._id === currentQuestion.questioner._id : false;
 
   const _handleDeleteAnswer = () => {
-    props.onDeleteAnswer(_id);
+    onDeleteAnswer(_id);
+  };
+
+  const _handlePickAnswer = () => {
+    onPickAnswer(currentQuestion._id, _id);
   };
 
   return (
@@ -38,6 +43,18 @@ function Answer(props) {
           ghost
         />
       }
+      {
+        isQuestioner && !bestAnswer &&
+        <Button
+          onClick={_handlePickAnswer}
+          type="primary"
+          shape="circle"
+          className="delete-btn"
+          style={{ marginLeft: '20px' }}
+          icon="check"
+          ghost
+        />
+      }
     </li>
   );
 }
@@ -45,14 +62,10 @@ function Answer(props) {
 Answer.propTypes = {
   answer: PropTypes.object,
   currentUser: PropTypes.object,
+  currentQuestion: PropTypes.object,
   onDeleteAnswer: PropTypes.func,
+  onPickAnswer: PropTypes.func,
+  bestAnswer: PropTypes.object,
 };
 
-const mapStateToProps = state => ({
-  currentUser:
-    state.get('global').get('currentUser') === null
-      ? null
-      : state.get('global').get('currentUser').toJS(),
-});
-
-export default connect(mapStateToProps)(Answer);
+export default Answer;

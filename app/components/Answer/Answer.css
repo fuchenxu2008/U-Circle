@@ -5,6 +5,8 @@
 
 .answer-detail {
     flex: 1;
+    max-width: 80%;
+    word-wrap: break-word;
 }
 
 .answer-body {

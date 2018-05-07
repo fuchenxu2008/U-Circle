@@ -25,3 +25,8 @@ export const DELETE_ANSWER = 'app/QuestionDetail/DELETE_ANSWER';
 export const DELETE_ANSWER_PENDING = 'app/QuestionDetail/DELETE_ANSWER_PENDING';
 export const DELETE_ANSWER_FULFILLED = 'app/QuestionDetail/DELETE_ANSWER_FULFILLED';
 export const DELETE_ANSWER_REJECTED = 'app/QuestionDetail/DELETE_ANSWER_REJECTED';
+
+export const PICK_ANSWER = 'app/QuestionDetail/PICK_ANSWER';
+export const PICK_ANSWER_PENDING = 'app/QuestionDetail/PICK_ANSWER_PENDING';
+export const PICK_ANSWER_FULFILLED = 'app/QuestionDetail/PICK_ANSWER_FULFILLED';
+export const PICK_ANSWER_REJECTED = 'app/QuestionDetail/PICK_ANSWER_REJECTED';

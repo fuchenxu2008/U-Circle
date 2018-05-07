@@ -42,7 +42,7 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
   render() {
     const { history, question, currentUser } = this.props;
     const { title, created_at, questioner, _id, images, subscribers } = question;
-    const showAsSubscribed = currentUser ? subscribers.includes(currentUser._id) : false;
+    const questionSubscribed = currentUser ? subscribers.includes(currentUser._id) : false;
 
     return (
       <Row className="question">
@@ -81,8 +81,9 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
         <Row className="question-action">
           <Button ghost icon="bulb" className="question-action-btn" onClick={() => history.push(`/question/${_id}`)}>Answer</Button>
           {
-            !showAsSubscribed &&
-            <Button ghost icon="star-o" className="question-action-btn" onClick={this.handleSubscribeQuestion}>Subscribe</Button>
+            questionSubscribed
+              ? <Button ghost icon="star" className="question-action-btn" onClick={this.handleSubscribeQuestion}>Subscribed</Button>
+              : <Button ghost icon="star-o" className="question-action-btn" onClick={this.handleSubscribeQuestion}>Subscribe</Button>
           }
         </Row>
       </Row>
