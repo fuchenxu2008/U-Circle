@@ -43,8 +43,8 @@ function questionDetailReducer(state = initialState, action) {
         ...state,
         answer: state.answer.filter(a => a._id !== action.payload.data.answer._id),
         bestAnswer: state.bestAnswer /* eslint no-nested-ternary: 0 */
-          ? null
-          : state.bestAnswer._id === action.payload.data.answer._id ? null : state.bestAnswer._id,
+          ? state.bestAnswer._id === action.payload.data.answer._id ? null : state.bestAnswer._id
+          : null,
       };
     case PICK_ANSWER_FULFILLED:
       return action.payload.data;

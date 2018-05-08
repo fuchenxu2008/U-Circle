@@ -6,7 +6,6 @@ injectGlobal`
     height: 100%;
     width: 100%;
     padding: 0;
-    overflow-x: hidden;
   }
 
   html {
