@@ -19,8 +19,12 @@ import {
   SUBSCRIBE_QUESTION_FULFILLED,
 } from './constants';
 
+import { loadState } from '../../utils/localStorage';
+const persistedStudentQuestionState = loadState('cachedData').studentPage;
+
 const initialState = fromJS({
   studentQuestions: {},
+  ...persistedStudentQuestionState,
 });
 
 function studentPageReducer(state = initialState, action) {

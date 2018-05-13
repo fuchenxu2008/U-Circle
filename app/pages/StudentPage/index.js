@@ -26,7 +26,9 @@ export class StudentPage extends React.Component { // eslint-disable-line react/
 
   componentDidMount() {
     this.props.getStudentQuestions();
-    this.props.socket.on('data', () => this.props.getStudentQuestions());
+    if (this.props.socket) {
+      this.props.socket.on('data', () => this.props.getStudentQuestions());
+    }
   }
 
   showForm = () => {

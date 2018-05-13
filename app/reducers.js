@@ -8,6 +8,9 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 
 import globalReducer from 'pages/App/reducer';
 
+import { loadState } from './utils/localStorage';
+const persistedRouteState = loadState('route');
+
 /*
  * routeReducer
  *
@@ -19,6 +22,7 @@ import globalReducer from 'pages/App/reducer';
 // Initial routing state
 const routeInitialState = fromJS({
   location: null,
+  ...persistedRouteState,
 });
 
 /**

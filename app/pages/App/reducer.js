@@ -12,7 +12,7 @@ import {
 } from './constants';
 
 import { loadState } from '../../utils/localStorage';
-const persistedGlobalState = loadState();
+const persistedGlobalState = loadState('globalState');
 
 const initialState = fromJS({
   currentUser: null,
