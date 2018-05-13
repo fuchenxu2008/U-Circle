@@ -20,11 +20,12 @@ import {
 } from './constants';
 
 import { loadState } from '../../utils/localStorage';
-const persistedStudentQuestionState = loadState('cachedData').studentPage;
+const persistedCachedData = loadState('cachedData') || {};
+const persistedStudentPageState = persistedCachedData.studentPage;
 
 const initialState = fromJS({
   studentQuestions: {},
-  ...persistedStudentQuestionState,
+  ...persistedStudentPageState,
 });
 
 function studentPageReducer(state = initialState, action) {
