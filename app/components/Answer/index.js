@@ -28,7 +28,7 @@ function Answer(props) {
     <li className="answer-wrapper">
       <Avatar className="question-user-avatar" src={answerer.avatar} />
       <div className="answer-detail">
-        <b>{answerer.nickname}</b>
+        <small className="question-user-nickname">{answerer.nickname}</small>
         <p className="answer-body">{content}</p>
         <small className="answer-time">{moment(created_at).fromNow()}</small>
       </div>

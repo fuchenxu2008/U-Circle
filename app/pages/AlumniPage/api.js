@@ -3,8 +3,8 @@ import axios from 'axios';
 import { ROOT_URL } from '../../config';
 import { getAuthHeader } from '../../authMiddleware';
 
-export function getStudentQuestions() {
-  return axios.get(`${ROOT_URL}/api/question/type/academic`);
+export function getAlumniQuestions() {
+  return axios.get(`${ROOT_URL}/api/question/type/occupational`);
 }
 
 export function addQuestion(question) {

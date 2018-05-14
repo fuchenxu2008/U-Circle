@@ -64,61 +64,60 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
     const { title, body, created_at, questioner, answer, images, bestAnswer } = question;
     const isOwner = currentUser ? currentUser._id === questioner._id : false;
     return (
-      <div className="body-container">
-        <div className="question-detailed">
-          <Button onClick={() => history.go(-1)} icon="left-circle" type="primary" ghost>Back</Button>
-          <br /><br />
-          <div className="detailed-userinfo">
-            <Avatar className="question-user-avatar" src={questioner.avatar} />
-            <b className="question-user-nickname">{questioner.nickname}</b>
-            {
-              isOwner &&
-              <Button
-                onClick={this.handleDeleteQuestion}
-                type="danger"
-                shape="circle"
-                ghost
-                style={{ float: 'right' }}
-              >
-                <Icon type="delete" />
-              </Button>
-            }
-          </div>
-          <div>
-            <h4><b>{title}</b></h4>
-            <Divider />
-            <p className="question-detail-body">{body}</p>
-            <div>
-              {images.map(img => (
-                <img key={img} src={img} alt="" className="question-detail-img" />
-              ))}
-            </div>
-            <Divider />
-            <small>{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
+      <div className="question-detailed">
+        <div className="detailed-userinfo">
+          <Avatar className="question-user-avatar" src={questioner.avatar} />
+          <div className="question-user-section">
+            <small className="question-user-nickname">{questioner.nickname}</small><br />
+            <small className="question-time">{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
           </div>
           {
-            bestAnswer &&
-            <div className="bestanswer-card">
-              <h3>Best Answer</h3>
-              <div className="answer-wrapper" style={{ marginBottom: 0 }}>
-                <Avatar className="question-user-avatar" src={bestAnswer.answerer.avatar} />
-                <div className="answer-detail">
-                  <b>{bestAnswer.answerer.nickname}</b>
-                  <p className="answer-body">{bestAnswer.content}</p>
-                </div>
+            isOwner &&
+            <Button
+              onClick={this.handleDeleteQuestion}
+              type="danger"
+              shape="circle"
+              ghost
+              style={{ float: 'right' }}
+            >
+              <Icon type="delete" />
+            </Button>
+          }
+        </div>
+        <div>
+          <h2 className="question-detail-title"><b>{title}</b></h2>
+          <p className="question-detail-body">{body}</p>
+          <div>
+            {images.map(img => (
+              <img key={img} src={img} alt="" className="question-detail-img" />
+            ))}
+          </div>
+        </div>
+
+        <Divider />
+
+        {
+          bestAnswer &&
+          <div className="bestanswer-card">
+            <h3 className="bestanswer-flag"><b>Best Answer</b></h3>
+            <div className="answer-wrapper" style={{ marginBottom: 0 }}>
+              <Avatar className="question-user-avatar" src={bestAnswer.answerer.avatar} />
+              <div className="answer-detail">
+                <small className="question-user-nickname">{bestAnswer.answerer.nickname}</small>
+                <p className="answer-body">{bestAnswer.content}</p>
               </div>
             </div>
-          }
-          <AnswersList
-            bestAnswer={bestAnswer}
-            answers={answer}
-            onDeleteAnswer={this.handleDeleteAnswer}
-            currentQuestion={question}
-            currentUser={currentUser}
-            onPickAnswer={this.handlePickAnswer}
-          />
-          <AnswerInput position="bottom" onAnswer={this.handleSubmitAnswer} />
-        </div>
+          </div>
+        }
+        <AnswersList
+          bestAnswer={bestAnswer}
+          answers={answer}
+          onDeleteAnswer={this.handleDeleteAnswer}
+          currentQuestion={question}
+          currentUser={currentUser}
+          onPickAnswer={this.handlePickAnswer}
+        />
+        <AnswerInput position="bottom" onAnswer={this.handleSubmitAnswer} />
       </div>
     );
   }

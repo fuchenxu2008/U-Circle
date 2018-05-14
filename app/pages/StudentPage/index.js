@@ -74,7 +74,6 @@ export class StudentPage extends React.Component { // eslint-disable-line react/
           currentUser={this.props.currentUser}
         />
         <QuestionsList
-          type="student"
           questions={this.props.studentQuestions}
           onSubscribeQuestion={this.handleSubscribeQuestion}
           currentUser={this.props.currentUser}

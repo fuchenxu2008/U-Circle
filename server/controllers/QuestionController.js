@@ -11,7 +11,7 @@ const { sendNotification } = require('./NotificationController');
 
 module.exports = {
   getQuestions: (req, res) => {
-    Question.find({})
+    Question.find({ type: req.params.type })
     .populate('questioner', ['nickname', 'avatar', 'role'])
     .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
     .exec((err, questions) => {

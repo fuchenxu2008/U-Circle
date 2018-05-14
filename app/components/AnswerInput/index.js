@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input, Form } from 'antd';
+import { Input, Form, Icon } from 'antd';
 import './AnswerInput.css';
 const FormItem = Form.Item;
 
@@ -16,7 +16,8 @@ class AnswerInput extends React.Component { // eslint-disable-line react/prefer-
     e.preventDefault();
     const { form, onAnswer } = this.props;
     form.validateFields((err, values) => {
-      if (!err) {
+      if (!err && values.content) {
+        console.log(values);
         onAnswer(values);
         form.resetFields();
       }
@@ -26,13 +27,16 @@ class AnswerInput extends React.Component { // eslint-disable-line react/prefer-
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="comment-box">
-        <FormItem>
-          {getFieldDecorator('content', {
-            rules: [{ required: true }],
-          })(<Input placeholder="Answer here" />)}
-        </FormItem>
-      </Form>
+      <div className="comment-box-inner-wrapper">
+        <button className="btn" onClick={() => history.go(-1)}><Icon type="left" /></button>
+        <Form onSubmit={this.handleSubmit} className="comment-box">
+          <FormItem>
+            {getFieldDecorator('content')(
+              <Input placeholder="Answer here" />
+            )}
+          </FormItem>
+        </Form>
+      </div>
     );
   }
 }

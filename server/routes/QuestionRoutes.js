@@ -13,7 +13,7 @@ const {
   pickBestAnswer,
 } = require('../controllers/QuestionController');
 
-router.get('/', getQuestions);
+router.get('/type/:type', getQuestions);
 router.get('/:id', getQuestion);
 router.post('/', passport.authenticate('jwt', { session: false }), addQuestion);
 router.put('/', passport.authenticate('jwt', { session: false }), editQuestion);
