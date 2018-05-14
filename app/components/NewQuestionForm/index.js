@@ -49,10 +49,17 @@ export class QuestionForm extends React.Component { // eslint-disable-line react
               )}
             </FormItem>
             <FormItem>
+              {getFieldDecorator('major', {
+                rules: [{ required: true, message: 'Please input question major!' }],
+              })(
+                <Input prefix={<Icon type="tags-o" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Question Major (CSE/ACF)" />
+              )}
+            </FormItem>
+            <FormItem>
               {getFieldDecorator('body', {
                 rules: [{ required: true, message: 'Please input question description!' }],
               })(
-                <TextArea prefix={<Icon type="form" style={{ color: 'rgba(0,0,0,.25)' }} />} rows={4} placeholder="Question Description" />
+                <TextArea rows={4} placeholder="Question Description" />
               )}
             </FormItem>
             <FormItem>

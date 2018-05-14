@@ -31,7 +31,6 @@ export class SearchResultCard extends React.Component { // eslint-disable-line r
     ? searchResult.map(question => (
       <Link to={`/question/${question._id}`} key={question._id} className="searchresult-item">
         <h3 className="searchresult-item-title">{question.title}</h3>
-        <p className="searchresult-item-body">{question.body}</p>
       </Link>
     ))
     : <h4 className="no-match-found">No Match Found</h4>;

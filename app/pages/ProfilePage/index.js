@@ -32,8 +32,8 @@ export class ProfilePage extends React.Component { // eslint-disable-line react/
     const { currentUser, myQuestions, myAnswers, mySubscription, notifications, history } = this.props;
     if (!currentUser) return <Redirect to="/auth" />;
 
-    const myQuestionsList = myQuestions.map(question => <MyQuestion key={question._id} question={question} />);
-    const myAnswersList = myAnswers.map(answer => <MyAnswer key={answer._id} answer={answer} />);
+    const myQuestionsList = myQuestions.slice(0, 3).map(question => <MyQuestion key={question._id} question={question} />);
+    const myAnswersList = myAnswers.slice(0, 3).map(answer => <MyAnswer key={answer._id} answer={answer} />);
 
     return (
       <div>

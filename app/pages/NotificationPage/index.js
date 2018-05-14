@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { sortBy } from 'lodash';
 import Notification from 'components/Notification';
 import { markNotiAsRead } from '../App/actions';
 import './NotificationPage.css';
@@ -17,8 +18,8 @@ export class NotificationPage extends React.Component { // eslint-disable-line r
   render() {
     const { notifications, currentUser } = this.props;
     if (!currentUser) return <Redirect to="/auth" />;
-
-    const myNotifications = notifications.map(noti => (
+    const notis = sortBy(sortBy(notifications, 'markRead').reverse(), 'created_at');
+    const myNotifications = notis.map(noti => (
       <Notification
         key={noti._id}
         info={noti}

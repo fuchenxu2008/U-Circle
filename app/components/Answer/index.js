@@ -28,33 +28,34 @@ function Answer(props) {
     <li className="answer-wrapper">
       <Avatar className="question-user-avatar" src={answerer.avatar} />
       <div className="answer-detail">
-        <small className="question-user-nickname">{answerer.nickname}</small>
+        <div>
+          <small className="question-user-nickname">{answerer.nickname}</small><br />
+          <small className="answer-time">{moment(created_at).fromNow()}</small>
+        </div>
         <p className="answer-body">{content}</p>
-        <small className="answer-time">{moment(created_at).fromNow()}</small>
+        <div className="answer-action">
+          {
+            isOwner &&
+            <Button
+              onClick={_handleDeleteAnswer}
+              type="danger"
+              className="answer-btn"
+              icon="delete"
+              ghost
+            >Delete</Button>
+          }
+          {
+            isQuestioner && !bestAnswer &&
+            <Button
+              onClick={_handlePickAnswer}
+              type="primary"
+              className="answer-btn"
+              icon="check"
+              ghost
+            >Pick As Best</Button>
+          }
+        </div>
       </div>
-      {
-        isOwner &&
-        <Button
-          onClick={_handleDeleteAnswer}
-          type="danger"
-          shape="circle"
-          className="delete-btn"
-          icon="delete"
-          ghost
-        />
-      }
-      {
-        isQuestioner && !bestAnswer &&
-        <Button
-          onClick={_handlePickAnswer}
-          type="primary"
-          shape="circle"
-          className="delete-btn"
-          style={{ marginLeft: '20px' }}
-          icon="check"
-          ghost
-        />
-      }
     </li>
   );
 }

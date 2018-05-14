@@ -11,8 +11,8 @@ import './MyAnswer.css';
 
 function MyAnswer({ answer }) {
   return (
-    <div className="my-answer-card">
-      {answer.content}
+    <div className="my-question-card">
+      <div className="my-question-title">{answer.content}</div>
     </div>
   );
 }

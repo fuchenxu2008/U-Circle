@@ -2,6 +2,7 @@
 
 const moment = require('moment');
 const path = require('path');
+const { unlink } = require('fs');
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 const User = require('../models/User');
@@ -36,8 +37,8 @@ module.exports = {
   addQuestion: (req, res) => {
     uploadPostImg(req, res, err => {
       if (err) return res.status(400).send(err);
-      const { type, title, body, questioner } = req.body;
-      if (!type || !title || !body || !questioner) return res.json({ message: 'Incomplete question!' });
+      const { type, title, body, questioner, major } = req.body;
+      if (!type || !title || !body || !questioner || !major) return res.json({ message: 'Incomplete question!' });
       User.findById(questioner, (err1, questionerUser) => {
         if (err1) return res.status(400).send(err1);
         if (!questionerUser) return res.status(404).json({ message: 'No user found!' });
@@ -47,7 +48,7 @@ module.exports = {
           if (err2) return res.status(400).send(err2);
           // Add question
           const imgList = req.files.map(img => `/api/question/img/${img.filename}`);
-          Question.create({ type, title, body, questioner, images: imgList, created_at: moment().format('YYYY-MM-DD HH:mm:ss') },
+          Question.create({ type, major, title, body, questioner, images: imgList, created_at: moment().format('YYYY-MM-DD HH:mm:ss') },
             (err3, newQuestion) => {
               if (err3) return res.status(400).send(err3);
               Question.findById(newQuestion._id)
@@ -85,6 +86,13 @@ module.exports = {
     Question.findByIdAndRemove(req.body.id, (err, question) => {
       if (err) return res.status(400).send(err);
       if (!question) return res.status(404).json({ message: 'Question not found!' });
+      // Remove all related imgs
+      if (question.images) {
+        question.images.forEach(imgApiPath => {
+          const imgPath = imgApiPath.split('/').pop();
+          unlink(`${global.__root}/storage/post-img/${imgPath}`);
+        });
+      }
       Answer.remove({ question: question._id }, err1 => {
         if (err1) return res.status(400).send(err1);
         Notification.remove({ relatedQuestion: question._id }, err2 => {

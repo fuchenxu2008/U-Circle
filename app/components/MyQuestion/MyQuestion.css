@@ -1,6 +1,17 @@
 .my-question-card {
-    border: 1px solid rgb(165, 165, 165);
+    /* border: 1px solid rgb(165, 165, 165); */
     border-radius: 5px;
+    box-shadow: 0 5px 25px rgba(224, 224, 224, 0.65);
     padding: 10px 20px 10px 20px;
     margin-bottom: 10px;
+}
+
+.my-question-title {
+    color: rgb(78, 78, 78);
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }

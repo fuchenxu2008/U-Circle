@@ -27,7 +27,7 @@ function Notification({ info, currentUser, history, onReadNoti }) {
       </div>
       <div className="notification-info">
         <b className="notification-info-title">New Answer</b>
-        <div>
+        <div className="notification-info-content">
           <span style={{ color: 'rgb(92, 176, 255)' }}>
             {fromUser.nickname}
           </span> answered {isOwner ? <span>

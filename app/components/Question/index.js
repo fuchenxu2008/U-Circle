@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Row, Avatar, Modal } from 'antd';
+import { Row, Avatar, Modal, Icon } from 'antd';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 import './Question.css';
@@ -30,7 +30,8 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
     this.setState({ showPreview: false });
   }
 
-  handleSubscribeQuestion = () => {
+  handleSubscribeQuestion = e => {
+    e.stopPropagation();
     const { onSubscribeQuestion, history, currentUser, question } = this.props;
     if (currentUser) {
       onSubscribeQuestion({ userId: currentUser._id, questionId: question._id });
@@ -41,16 +42,18 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
 
   render() {
     const { history, question, currentUser } = this.props;
-    const { title, created_at, questioner, _id, images, subscribers } = question;
+    const { title, created_at, questioner, _id, images, subscribers, answer, major } = question;
     const questionSubscribed = currentUser ? subscribers.includes(currentUser._id) : false;
-
     return (
       <Row className="question">
         <Row className="question-info">
           <Avatar className="question-user-avatar" src={questioner.avatar} />
-          <div className="question-userinfo">{questioner.nickname}</div>
-          <small className="question-time">{moment(created_at).fromNow()}</small>
+          <div className="question-user-time">
+            <div className="question-userinfo">{questioner.nickname}</div>
+            <small className="question-time">{moment(created_at).fromNow()}</small>
+          </div>
         </Row>
+        <hr className="question-divider" />
         <div
           className="question-content"
           onClick={e => {
@@ -77,15 +80,20 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
               <img alt="" style={{ width: '100%' }} src={this.state.previewImg} />
             </Modal>
           </div>
+
+          <div className="question-action">
+            <div><Icon type="tags-o" />{major}</div>
+            <button className="question-action-btn" onClick={() => history.push(`/question/${_id}`)}>
+              <Icon type="message" /> { answer.length ? `${answer.length} answers` : 'Answer' }
+            </button>
+            {
+              questionSubscribed
+                ? <button className="question-action-btn" onClick={this.handleSubscribeQuestion}><Icon type="star" /> Subscribed</button>
+                : <button className="question-action-btn" onClick={this.handleSubscribeQuestion}><Icon type="star-o" /> Subscribe</button>
+            }
+          </div>
+
         </div>
-        <Row className="question-action">
-          <Button ghost icon="bulb" className="question-action-btn" onClick={() => history.push(`/question/${_id}`)}>Answer</Button>
-          {
-            questionSubscribed
-              ? <Button ghost icon="star" className="question-action-btn" onClick={this.handleSubscribeQuestion}>Subscribed</Button>
-              : <Button ghost icon="star-o" className="question-action-btn" onClick={this.handleSubscribeQuestion}>Subscribe</Button>
-          }
-        </Row>
       </Row>
     );
   }

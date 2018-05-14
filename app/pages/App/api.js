@@ -25,6 +25,7 @@ export function closeSocket(socket) {
 }
 
 export function getNotifications(id) {
+  console.log('oops');
   return axios.get(`${ROOT_URL}/api/notification/${id}`, getAuthHeader());
 }
 

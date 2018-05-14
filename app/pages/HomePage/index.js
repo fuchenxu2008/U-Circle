@@ -48,8 +48,8 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
         <div className="home-banner">
           <h1 className="home-banner-title">U-CIRCLE</h1>
           <p>
-            This platform is dedicated to answering your enquirers regarding
-            academic studies and occupational queries. Share your questions
+            This app is dedicated to providing a platform in XJTLU for answering your enquiries regarding
+            academic studies and occupational queries. Get started today and share your questions
             and answers with our alumni and students.{' '}
           </p>
         </div>

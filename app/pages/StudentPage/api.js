@@ -10,6 +10,7 @@ export function getStudentQuestions() {
 export function addQuestion(question) {
   const formData = new FormData();
   formData.append('type', question.type);
+  formData.append('major', question.major);
   formData.append('title', question.title);
   formData.append('body', question.body);
   formData.append('questioner', question.questioner);

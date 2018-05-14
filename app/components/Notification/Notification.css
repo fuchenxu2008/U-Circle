@@ -8,7 +8,7 @@
 }
 
 .unreadNoti {
-    box-shadow: 0 3px 15px rgba(75, 159, 255, 0.603);
+    box-shadow: 0 3px 15px rgba(119, 189, 255, 0.568);
 }
 
 .seenNoti {
@@ -30,6 +30,15 @@
 
 .notification-info-title {
     font-size: 15px;
+}
+
+.notification-info-content {
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .notification-time {

@@ -11,6 +11,7 @@ export function addQuestion(question) {
   const formData = new FormData();
   formData.append('type', question.type);
   formData.append('title', question.title);
+  formData.append('major', question.major);
   formData.append('body', question.body);
   formData.append('questioner', question.questioner);
   if (question.postImg) {

@@ -74,7 +74,7 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
     const { currentUser } = this.props;
     const notiKey = `open${Date.now()}`;
     const notiContent = (
-      <p onClick={() => this._onClickNotification(relatedQuestion.id, notiKey)}>
+      <p onClick={() => this._onClickNotification(relatedQuestion.id, notiKey)} className="notification-info-content">
         <b style={{ color: '#FDBE41' }}>{fromUser.nickname}</b> answered { currentUser._id === relatedQuestion.questioner._id
           ? <span>your</span>
           : <b style={{ color: '#FDBE41' }}>{`${relatedQuestion.questioner.nickname}'s`}</b>

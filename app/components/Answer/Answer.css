@@ -6,7 +6,6 @@
 
 .answer-detail {
     flex: 1;
-    max-width: 80%;
     word-wrap: break-word;
 }
 
@@ -20,6 +19,13 @@
     color: rgb(105, 105, 105);
 }
 
-.delete-btn {
-    align-self: center;
+.answer-action {
+    display: flex;
+    justify-content: space-between;
+}
+
+.answer-btn {
+    border: none;
+    padding: 0;
+    font-size: 13px;
 }

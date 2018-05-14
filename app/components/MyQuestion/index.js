@@ -12,7 +12,7 @@ import './MyQuestion.css';
 function MyQuestion({ question }) {
   return (
     <div className="my-question-card">
-      {question.title}
+      <div className="my-question-title">{question.title}</div>
     </div>
   );
 }
