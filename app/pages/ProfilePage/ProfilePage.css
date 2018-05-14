@@ -11,7 +11,8 @@
 
 .profile-bg::before {
     content: '';
-    background-image: linear-gradient(to top, #151b2b79 0%, #8894a32f 100%);
+    background-image: linear-gradient(to top, #373b4679 0%, #8894a32f 100%);
+    /* background-color: rgba(153, 153, 153, 0.336); */
     width: 100%;
     height: 100%;
     position: absolute;

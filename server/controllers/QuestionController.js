@@ -146,6 +146,7 @@ module.exports = {
                     title: question.title,
                     id: question._id,
                     questioner: question.questioner,  // Questioner model
+                    type: question.type,
                   },
                 },
                 socket: req.app.get('socket'),

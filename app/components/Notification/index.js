@@ -32,7 +32,7 @@ function Notification({ info, currentUser, history, onReadNoti }) {
             {fromUser.nickname}
           </span> answered {isOwner ? <span>
               your
-            </span> : <span>{`${relatedQuestion.questioner.nickname}'s`}</span>} question: <span
+            </span> : <span>{`${relatedQuestion.questioner.nickname}'s`}</span>} {relatedQuestion.type} question: <span
               style={{ color: 'rgb(92, 176, 255)' }}
             >
               {relatedQuestion.title}

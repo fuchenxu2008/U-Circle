@@ -71,6 +71,7 @@
 }
 
 .question-action {
+  margin: 10px 0 5px 0;
   display: flex;
   justify-content: space-between;
   color: rgb(119, 126, 136);
@@ -79,6 +80,5 @@
 .question-action-btn {
   border: none;
   color: rgb(119, 126, 136);
-  margin: 0 0 5px 0;
   padding: 0;
 }

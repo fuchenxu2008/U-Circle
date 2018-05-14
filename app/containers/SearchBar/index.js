@@ -32,7 +32,15 @@ export class SearchBar extends React.Component { // eslint-disable-line react/pr
 
   async onMajorChange(major) {
     await this.props.onSearchMajorChange(major);
-    console.log(this.props.searchPhrase);
+    if (major !== '') {
+      if (this.props.searching === false) {
+        this.props.beginSearch();
+      }
+      console.log(this.props.searchPhrase);
+      this.search();
+    } else {
+      this.props.endSearch();
+    }
   }
 
   async onKeywordChange(keyword) {

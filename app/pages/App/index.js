@@ -20,6 +20,7 @@ import NavBar from 'components/NavBar';
 import LoginPage from 'pages/LoginPage';
 import HomePage from 'pages/HomePage';
 import ProfilePage from 'pages/ProfilePage';
+import MyStuffPage from 'pages/MyStuffPage';
 import AlumniPage from 'pages/AlumniPage';
 import StudentPage from 'pages/StudentPage';
 import NotificationPage from 'pages/NotificationPage';
@@ -78,7 +79,7 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
         <b style={{ color: '#FDBE41' }}>{fromUser.nickname}</b> answered { currentUser._id === relatedQuestion.questioner._id
           ? <span>your</span>
           : <b style={{ color: '#FDBE41' }}>{`${relatedQuestion.questioner.nickname}'s`}</b>
-        } question: <b style={{ color: '#FDBE41' }}>{relatedQuestion.title}</b>
+        } {relatedQuestion.type} question: <b style={{ color: '#FDBE41' }}>{relatedQuestion.title}</b>
       </p>
     );
     notification.open({
@@ -108,7 +109,8 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/auth" component={LoginPage} />
-          <Route path="/me" component={ProfilePage} />
+          <Route exact path="/me" component={ProfilePage} />
+          <Route path="/me/:type" component={MyStuffPage} />
           <Route path="/alumni" component={AlumniPage} />
           <Route path="/student" component={StudentPage} />
           <Route path="/notification" component={NotificationPage} />
