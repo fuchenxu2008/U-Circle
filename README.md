@@ -1,4 +1,4 @@
-Subscribe/Unsubscribe Question
+# Subscribe/Unsubscribe Question
 
 1. Recieve HTTP request from user through API end point.
 2. Extract user ID and question ID to subscribe from request.
@@ -10,7 +10,7 @@ Subscribe/Unsubscribe Question
 5. On successful save, send the updated question as response to front end.
 6. In case of any error, send errored response with status code 400 to front end.
 
-Search Question - Backend
+# Search Question - Backend
 
 1. Recieve HTTP request from user search query through API end point.
 2. Extract type, major, keyword from request which refer to question properties.
@@ -19,15 +19,15 @@ Search Question - Backend
 5. Find the matching questions based on the search terms using Regex(Regular Expression).
 6. Send the result to user on success and error on failure.
 
-Notification - Backend
+# Notification - Backend
 
-Send Notification
+## Send Notification
 
 1. When user answer a question, construct a notification object including information of the answerer, the user or users to be notified and the related question.
 2. Pass the notification object and server websocket to the controller.
 3. Iterate the target users group, for each of the users, send them a notification through websocket and create a record in database with the notification object and intialize its property markRead as false.
 
-Mark Notification as read
+## Mark Notification as read
 
 1. Find the notification model in database by given user ID and related question ID
 2. For each question found, modify its property markRead to true.

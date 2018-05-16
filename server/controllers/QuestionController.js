@@ -48,7 +48,7 @@ module.exports = {
           if (err2) return res.status(400).send(err2);
           // Add question
           const imgList = req.files.map(img => `/api/question/img/${img.filename}`);
-          Question.create({ type, major, title, body, questioner, images: imgList, created_at: moment().format('YYYY-MM-DD HH:mm:ss') },
+          Question.create({ type, major, title, body: body.replace(new RegExp('\\r\\n', 'g'), '<br />'), questioner, images: imgList, created_at: moment().format('YYYY-MM-DD HH:mm:ss') },
             (err3, newQuestion) => {
               if (err3) return res.status(400).send(err3);
               Question.findById(newQuestion._id)

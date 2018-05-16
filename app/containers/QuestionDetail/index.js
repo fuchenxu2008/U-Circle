@@ -86,7 +86,7 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
         </div>
         <div>
           <h2 className="question-detail-title"><b>{title}</b></h2>
-          <p className="question-detail-body">{body}</p>
+          <p dangerouslySetInnerHTML={{ __html: body }} className="question-detail-body"></p>
           <div>
             {images.map(img => (
               <img key={img} src={img} alt="" className="question-detail-img" />
