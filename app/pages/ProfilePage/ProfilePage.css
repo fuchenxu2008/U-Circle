@@ -96,4 +96,5 @@
 .borderless-btn {
     border: none;
     color: #3e86c2;
+    background-color: transparent;
 }

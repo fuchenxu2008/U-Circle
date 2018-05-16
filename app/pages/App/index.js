@@ -15,7 +15,7 @@ import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { notification, Icon } from 'antd';
+import { notification, Icon, Button } from 'antd';
 import NavBar from 'components/NavBar';
 import LoginPage from 'pages/LoginPage';
 import HomePage from 'pages/HomePage';
@@ -30,6 +30,8 @@ import { setCurrentUser, establishSocket, closeSocket, logOut, getNotifications,
 import './App.css';
 
 class MainApp extends Component { // eslint-disable-line react/prefer-stateless-function
+  state = { scrollY: 0, backbtnClass: '' }
+
   componentWillMount() {
     const { currentUser, socket } = this.props;
     if (currentUser) {
@@ -41,6 +43,10 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
     }
   }
 
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll, { passive: true });
+  }
+
   componentWillReceiveProps(props) {  // Establish and listen socket on login/register
     const { currentUser, socket } = props;
     if (currentUser && !socket) {
@@ -48,10 +54,23 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
   onLogOut = () => {
     this.props.logOut();
     this.props.closeSocket(this.props.socket);
     this.props.history.push('/auth');
+  }
+
+  handleScroll = () => {
+    if (window.scrollY - this.state.scrollY > 20) {
+      this.setState({ backbtnClass: 'slideOutDown' });
+    } else if (this.state.scrollY - window.scrollY > 20) {
+      this.setState({ backbtnClass: 'slideInUp' });
+    }
+    this.setState({ scrollY: window.scrollY });
   }
 
   listenSocket = async id => {
@@ -98,7 +117,10 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
   }
 
   render() {
-    const { currentUser, notifications } = this.props;
+    const { currentUser, notifications, history } = this.props;
+    const { pathname } = history.location;
+    const noBackBtnLocation = ['/', '/student', '/alumni'];
+
     return (
       <div className="page">
         <NavBar
@@ -117,6 +139,13 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
           <Route path="/question/:id" component={QuestionDetail} />
           <Route path="" component={NotFoundPage} />
         </Switch>
+        {
+          !noBackBtnLocation.includes(pathname) &&
+          <Button
+            className={`back-btn animated ${this.state.backbtnClass}`}
+            onClick={() => history.go(-1)}
+          ><Icon type="arrow-left" /></Button>
+        }
       </div>
     );
   }
