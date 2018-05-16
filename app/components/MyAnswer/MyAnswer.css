@@ -1,6 +1,22 @@
 .my-answer-card {
-  border: 1px solid rgb(165, 165, 165);
+  display: flex;
   border-radius: 5px;
+  box-shadow: 0 5px 25px rgba(224, 224, 224, 0.65);
   padding: 10px 20px 10px 20px;
   margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.yellow-text {
+  color: rgb(253, 190, 65);
+}
+
+.my-answer-content {
+  color: rgb(119, 119, 119);
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }

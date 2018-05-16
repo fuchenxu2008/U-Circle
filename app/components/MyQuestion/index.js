@@ -9,9 +9,10 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import './MyQuestion.css';
 
-function MyQuestion({ question }) {
+function MyQuestion({ question, history }) {
   return (
-    <div className="my-question-card">
+    <div className="my-question-card" onClick={() => history.push(`/question/${question._id}`)}>
+      <small className={`question-major ${question.bestAnswer && 'question-solved'}`}>{question.major}</small>
       <div className="my-question-title">{question.title}</div>
     </div>
   );
@@ -19,6 +20,7 @@ function MyQuestion({ question }) {
 
 MyQuestion.propTypes = {
   question: PropTypes.object,
+  history: PropTypes.object,
 };
 
 export default withRouter(MyQuestion);

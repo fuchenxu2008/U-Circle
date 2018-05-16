@@ -29,8 +29,8 @@ module.exports = {
     const { id } = req.params;
     if (id.length !== 24) return res.status(400).json({ message: 'Invalid User ID!' });
     return Notification.find({ targetUser: req.params.id })
-      .populate('fromUser', ['nickname', 'avatar', 'role'])
-      .populate({ path: 'relatedQuestion', populate: { path: 'questioner', select: ['avatar', 'nickname', 'id'] } })
+      .populate('fromUser', ['nickname', 'avatar', 'role', 'id'])
+      .populate({ path: 'relatedQuestion', populate: { path: 'questioner', select: ['avatar', 'nickname', 'id', 'role'] } })
       .then(notifications => {
         if (!notifications) return res.status(404).json({ message: 'No notification found!' });
         return res.json(notifications);

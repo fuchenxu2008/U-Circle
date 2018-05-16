@@ -10,6 +10,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { sortBy } from 'lodash';
+import { Icon } from 'antd';
 import Notification from 'components/Notification';
 import { markNotiAsRead } from '../App/actions';
 import './NotificationPage.css';
@@ -35,7 +36,11 @@ export class NotificationPage extends React.Component { // eslint-disable-line r
           <meta name="description" content="Description of NotificationCenter" />
         </Helmet>
         <h2 className="big-title mb-20">Notification Center</h2>
-        { myNotifications }
+        {
+          notis.length
+            ? myNotifications
+            : <div className="no-match-found"><Icon type="notification" /> No notification available.</div>
+        }
       </div>
     );
   }

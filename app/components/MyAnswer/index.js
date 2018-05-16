@@ -9,16 +9,23 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import './MyAnswer.css';
 
-function MyAnswer({ answer }) {
+function MyAnswer({ answer, history }) {
+  const { content, question } = answer;
+  const { _id, questioner, title, major, type, bestAnswer } = question;
   return (
-    <div className="my-question-card">
-      <div className="my-question-title">{answer.content}</div>
+    <div className="my-answer-card" onClick={() => history.push(`/question/${_id}`)}>
+      <small className={`question-major ${bestAnswer && 'question-solved'}`}>{major}</small>
+      <div>
+        You answered <span className="yellow-text">{`${questioner.nickname}'s`}</span> {type} question <span className="yellow-text">{title}</span> :<br />
+        <span className="my-answer-content">{content}</span>
+      </div>
     </div>
   );
 }
 
 MyAnswer.propTypes = {
   answer: PropTypes.object,
+  history: PropTypes.object,
 };
 
 export default withRouter(MyAnswer);

@@ -42,7 +42,7 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
 
   render() {
     const { history, question, currentUser } = this.props;
-    const { title, created_at, questioner, _id, images, subscribers, answer, major } = question;
+    const { title, created_at, questioner, _id, images, subscribers, answer, major, bestAnswer } = question;
     const questionSubscribed = currentUser ? subscribers.includes(currentUser._id) : false;
     return (
       <Row className="question">
@@ -82,7 +82,7 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
           </div>
 
           <div className="question-action">
-            <div><Icon type="tags-o" />{major}</div>
+            <div className={`question-major ${bestAnswer && 'question-solved'}`}><Icon type="tags-o" />{major}</div>
             <button className="question-action-btn" onClick={() => history.push(`/question/${_id}`)}>
               <Icon type="message" /> { answer.length ? `${answer.length} answers` : 'Answer' }
             </button>

@@ -14,7 +14,7 @@ import {
 const initialState = fromJS({
   myQuestions: [],
   myAnswers: [],
-  mySubscription: [],
+  mySubscriptions: [],
 });
 
 function profilePageReducer(state = initialState, action) {
@@ -24,7 +24,7 @@ function profilePageReducer(state = initialState, action) {
     case GET_MY_ANSWERS_FULFILLED:
       return state.set('myAnswers', fromJS(action.payload.data));
     case GET_MY_SUBSCRIPTION_FULFILLED:
-      return state.set('mySubscription', fromJS(action.payload.data));
+      return state.set('mySubscriptions', fromJS(action.payload.data));
     default:
       return state;
   }

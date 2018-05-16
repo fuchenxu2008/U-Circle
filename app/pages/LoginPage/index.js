@@ -23,6 +23,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
           <meta name="description" content="Description of LoginPage" />
         </Helmet>
         <div className="LoginFormStyle">
+          <h1 className="login-title">U-CIRCLE</h1>
           <LoginForm mode="login" />
         </div>
       </div>

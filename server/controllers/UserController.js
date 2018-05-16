@@ -40,6 +40,8 @@ module.exports = {
   getMyQuestions: (req, res) => {
     const { id } = req.params;
     Question.find({ questioner: id })
+      .populate('questioner', ['nickname', 'avatar', 'role', 'id'])
+      .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
       .then(questions => {
         if (!questions) return res.status(404).json({ message: 'No question found!' });
         return res.json(questions);
@@ -50,6 +52,7 @@ module.exports = {
   getMyAnswers: (req, res) => {
     const { id } = req.params;
     Answer.find({ answerer: id })
+      .populate({ path: 'question', populate: { path: 'questioner', select: ['avatar', 'nickname', 'role', 'id'] } })
       .then(answers => {
         if (!answers) return res.status(404).json({ message: 'No answer found!' });
         return res.json(answers);
@@ -60,6 +63,8 @@ module.exports = {
   getMySubscription: (req, res) => {
     const { id } = req.params;
     Question.find({ subscribers: id })
+      .populate('questioner', ['nickname', 'avatar', 'role', 'id'])
+      .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
       .then(questions => {
         if (!questions) return res.status(404).json({ message: 'No question found!' });
         return res.json(questions);

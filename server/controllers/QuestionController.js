@@ -13,8 +13,8 @@ const { sendNotification } = require('./NotificationController');
 module.exports = {
   getQuestions: (req, res) => {
     Question.find({ type: req.params.type })
-    .populate('questioner', ['nickname', 'avatar', 'role'])
-    .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
+    .populate('questioner', ['nickname', 'avatar', 'role', 'id'])
+    .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
     .exec((err, questions) => {
       if (err) return res.status(400).send(err);
       if (!questions) return res.status(404).json({ message: 'No question found!' });
@@ -24,9 +24,9 @@ module.exports = {
 
   getQuestion: (req, res) => {
     Question.findById(req.params.id)
-    .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
-    .populate('questioner', ['nickname', 'avatar', 'role'])
-    .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
+    .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
+    .populate('questioner', ['nickname', 'avatar', 'role', 'id'])
+    .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
     .exec((err, question) => {
       if (err) return res.status(400).send(err);
       if (!question) return res.status(404).json({ message: 'No question found!' });
@@ -52,7 +52,7 @@ module.exports = {
             (err3, newQuestion) => {
               if (err3) return res.status(400).send(err3);
               Question.findById(newQuestion._id)
-                .populate('questioner', ['nickname', 'avatar', 'role'])
+                .populate('questioner', ['nickname', 'avatar', 'role', 'id'])
                 .exec((err4, question) => {
                   if (err4) return res.status(400).send(err4);
                   if (!question) return res.status(404).json({ message: 'No question found!' });
@@ -128,9 +128,9 @@ module.exports = {
             if (err3) return res.json(err3);
             // Dumb populate various detail info of the question
             Question.findById(id)
-            .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
-            .populate('questioner', ['nickname', 'avatar', 'role'])
-            .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
+            .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
+            .populate('questioner', ['nickname', 'avatar', 'role', 'id'])
+            .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
             .exec((err4, question) => {
               if (err4) return res.status(400).send(err4);
               if (!question) return res.status(404).json({ message: 'No question found!' });

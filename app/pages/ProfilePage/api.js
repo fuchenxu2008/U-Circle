@@ -12,5 +12,5 @@ export function getMyAnswers(id) {
 }
 
 export function getMySubscription(id) {
-  return axios.get(`${ROOT_URL}/api/user/${id}/subscription`, getAuthHeader());
+  return axios.get(`${ROOT_URL}/api/user/${id}/subscriptions`, getAuthHeader());
 }
