@@ -6,9 +6,10 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Avatar, Modal, Icon } from 'antd';
+import { Row, Modal, Icon } from 'antd';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
+import UserHeading from 'components/UserHeading';
 import './Question.css';
 
 class Question extends Component {  // eslint-disable-line react/prefer-stateless-function
@@ -46,13 +47,12 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
     const questionSubscribed = currentUser ? subscribers.includes(currentUser._id) : false;
     return (
       <Row className="question">
-        <Row className="question-info">
-          <Avatar className="question-user-avatar" src={questioner.avatar} />
-          <div className="question-user-time">
-            <div className="question-userinfo">{questioner.nickname}</div>
-            <small className="question-time">{moment(created_at).fromNow()}</small>
-          </div>
-        </Row>
+        <UserHeading
+          avatar={questioner.avatar}
+          nickname={questioner.nickname}
+          time={moment(created_at).fromNow()}
+          onClick={() => history.push(`/user/${questioner._id}`)}
+        />
         <hr className="question-divider" />
         <div
           className="question-content"

@@ -43,7 +43,7 @@ export class NormalLoginForm extends React.Component { // eslint-disable-line re
   render() {
     const { getFieldDecorator } = this.props.form;
     const { formMode, currentUser } = this.props;
-    if (currentUser) return <Redirect to="/me" />;
+    if (currentUser) return <Redirect to={`/user/${currentUser._id}`} />;
     return (
       <div className="loginFormStyle">
         <Spin spinning={this.props.loading}>

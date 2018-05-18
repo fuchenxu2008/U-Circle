@@ -12,12 +12,6 @@ import { Upload, Icon, message } from 'antd';
 import { uploadAvatar } from './actions';
 import './AvatarUploader.css';
 
-// function getBase64(img, callback) {
-//   const reader = new FileReader();
-//   reader.addEventListener('load', () => callback(reader.result));
-//   reader.readAsDataURL(img);
-// }
-
 function beforeUpload(file) {
   const isImg = file.type.includes('image');
   if (!isImg) {
@@ -47,9 +41,8 @@ export class AvatarUploader extends React.Component { // eslint-disable-line rea
   }
 
   render() {
-    const { currentUser } = this.props;
-    if (!currentUser) return <h1>Loading...</h1>;
-    const { avatar } = currentUser;
+    const { disabled, avatar } = this.props;
+    // if (!avatar) return <h1>Loading...</h1>;
     const uploadButton = (
       <div style={{ color: 'rgb(200, 200, 200)' }}>
         <Icon type={this.state.loading ? 'loading' : 'plus'} />
@@ -59,6 +52,7 @@ export class AvatarUploader extends React.Component { // eslint-disable-line rea
     return (
       <div>
         <Upload
+          disabled={disabled}
           name="avatar"
           listType="picture-card"
           className="avatar-uploader"
@@ -67,7 +61,7 @@ export class AvatarUploader extends React.Component { // eslint-disable-line rea
           customRequest={this.handleUpload}
           style={{ backgroundImage: `url(${avatar})`, backgroundSize: 'cover', borderRadius: '100%', backgroundPosition: 'top' }}
         >
-          {avatar ? <div></div> : uploadButton}
+          {avatar ? <div></div> : (!disabled ? uploadButton : <div></div>)}
         </Upload>
       </div>
     );
@@ -75,16 +69,10 @@ export class AvatarUploader extends React.Component { // eslint-disable-line rea
 }
 
 AvatarUploader.propTypes = {
-  currentUser: PropTypes.object,
+  avatar: PropTypes.string,
+  disabled: PropTypes.bool,
   uploadAvatar: PropTypes.func,
 };
-
-const mapStateToProps = state => ({
-  currentUser:
-    state.get('global').get('currentUser') === null
-      ? null
-      : state.get('global').get('currentUser').toJS(),
-});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -92,4 +80,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AvatarUploader);
+export default connect(null, mapDispatchToProps)(AvatarUploader);

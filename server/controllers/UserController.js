@@ -15,6 +15,13 @@ module.exports = {
       return res.json(user);
     });
   },
+
+  getAlumni: (req, res) => {
+    User.find({ role: 'alumni' })
+    .then(alumni => res.json(alumni))
+    .catch(err => res.status(400).send(err));
+  },
+
   changeAvatar: (req, res) => {
     uploadAvatar(req, res, err => {
       if (err) return res.status(400).send(err);

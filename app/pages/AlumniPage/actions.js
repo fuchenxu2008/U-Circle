@@ -8,6 +8,7 @@ import {
   SUBMIT_NEW_ALUMNI_QUESTION,
   GET_ALUMNI_QUESTIONS,
   SUBSCRIBE_QUESTION,
+  GET_ALL_ALUMNI,
 } from './constants';
 import * as api from './api';
 
@@ -35,3 +36,9 @@ export function subscribeQuestion(info) {
   };
 }
 
+export function getAllAlumni() {
+  return {
+    type: GET_ALL_ALUMNI,
+    payload: api.getAllAlumni(),
+  };
+}

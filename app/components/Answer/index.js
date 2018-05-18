@@ -6,12 +6,13 @@
 
 import React from 'react';
 import moment from 'moment';
+import { withRouter } from 'react-router-dom';
 import { Avatar, Button } from 'antd';
 import PropTypes from 'prop-types';
 import './Answer.css';
 
 function Answer(props) {
-  const { answer, onDeleteAnswer, onPickAnswer, currentQuestion, currentUser, bestAnswer } = props;
+  const { answer, onDeleteAnswer, onPickAnswer, currentQuestion, currentUser, bestAnswer, history } = props;
   const { _id, content, answerer, created_at } = answer;
   const isOwner = currentUser ? currentUser._id === answerer._id : false;
   const isQuestioner = currentUser ? currentUser._id === currentQuestion.questioner._id : false;
@@ -26,7 +27,7 @@ function Answer(props) {
 
   return (
     <li className="answer-wrapper">
-      <Avatar className="question-user-avatar" src={answerer.avatar} />
+      <Avatar className="question-user-avatar" src={answerer.avatar} onClick={() => history.push(`/user/${answerer._id}`)} />
       <div className="answer-detail">
         <div>
           <small className="question-user-nickname">{answerer.nickname}</small><br />
@@ -67,6 +68,7 @@ Answer.propTypes = {
   onDeleteAnswer: PropTypes.func,
   onPickAnswer: PropTypes.func,
   bestAnswer: PropTypes.object,
+  history: PropTypes.object,
 };
 
-export default Answer;
+export default withRouter(Answer);

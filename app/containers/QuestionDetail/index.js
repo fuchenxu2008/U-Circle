@@ -35,15 +35,15 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
   }
 
   handleSubmitAnswer = fields => {
-    const { currentUser } = this.props;
+    const { currentUser, question, history } = this.props;
     if (!currentUser) return message.info('Log in first');
     return this.props
       .answerQuestion({
         content: fields.content,
         answerer: currentUser._id,
-        questionId: this.props.question._id,
+        questionId: question._id,
       })
-      .catch(() => this.props.history.goBack());
+      .catch(() => history.goBack());
   }
 
   handleDeleteAnswer = id => {
@@ -57,16 +57,18 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
   }
 
   render() {
-    const { question, currentUser } = this.props;
+    const { question, currentUser, history } = this.props;
     if (!question) {
       return <h3>Loading...</h3>;
     }
-    const { title, body, created_at, questioner, answer, images, bestAnswer } = question;
+    const { title, body, created_at, questioner, answer, images, bestAnswer, type } = question;
     const isOwner = currentUser ? currentUser._id === questioner._id : false;
+    const canAnswer = currentUser ? (currentUser.role === 'alumni' && type === 'occupational') || (currentUser.role === 'student' && type === 'academic') : false;
+
     return (
       <div className="question-detailed">
         <div className="detailed-userinfo">
-          <Avatar className="question-user-avatar" src={questioner.avatar} />
+          <Avatar className="question-user-avatar" src={questioner.avatar} onClick={() => history.push(`/user/${questioner._id}`)} />
           <div className="question-user-section">
             <small className="question-user-nickname">{questioner.nickname}</small><br />
             <small className="question-time">{moment(created_at).format('YYYY-MM-DD HH:mm:ss')}</small>
@@ -101,7 +103,7 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
           <div className="bestanswer-card">
             <h3 className="bestanswer-flag"><b>Best Answer</b></h3>
             <div className="answer-wrapper" style={{ marginBottom: 0 }}>
-              <Avatar className="question-user-avatar" src={bestAnswer.answerer.avatar} />
+              <Avatar className="question-user-avatar" src={bestAnswer.answerer.avatar} onClick={() => history.push(`/user/${bestAnswer.answerer._id}`)} />
               <div className="answer-detail">
                 <small className="question-user-nickname">{bestAnswer.answerer.nickname}</small>
                 <p className="answer-body">{bestAnswer.content}</p>
@@ -117,7 +119,10 @@ export class QuestionDetail extends React.Component { // eslint-disable-line rea
           currentUser={currentUser}
           onPickAnswer={this.handlePickAnswer}
         />
-        <AnswerInput position="bottom" onAnswer={this.handleSubmitAnswer} />
+        {
+          canAnswer &&
+          <AnswerInput position="bottom" onAnswer={this.handleSubmitAnswer} />
+        }
       </div>
     );
   }

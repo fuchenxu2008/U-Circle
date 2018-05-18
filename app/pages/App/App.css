@@ -41,23 +41,12 @@
     display: none;
 }
 
-.back-btn {
-    font-size: 2rem;
-    color: white;
-    border-radius: 100%;
-    border: none;
-    cursor: pointer;
-    width: 70px;
-    height: 70px;
+.role-tag {
     background-image: linear-gradient(120deg, #4facfe 0%, #00d6fc 100%);
-    position: fixed;
-    bottom: 2%;
-    left: 2%;
-    box-shadow: 0 5px 30px rgb(0, 191, 255);
-    -webkit-animation-duration: 0.2s;
-}
-
-.back-btn:hover {
-    color: white;
-    background-image: linear-gradient(120deg, #4facfe 0%, #00d6fc 100%);
+    /* background-color: #00d6fc; */
+    color: #e8e9e9;
+    padding: 0px 7px 0px 7px;
+    border-radius: 15px;
+    margin-left: 5px;
+    font-size: 14px;
 }

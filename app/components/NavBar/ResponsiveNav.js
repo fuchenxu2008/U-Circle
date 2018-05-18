@@ -47,7 +47,7 @@ class ResponsiveNav extends Component {
       return <MenuMarkup currentUser={currentUser} onLogOut={onLogOut} notiNum={notiNum} />;
     }
 
-    const navStyle = (location === '/' || location === '/me') ? 'transparent-bar' : '';
+    const navStyle = (location === '/' || location.match('/user')) ? 'transparent-bar' : '';
 
     return (
       <Menu mode="horizontal" className={`mobile-navbar container ${navStyle}`}>

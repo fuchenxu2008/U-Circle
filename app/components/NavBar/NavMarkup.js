@@ -38,7 +38,7 @@ const NavMarkup = ({ currentUser, onLogOut, mobileVersion, notiNum }) => (
     {currentUser ? (
       <SubMenu key="user" title={<span><Icon type="user" />{currentUser.nickname}</span>}>
         <Item key="profile">
-          <Link to="/me"><Icon type="profile" />Profile</Link>
+          <Link to={`/user/${currentUser._id}`}><Icon type="profile" />Profile</Link>
         </Item>
         <Item key="logout">
           <div onClick={onLogOut}><Icon type="logout" />Log Out</div>

@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Divider, Button } from 'antd';
+import { Divider, Button, Icon } from 'antd';
 
 import { endSearch } from 'containers/SearchBar/actions';
 import './SearchResultCard.css';
@@ -30,6 +30,7 @@ export class SearchResultCard extends React.Component { // eslint-disable-line r
     const results = searchResult.length > 0
     ? searchResult.map(question => (
       <Link to={`/question/${question._id}`} key={question._id} className="searchresult-item">
+        <div className={`search-question-major ${question.bestAnswer && 'search-question-solved'}`}><Icon type="tags-o" />{question.major}</div>
         <h3 className="searchresult-item-title">{question.title}</h3>
       </Link>
     ))

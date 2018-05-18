@@ -10,6 +10,13 @@ const Notification = require('../models/Notification');
 const { uploadPostImg } = require('../middlewares/multer');
 const { sendNotification } = require('./NotificationController');
 
+const creditCost = {
+  academic: 10,
+  occupational: 30,
+  bestAnswer: 20,
+  normalAnswer: 2,
+};
+
 module.exports = {
   getQuestions: (req, res) => {
     Question.find({ type: req.params.type })
@@ -43,7 +50,7 @@ module.exports = {
         if (err1) return res.status(400).send(err1);
         if (!questionerUser) return res.status(404).json({ message: 'No user found!' });
         /* eslint-disable no-param-reassign */
-        questionerUser.credit -= 10;
+        questionerUser.credit -= creditCost[type];
         questionerUser.save(err2 => {
           if (err2) return res.status(400).send(err2);
           // Add question
@@ -60,7 +67,7 @@ module.exports = {
                   // Emit socket to force refetch
                   req.app.get('socket').emit('data', 'New question!');
 
-                  return res.json({ question, message: 'Post created!' });
+                  return res.json({ question, remainingCredit: questionerUser.credit, message: 'Post created!' });
                 });
             }
           );
@@ -115,46 +122,52 @@ module.exports = {
     }, (err, answer) => {
       if (err || !answer) return res.status(400).send(err);
       // Dumb populate answerer info
-      User.findById(answerer, (err1, answererObj) => {
-        if (err1) return res.status(400).send(err1);
+      User.findById(answerer, (err0, answererObj) => {
+        if (err0) return res.status(400).send(err0);
         if (!answererObj) return res.status(404).json({ message: 'No answerer found!' });
-        // Insert answer to the question
-        Question.findById(id, (err2, oldQuestion) => {
-          if (err2) return res.status(400).send(err2);
-          if (!oldQuestion) return res.status(404).json({ message: 'No question found!' });
-          // Update answers array of the question
-          oldQuestion.set({ answer: oldQuestion.answer.concat(answer._id) });
-          oldQuestion.save(err3 => {
-            if (err3) return res.json(err3);
-            // Dumb populate various detail info of the question
-            Question.findById(id)
-            .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
-            .populate('questioner', ['nickname', 'avatar', 'role', 'id'])
-            .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
-            .exec((err4, question) => {
-              if (err4) return res.status(400).send(err4);
-              if (!question) return res.status(404).json({ message: 'No question found!' });
-              // Send notification to all subscribers and question owner
-              sendNotification({
-                notification: {
-                  targetUsers: [
-                    question.questioner._id,  // Questioner id
-                    ...question.subscribers.filter(subscriber => subscriber.toString() !== answerer),  // Subscibers id
-                  ],
-                  fromUser: answererObj,  // Answerer model (front need nickname, db need id)
-                  relatedQuestion: { // Related question
-                    title: question.title,
-                    id: question._id,
-                    questioner: question.questioner,  // Questioner model
-                    type: question.type,
+        /* eslint-disable no-param-reassign */
+        answererObj.credit += creditCost.normalAnswer;
+        answererObj.save()
+        .then(() => {
+          // Insert answer to the question
+          Question.findById(id, (err2, oldQuestion) => {
+            if (err2) return res.status(400).send(err2);
+            if (!oldQuestion) return res.status(404).json({ message: 'No question found!' });
+            // Update answers array of the question
+            oldQuestion.set({ answer: oldQuestion.answer.concat(answer._id) });
+            oldQuestion.save(err3 => {
+              if (err3) return res.json(err3);
+              // Dumb populate various detail info of the question
+              Question.findById(id)
+              .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
+              .populate('questioner', ['nickname', 'avatar', 'role', 'id'])
+              .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
+              .exec((err4, question) => {
+                if (err4) return res.status(400).send(err4);
+                if (!question) return res.status(404).json({ message: 'No question found!' });
+                // Send notification to all subscribers and question owner
+                sendNotification({
+                  notification: {
+                    targetUsers: [
+                      question.questioner._id,  // Questioner id
+                      ...question.subscribers.filter(subscriber => subscriber.toString() !== answerer),  // Subscibers id
+                    ],
+                    fromUser: answererObj,  // Answerer model (front need nickname, db need id)
+                    relatedQuestion: { // Related question
+                      title: question.title,
+                      id: question._id,
+                      questioner: question.questioner,  // Questioner model
+                      type: question.type,
+                    },
                   },
-                },
-                socket: req.app.get('socket'),
+                  socket: req.app.get('socket'),
+                });
+                return res.json({ question, remainingCredit: answererObj.credit, message: 'Answer submitted' });
               });
-              return res.json({ question, message: 'Answer submitted' });
             });
           });
-        });
+        })
+        .catch(err1 => res.status(400).send(err1));
       });
     });
   },
@@ -199,18 +212,23 @@ module.exports = {
         if (question.bestAnswer) {
           return res.status(400).json({ message: 'Best answer already selected!' });
         }
-        question.set({
-          bestAnswer: answerId,
-        });
+        question.set({ bestAnswer: answerId });
         question
           .save()
           .then(updatedQuestion => {
-            Question.findById(updatedQuestion._id)
-              .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
-              .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
-              .populate({ path: 'questioner', select: ['avatar', 'nickname', 'role', '_id'] })
-              .then(populatedQuestion => res.json(populatedQuestion))
-              .catch(err => res.status(400).send(err));
+            Answer.findById(answerId).then(answer => {
+              User.findById(answer.answerer).then(answerer => {
+                answerer.credit += creditCost.bestAnswer;
+                answerer.save().then(() => {
+                  Question.findById(updatedQuestion._id)
+                    .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
+                    .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
+                    .populate({ path: 'questioner', select: ['avatar', 'nickname', 'role', '_id'] })
+                    .then(populatedQuestion => res.json(populatedQuestion))
+                    .catch(err => res.status(400).send(err));
+                }).catch(err => res.status(400).send(err));
+              }).catch(err => res.status(400).send(err));
+            }).catch(err => res.status(400).send(err));
           })
           .catch(err => res.status(400).send(err));
       })

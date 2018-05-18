@@ -1,0 +1,19 @@
+.user-heading {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px 10px 20px;
+  border-radius: 15px 15px 0 0;
+}
+
+.user-heading-nickname {
+  flex: 1;
+}
+
+.user-heading-avatar {
+  margin-right: 10px;
+  min-width: 32px;
+}
+
+.user-heading-info {
+  margin-left: 5px;
+}

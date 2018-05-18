@@ -9,23 +9,27 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
-import { Row } from 'antd';
+import { Row, Tabs } from 'antd';
 import SearchBar from 'containers/SearchBar';
 import SearchResultCard from 'containers/SearchResultCard';
 import QuestionsList from 'components/QuestionsList';
 import AddButton from 'components/AddButton';
 import LoginHint from 'components/LoginHint';
 import NewQuestionForm from 'components/NewQuestionForm';
+import AlumniList from 'components/AlumniList';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
-import { getAlumniQuestions, addQuestion, subscribeQuestion } from './actions';
-// import './AlumniPage.css';
+import { getAlumniQuestions, addQuestion, subscribeQuestion, getAllAlumni } from './actions';
+import './AlumniPage.css';
+
+const TabPane = Tabs.TabPane;
 
 export class AlumniPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = { showAddForm: false, showHint: false };
 
   componentDidMount() {
     this.props.getAlumniQuestions();
+    this.props.getAllAlumni();
     if (this.props.socket) {
       this.props.socket.on('data', () => this.props.getAlumniQuestions());
     }
@@ -47,6 +51,9 @@ export class AlumniPage extends React.Component { // eslint-disable-line react/p
   }
 
   render() {
+    const { history, allAlumni, alumniQuestions, currentUser } = this.props;
+    console.log('allAlumni: ', allAlumni);
+
     return (
       <div className="body-container Alumnipage-bg">
         <Helmet>
@@ -62,20 +69,27 @@ export class AlumniPage extends React.Component { // eslint-disable-line react/p
           <LoginHint
             visible={this.state.showHint}
             onCancel={this.hideForm}
-            onOk={() => this.props.history.push('/auth')}
+            onOk={() => history.push('/auth')}
           />
         </Row>
+        <Tabs defaultActiveKey="2">
+          <TabPane tab="Questions" key="1">
+            <QuestionsList
+              questions={alumniQuestions}
+              onSubscribeQuestion={this.handleSubscribeQuestion}
+              currentUser={currentUser}
+            />
+          </TabPane>
+          <TabPane tab="Alumni" key="2">
+            <AlumniList alumnis={allAlumni} />
+          </TabPane>
+        </Tabs>
         <NewQuestionForm
           visible={this.state.showAddForm}
           onCancel={this.hideForm}
           onOk={this.hideForm}
           onAddQuestion={this.handleAddQuestion}
           type="occupational"
-          currentUser={this.props.currentUser}
-        />
-        <QuestionsList
-          questions={this.props.alumniQuestions}
-          onSubscribeQuestion={this.handleSubscribeQuestion}
           currentUser={this.props.currentUser}
         />
       </div>
@@ -91,6 +105,8 @@ AlumniPage.propTypes = {
   subscribeQuestion: PropTypes.func,
   alumniQuestions: PropTypes.object,
   socket: PropTypes.object,
+  getAllAlumni: PropTypes.func,
+  allAlumni: PropTypes.arrayOf(PropTypes.object),
 };
 
 const mapStateToProps = state => ({
@@ -99,6 +115,7 @@ const mapStateToProps = state => ({
       ? null
       : state.get('global').get('currentUser').toJS(),
   alumniQuestions: state.get('alumniPage').get('alumniQuestions').toJS(),
+  allAlumni: state.get('alumniPage').get('allAlumni').toJS(),
   socket: state.get('global').get('socket'),
 });
 
@@ -107,6 +124,7 @@ function mapDispatchToProps(dispatch) {
     getAlumniQuestions: () => dispatch(getAlumniQuestions()),
     addQuestion: fields => dispatch(addQuestion(fields)),
     subscribeQuestion: info => dispatch(subscribeQuestion(info)),
+    getAllAlumni: () => dispatch(getAllAlumni()),
   };
 }
 

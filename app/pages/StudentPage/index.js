@@ -56,7 +56,7 @@ export class StudentPage extends React.Component { // eslint-disable-line react/
         <SearchBar searchType="academic" />
         <SearchResultCard key="key" />
         <br />
-        <Row className="title-row">
+        <Row className="title-row mb-20">
           <h2 className="big-title" style={{ flex: 1 }}>Student Page</h2>
           <AddButton handleClick={this.showForm} />
           <LoginHint

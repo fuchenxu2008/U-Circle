@@ -1,0 +1,27 @@
+.alumni-card {
+    display: flex;
+    margin-bottom: 15px;
+    padding: 15px 20px 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 5px 25px rgba(224, 224, 224, 0.65);
+    background-color: white;
+}
+
+.big-avatar {
+    width: 20vw;
+    height: 20vw;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 100%;
+}
+
+.alumni-card-info {
+    margin-left: 20px;
+    align-self: center;
+}
+
+.alumni-card-nickname {
+    font-weight: bold;
+    font-size: 15px;
+}

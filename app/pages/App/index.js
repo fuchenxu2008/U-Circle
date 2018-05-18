@@ -15,12 +15,13 @@ import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { notification, Icon, Button } from 'antd';
+import { notification, Icon } from 'antd';
+import BackButton from 'components/BackButton';
 import NavBar from 'components/NavBar';
 import LoginPage from 'pages/LoginPage';
 import HomePage from 'pages/HomePage';
 import ProfilePage from 'pages/ProfilePage';
-import MyStuffPage from 'pages/MyStuffPage';
+import UserStuffPage from 'pages/UserStuffPage';
 import AlumniPage from 'pages/AlumniPage';
 import StudentPage from 'pages/StudentPage';
 import NotificationPage from 'pages/NotificationPage';
@@ -30,8 +31,6 @@ import { setCurrentUser, establishSocket, closeSocket, logOut, getNotifications,
 import './App.css';
 
 class MainApp extends Component { // eslint-disable-line react/prefer-stateless-function
-  state = { scrollY: 0, backbtnClass: '' }
-
   componentWillMount() {
     const { currentUser, socket } = this.props;
     if (currentUser) {
@@ -43,10 +42,6 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
     }
   }
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll, { passive: true });
-  }
-
   componentWillReceiveProps(props) {  // Establish and listen socket on login/register
     const { currentUser, socket } = props;
     if (currentUser && !socket) {
@@ -54,23 +49,10 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
   onLogOut = () => {
     this.props.logOut();
     this.props.closeSocket(this.props.socket);
     this.props.history.push('/auth');
-  }
-
-  handleScroll = () => {
-    if (window.scrollY - this.state.scrollY > 20) {
-      this.setState({ backbtnClass: 'slideOutDown' });
-    } else if (this.state.scrollY - window.scrollY > 20) {
-      this.setState({ backbtnClass: 'slideInUp' });
-    }
-    this.setState({ scrollY: window.scrollY });
   }
 
   listenSocket = async id => {
@@ -131,8 +113,8 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/auth" component={LoginPage} />
-          <Route exact path="/me" component={ProfilePage} />
-          <Route path="/me/:type" component={MyStuffPage} />
+          <Route path="/user/:id/:type" component={UserStuffPage} />
+          <Route path="/user/:id" component={ProfilePage} />
           <Route path="/alumni" component={AlumniPage} />
           <Route path="/student" component={StudentPage} />
           <Route path="/notification" component={NotificationPage} />
@@ -141,10 +123,7 @@ class MainApp extends Component { // eslint-disable-line react/prefer-stateless-
         </Switch>
         {
           !noBackBtnLocation.includes(pathname) &&
-          <Button
-            className={`back-btn animated ${this.state.backbtnClass}`}
-            onClick={() => history.go(-1)}
-          ><Icon type="arrow-left" /></Button>
+          <BackButton history={history} />
         }
       </div>
     );

@@ -25,3 +25,7 @@ export function addQuestion(question) {
 export function subscribeQuestion({ userId, questionId }) {
   return axios.put(`${ROOT_URL}/api/question/subscribe/${questionId}`, { userId }, getAuthHeader());
 }
+
+export function getAllAlumni() {
+  return axios.get(`${ROOT_URL}/api/user/alumni`);
+}

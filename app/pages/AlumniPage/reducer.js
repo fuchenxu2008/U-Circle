@@ -17,6 +17,7 @@ import {
   SUBMIT_NEW_ALUMNI_QUESTION_FULFILLED,
   SUBMIT_NEW_ALUMNI_QUESTION_REJECTED,
   SUBSCRIBE_QUESTION_FULFILLED,
+  GET_ALL_ALUMNI_FULFILLED,
 } from './constants';
 
 import { loadState } from '../../utils/localStorage';
@@ -25,6 +26,7 @@ const persistedAlumniPageState = persistedCachedData.alumniPage;
 
 const initialState = fromJS({
   alumniQuestions: {},
+  allAlumni: [],
   ...persistedAlumniPageState,
 });
 
@@ -59,6 +61,8 @@ function alumniPageReducer(state = initialState, action) {
           [action.payload.data._id]: action.payload.data,
         })
       );
+    case GET_ALL_ALUMNI_FULFILLED:
+      return state.set('allAlumni', fromJS(action.payload.data));
     default:
       return state;
   }

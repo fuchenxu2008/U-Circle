@@ -45,7 +45,7 @@
     text-align: center;
     font-weight: bold;
     margin-top: 1.2rem;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
 }
 
 .profile-list {
@@ -53,6 +53,7 @@
     display: flex;
     justify-content: space-around;
     padding-left: 0;
+    margin-top: 2rem;
 }
 
 .profile-list-item {
@@ -97,4 +98,24 @@
     border: none;
     color: #3e86c2;
     background-color: transparent;
+}
+
+.user-avatar {
+    width: 300px;
+    height: 300px;
+}
+
+.private-asking {
+    /* display: flex; */
+    text-align: center;
+}
+
+.ask-btn:hover {
+    border: white !important;
+    background: white !important;
+}
+
+.ask-btn:focus {
+  border: white !important;
+  background: white !important;
 }

@@ -1,6 +1,6 @@
 /**
  *
- * MyStuffPage
+ * UserStuffPage
  *
  */
 
@@ -15,27 +15,29 @@ import QuestionList from 'components/QuestionsList';
 import MyAnswer from 'components/MyAnswer';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
-import { getMyStuff, subscribeQuestion } from './actions';
-export class MyStuffPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+import { getUserStuff, subscribeQuestion } from './actions';
+export class UserStuffPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = {
     pageType: '',
     typeMapping: {
-      questions: 'myQuestions',
-      answers: 'myAnswers',
-      subscriptions: 'mySubscriptions',
+      questions: 'userQuestions',
+      answers: 'userAnswers',
+      subscriptions: 'userSubscriptions',
     },
   }
 
-  componentWillMount() {
+  componentWillMount() { /* eslint consistent-return: 0 */
     const { match, currentUser, history } = this.props;
-    const { type } = match.params;
+    const { type, id } = match.params;
+    const isCurrentUser = id === currentUser._id;
+    if ((type === 'answers' || type === 'subscription') && !isCurrentUser) return history.push(`/user/${id}`);
     if (currentUser) {
       if (type in this.state.typeMapping) {
-        this.props.getMyStuff({ id: currentUser._id, type });
+        this.props.getUserStuff({ id, type });
         this.setState({
-          pageType: `My ${type.charAt(0).toUpperCase() + type.slice(1)}`,
+          pageType: `${isCurrentUser ? 'My' : 'User'} ${type.charAt(0).toUpperCase() + type.slice(1)}`,
         });
-      } else history.push('/me');
+      } else return history.push(`/user/${id}`);
     } else history.push('/auth');
   }
 
@@ -48,7 +50,7 @@ export class MyStuffPage extends React.Component { // eslint-disable-line react/
     const { type } = match.params;
     const { typeMapping, pageType } = this.state;
 
-    const myStuffList = type === 'answers'
+    const userStuffList = type === 'answers'
       ? map(sortBy(this.props[typeMapping[type]], 'created_at').reverse(), answer => (
         <MyAnswer key={answer._id} answer={answer} />
       ))
@@ -63,14 +65,14 @@ export class MyStuffPage extends React.Component { // eslint-disable-line react/
     return (
       <div>
         <Helmet>
-          <title>MyStuffPage</title>
-          <meta name="description" content="Description of MyStuffPage" />
+          <title>User{type.charAt(0).toUpperCase() + type.slice(1)}Page</title>
+          <meta name="description" content="Description of UserStuffPage" />
         </Helmet>
         <div className="body-container">
           <h2 className="big-title">{pageType}</h2>
           {
             Object.keys(this.props[typeMapping[type]]).length
-              ? myStuffList
+              ? userStuffList
               : <div className="no-match-found"><Icon type="bulb" /> No {type} available.</div>
           }
         </div>
@@ -79,18 +81,18 @@ export class MyStuffPage extends React.Component { // eslint-disable-line react/
   }
 }
 
-MyStuffPage.propTypes = {
+UserStuffPage.propTypes = {
   match: PropTypes.object,
   currentUser: PropTypes.object,
   subscribeQuestion: PropTypes.func,
-  getMyStuff: PropTypes.func,
+  getUserStuff: PropTypes.func,
   history: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  myQuestions: state.get('myStuffPage').get('myQuestions').toJS(),
-  myAnswers: state.get('myStuffPage').get('myAnswers').toJS(),
-  mySubscriptions: state.get('myStuffPage').get('mySubscriptions').toJS(),
+  userQuestions: state.get('userStuffPage').get('userQuestions').toJS(),
+  userAnswers: state.get('userStuffPage').get('userAnswers').toJS(),
+  userSubscriptions: state.get('userStuffPage').get('userSubscriptions').toJS(),
   currentUser:
     state.get('global').get('currentUser') === null ?
     null :
@@ -100,15 +102,15 @@ const mapStateToProps = state => ({
 function mapDispatchToProps(dispatch) {
   return {
     subscribeQuestion: info => dispatch(subscribeQuestion(info)),
-    getMyStuff: ({ id, type }) => dispatch(getMyStuff({ id, type })),
+    getUserStuff: ({ id, type }) => dispatch(getUserStuff({ id, type })),
   };
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-const withReducer = injectReducer({ key: 'myStuffPage', reducer });
+const withReducer = injectReducer({ key: 'userStuffPage', reducer });
 
 export default compose(
   withReducer,
   withConnect,
-)(MyStuffPage);
+)(UserStuffPage);

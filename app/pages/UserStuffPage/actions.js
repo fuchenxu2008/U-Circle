@@ -1,35 +1,35 @@
 /*
  *
- * MyStuffPage actions
+ * UserStuffPage actions
  *
  */
 
 import {
-  GET_MY_QUESTIONS,
-  GET_MY_ANSWERS,
-  GET_MY_SUBSCRIPTIONS,
+  GET_USER_QUESTIONS,
+  GET_USER_ANSWERS,
+  GET_USER_SUBSCRIPTIONS,
   SUBSCRIBE_QUESTION,
 } from './constants';
 import * as api from './api';
 
-export function getMyStuff({ id, type }) {
+export function getUserStuff({ id, type }) {
   let actionType = '';
   switch (type) {
     case 'questions':
-      actionType = GET_MY_QUESTIONS;
+      actionType = GET_USER_QUESTIONS;
       break;
     case 'answers':
-      actionType = GET_MY_ANSWERS;
+      actionType = GET_USER_ANSWERS;
       break;
     case 'subscriptions':
-      actionType = GET_MY_SUBSCRIPTIONS;
+      actionType = GET_USER_SUBSCRIPTIONS;
       break;
     default:
       break;
   }
   return {
     type: actionType,
-    payload: api.getMyStuff({ id, type }),
+    payload: api.getUserStuff({ id, type }),
   };
 }
 
