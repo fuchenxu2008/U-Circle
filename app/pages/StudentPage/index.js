@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
-import { Row } from 'antd';
+import { Row, Icon } from 'antd';
 import SearchBar from 'containers/SearchBar';
 import SearchResultCard from 'containers/SearchResultCard';
 import QuestionsList from 'components/QuestionsList';
@@ -73,11 +73,17 @@ export class StudentPage extends React.Component { // eslint-disable-line react/
           type="academic"
           currentUser={this.props.currentUser}
         />
-        <QuestionsList
-          questions={this.props.studentQuestions}
-          onSubscribeQuestion={this.handleSubscribeQuestion}
-          currentUser={this.props.currentUser}
-        />
+        { this.props.studentQuestions.length
+          ? (
+            <QuestionsList
+              questions={this.props.studentQuestions}
+              onSubscribeQuestion={this.handleSubscribeQuestion}
+              currentUser={this.props.currentUser}
+            />
+          ) : (
+            <div className="no-match-found"><Icon type="calculator" /> No academic question available.</div>
+          )
+        }
       </div>
     );
   }

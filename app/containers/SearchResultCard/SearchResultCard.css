@@ -63,6 +63,10 @@
   align-self: center;
   color: grey;
   background-color: white;
+  max-width: 40%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .search-question-solved {

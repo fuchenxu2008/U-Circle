@@ -19,7 +19,7 @@ import NewQuestionForm from 'components/NewQuestionForm';
 import AlumniList from 'components/AlumniList';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
-import { getAlumniQuestions, addQuestion, subscribeQuestion, getAllAlumni } from './actions';
+import { getAlumniQuestions, addQuestion, subscribeQuestion, getAllAlumni, changeTab } from './actions';
 import './AlumniPage.css';
 
 const TabPane = Tabs.TabPane;
@@ -51,8 +51,7 @@ export class AlumniPage extends React.Component { // eslint-disable-line react/p
   }
 
   render() {
-    const { history, allAlumni, alumniQuestions, currentUser } = this.props;
-    console.log('allAlumni: ', allAlumni);
+    const { history, allAlumni, alumniQuestions, currentUser, activeTab } = this.props;
 
     return (
       <div className="body-container Alumnipage-bg">
@@ -72,8 +71,8 @@ export class AlumniPage extends React.Component { // eslint-disable-line react/p
             onOk={() => history.push('/auth')}
           />
         </Row>
-        <Tabs defaultActiveKey="2">
-          <TabPane tab="Questions" key="1">
+        <Tabs activeKey={activeTab} onChange={key => this.props.changeTab(key)}>
+          <TabPane tab="Questions" key="1" style={{ display: 'flex' }}>
             <QuestionsList
               questions={alumniQuestions}
               onSubscribeQuestion={this.handleSubscribeQuestion}
@@ -107,6 +106,8 @@ AlumniPage.propTypes = {
   socket: PropTypes.object,
   getAllAlumni: PropTypes.func,
   allAlumni: PropTypes.arrayOf(PropTypes.object),
+  activeTab: PropTypes.string,
+  changeTab: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -116,6 +117,7 @@ const mapStateToProps = state => ({
       : state.get('global').get('currentUser').toJS(),
   alumniQuestions: state.get('alumniPage').get('alumniQuestions').toJS(),
   allAlumni: state.get('alumniPage').get('allAlumni').toJS(),
+  activeTab: state.get('alumniPage').get('activeTab'),
   socket: state.get('global').get('socket'),
 });
 
@@ -125,6 +127,7 @@ function mapDispatchToProps(dispatch) {
     addQuestion: fields => dispatch(addQuestion(fields)),
     subscribeQuestion: info => dispatch(subscribeQuestion(info)),
     getAllAlumni: () => dispatch(getAllAlumni()),
+    changeTab: tab => dispatch(changeTab(tab)),
   };
 }
 

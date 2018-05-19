@@ -18,6 +18,7 @@ import {
   SUBMIT_NEW_ALUMNI_QUESTION_REJECTED,
   SUBSCRIBE_QUESTION_FULFILLED,
   GET_ALL_ALUMNI_FULFILLED,
+  CHANGE_TAB,
 } from './constants';
 
 import { loadState } from '../../utils/localStorage';
@@ -27,6 +28,7 @@ const persistedAlumniPageState = persistedCachedData.alumniPage;
 const initialState = fromJS({
   alumniQuestions: {},
   allAlumni: [],
+  activeTab: '1',
   ...persistedAlumniPageState,
 });
 
@@ -63,6 +65,8 @@ function alumniPageReducer(state = initialState, action) {
       );
     case GET_ALL_ALUMNI_FULFILLED:
       return state.set('allAlumni', fromJS(action.payload.data));
+    case CHANGE_TAB:
+      return state.set('activeTab', action.payload);
     default:
       return state;
   }

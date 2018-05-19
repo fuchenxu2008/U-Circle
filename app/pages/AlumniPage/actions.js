@@ -9,6 +9,7 @@ import {
   GET_ALUMNI_QUESTIONS,
   SUBSCRIBE_QUESTION,
   GET_ALL_ALUMNI,
+  CHANGE_TAB,
 } from './constants';
 import * as api from './api';
 
@@ -40,5 +41,12 @@ export function getAllAlumni() {
   return {
     type: GET_ALL_ALUMNI,
     payload: api.getAllAlumni(),
+  };
+}
+
+export function changeTab(tab) {
+  return {
+    type: CHANGE_TAB,
+    payload: tab,
   };
 }
