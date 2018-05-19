@@ -72,7 +72,7 @@ export class AlumniPage extends React.Component { // eslint-disable-line react/p
           />
         </Row>
         <Tabs activeKey={activeTab} onChange={key => this.props.changeTab(key)}>
-          <TabPane tab="Questions" key="1" style={{ display: 'flex' }}>
+          <TabPane tab="Questions" key="1">
             <QuestionsList
               questions={alumniQuestions}
               onSubscribeQuestion={this.handleSubscribeQuestion}
