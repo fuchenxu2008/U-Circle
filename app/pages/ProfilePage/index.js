@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
-import { Icon, Button } from 'antd';
+import { Icon, Button, Popconfirm } from 'antd';
 import AvatarUploader from 'containers/AvatarUploader';
 import NewQuestionForm from 'components/NewQuestionForm';
 import MyQuestion from 'components/MyQuestion';
@@ -101,7 +101,9 @@ export class ProfilePage extends React.Component { // eslint-disable-line react/
             }
             { !isCurrentUser && isAlumni && // Other alumni's profile
               <div className="private-asking">
-                <Button ghost className="ask-btn" onClick={this.showForm}>Ask Questions</Button>
+                <Popconfirm title="Are you sure to pay 30 credit?" onConfirm={this.showForm} okText="Yes" cancelText="No">
+                  <Button ghost className="ask-btn">Ask Questions<Icon type="pay-circle" /><span style={{ marginLeft: '2px' }}>30</span></Button>
+                </Popconfirm>
                 <NewQuestionForm
                   visible={this.state.showAddForm}
                   onCancel={this.hideForm}

@@ -9,11 +9,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
-import { Row, Tabs } from 'antd';
+import { Row, Tabs, Button } from 'antd';
 import SearchBar from 'containers/SearchBar';
 import SearchResultCard from 'containers/SearchResultCard';
 import QuestionsList from 'components/QuestionsList';
-import AddButton from 'components/AddButton';
 import LoginHint from 'components/LoginHint';
 import NewQuestionForm from 'components/NewQuestionForm';
 import AlumniList from 'components/AlumniList';
@@ -64,7 +63,13 @@ export class AlumniPage extends React.Component { // eslint-disable-line react/p
         <br />
         <Row className="title-row">
           <h2 className="big-title" style={{ flex: 1 }}>Alumni Page</h2>
-          <AddButton handleClick={this.showForm} />
+          <Button
+            onClick={this.showForm}
+            type="ghost"
+            shape="circle"
+            icon="plus"
+            className="addBtn"
+          />
           <LoginHint
             visible={this.state.showHint}
             onCancel={this.hideForm}
@@ -72,7 +77,7 @@ export class AlumniPage extends React.Component { // eslint-disable-line react/p
           />
         </Row>
         <Tabs activeKey={activeTab} onChange={key => this.props.changeTab(key)}>
-          <TabPane tab="Questions" key="1">
+          <TabPane tab="Featured" key="1">
             <QuestionsList
               questions={alumniQuestions}
               onSubscribeQuestion={this.handleSubscribeQuestion}

@@ -9,11 +9,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
-import { Row } from 'antd';
+import { Row, Popconfirm, Button } from 'antd';
 import SearchBar from 'containers/SearchBar';
 import SearchResultCard from 'containers/SearchResultCard';
 import QuestionsList from 'components/QuestionsList';
-import AddButton from 'components/AddButton';
 import LoginHint from 'components/LoginHint';
 import NewQuestionForm from 'components/NewQuestionForm';
 import injectReducer from 'utils/injectReducer';
@@ -58,7 +57,14 @@ export class StudentPage extends React.Component { // eslint-disable-line react/
         <br />
         <Row className="title-row mb-20">
           <h2 className="big-title" style={{ flex: 1 }}>Student Page</h2>
-          <AddButton handleClick={this.showForm} />
+          <Popconfirm title="Are you sure to pay 5 credit?" placement="topRight" onConfirm={this.showForm} okText="Yes" cancelText="No">
+            <Button
+              type="ghost"
+              shape="circle"
+              icon="plus"
+              className="addBtn"
+            />
+          </Popconfirm>
           <LoginHint
             visible={this.state.showHint}
             onCancel={this.hideForm}

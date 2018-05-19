@@ -83,9 +83,12 @@ class Question extends Component {  // eslint-disable-line react/prefer-stateles
 
           <div className="question-action">
             <div className={`question-major ${bestAnswer && 'question-solved'}`}><Icon type="tags-o" />{major}</div>
-            <button className="question-action-btn" onClick={() => history.push(`/question/${_id}`)}>
-              <Icon type="message" /> { answer.length ? `${answer.length} answers` : 'Answer' }
-            </button>
+            {
+              !history.location.pathname.match('/alumni') &&
+              <button className="question-action-btn" onClick={() => history.push(`/question/${_id}`)}>
+                <Icon type="message" /> { answer.length ? `${answer.length} answers` : 'Answer' }
+              </button>
+            }
             {
               questionSubscribed
                 ? <button className="question-action-btn" onClick={this.handleSubscribeQuestion}><Icon type="star" /> Subscribed</button>
