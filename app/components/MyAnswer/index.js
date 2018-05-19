@@ -15,7 +15,7 @@ function MyAnswer({ answer, history }) {
   return (
     <div className="my-answer-card" onClick={() => history.push(`/question/${_id}`)}>
       <small className={`question-major ${bestAnswer && 'question-solved'}`}>{major}</small>
-      <div>
+      <div style={{ flex: 1 }}>
         You answered <span className="yellow-text">{`${questioner.nickname}'s`}</span> {type} question <span className="yellow-text">{title}:</span><br />
         <span className="my-answer-content">{content}</span>
       </div>

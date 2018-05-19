@@ -12,6 +12,7 @@ import {
   SEARCH_FULFILLED,
   BEGIN_SEARCH,
   END_SEARCH,
+  CLEAR_SEARCH,
 } from './constants';
 
 const initialState = fromJS({
@@ -30,6 +31,8 @@ function searchBarReducer(state = initialState, action) {
       return state.set('searching', true);
     case END_SEARCH:
       return state.set('searching', false);
+    case CLEAR_SEARCH:
+      return initialState;
     case SEARCH_TYPE_CHANGE:
       return state.updateIn(['searchPhrase', 'type'], () => action.payload);
     case SEARCH_MAJOR_CHANGE:

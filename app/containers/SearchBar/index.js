@@ -19,6 +19,7 @@ import {
   searchMajorChange,
   searchKeywordChange,
   searchQuestion,
+  clearSearch,
 } from './actions';
 import './SearchBar.css';
 
@@ -28,6 +29,10 @@ const InputGroup = Input.Group;
 export class SearchBar extends React.Component { // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
     this.props.onSearchTypeChange(this.props.searchType);
+  }
+
+  componentWillUnmount() {
+    this.props.clearSearch();
   }
 
   async onMajorChange(major) {
@@ -93,6 +98,7 @@ SearchBar.propTypes = {
   searchPhrase: PropTypes.object,
   beginSearch: PropTypes.func,
   endSearch: PropTypes.func,
+  clearSearch: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -105,6 +111,7 @@ function mapDispatchToProps(dispatch) {
   return {
     beginSearch: () => dispatch(beginSearch()),
     endSearch: () => dispatch(endSearch()),
+    clearSearch: () => dispatch(clearSearch()),
     searchQuestion: searchPhrase => dispatch(searchQuestion(searchPhrase)),
     onSearchTypeChange: type => dispatch(searchTypeChange(type)),
     onSearchMajorChange: major => dispatch(searchMajorChange(major)),

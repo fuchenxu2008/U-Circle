@@ -11,6 +11,7 @@ import {
   SEARCH_MAJOR_CHANGE,
   SEARCH_KEYWORD_CHANGE,
   SEARCH,
+  CLEAR_SEARCH,
 } from './constants';
 import * as api from './api';
 
@@ -23,6 +24,12 @@ export function beginSearch() {
 export function endSearch() {
   return {
     type: END_SEARCH,
+  };
+}
+
+export function clearSearch() {
+  return {
+    type: CLEAR_SEARCH,
   };
 }
 

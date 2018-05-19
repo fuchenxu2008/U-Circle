@@ -25,6 +25,7 @@
 }
 
 .my-question-title {
+    flex: 1;
     color: rgb(78, 78, 78);
     text-overflow: -o-ellipsis-lastline;
     overflow: hidden;

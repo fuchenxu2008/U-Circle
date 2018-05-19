@@ -10,7 +10,7 @@ import { Button, Icon } from 'antd';
 import './BackButton.css';
 
 class BackButton extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  state = { scrollY: 0, backbtnClass: '' }
+  state = { scrollY: 0, backbtnClass: 'slideInUp' }
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll, { passive: true });
