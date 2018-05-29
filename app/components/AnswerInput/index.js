@@ -11,7 +11,7 @@ import './AnswerInput.css';
 const FormItem = Form.Item;
 
 
-class AnswerInput extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class AnswerInput extends React.Component { // eslint-disable-line react/prefer-stateless-function
   handleSubmit = e => {
     e.preventDefault();
     const { form, onAnswer } = this.props;

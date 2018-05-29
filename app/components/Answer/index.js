@@ -11,7 +11,7 @@ import { Avatar, Button } from 'antd';
 import PropTypes from 'prop-types';
 import './Answer.css';
 
-function Answer(props) {
+export function Answer(props) {
   const { answer, onDeleteAnswer, onPickAnswer, currentQuestion, currentUser, bestAnswer, history } = props;
   const { _id, content, answerer, created_at } = answer;
   const isOwner = currentUser ? currentUser._id === answerer._id : false;

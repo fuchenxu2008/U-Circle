@@ -30,7 +30,7 @@ import NotFoundPage from 'pages/NotFoundPage/Loadable';
 import { setCurrentUser, establishSocket, closeSocket, logOut, getNotifications, markNotiAsRead } from './actions';
 import './App.css';
 
-class MainApp extends Component { // eslint-disable-line react/prefer-stateless-function
+export class MainApp extends Component { // eslint-disable-line react/prefer-stateless-function
   componentWillMount() {
     const { currentUser, socket } = this.props;
     if (currentUser) {

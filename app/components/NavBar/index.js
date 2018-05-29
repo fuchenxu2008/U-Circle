@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import NavMarkup from './NavMarkup';
 import ResponsiveNav from './ResponsiveNav';
 
-const NavBar = ({ currentUser, onLogOut, notiNum, history }) => (
+export const NavBar = ({ currentUser, onLogOut, notiNum, history }) => (
   <ResponsiveNav
     menuMarkup={NavMarkup}
     currentUser={currentUser}

@@ -1,17 +1,16 @@
 {
   "name": "u-circle",
-  "version": "0.9.0",
-  "description": "A advanced Scaffold for MERN.",
+  "version": "1.0.0",
+  "description": "CSE208 group project program.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/fuchenxu2008/MERN-Scaffold.git"
+    "url": "https://github.com/fuchenxu2008/U-Circle.git"
   },
   "engines": {
     "npm": ">=3",
     "node": ">=5"
   },
-  "author": "Max Stoiber",
-  "license": "MIT",
+  "author": "Group Delta",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
     "preanalyze": "npm run analyze:clean",

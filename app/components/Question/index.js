@@ -12,7 +12,7 @@ import { withRouter } from 'react-router-dom';
 import UserHeading from 'components/UserHeading';
 import './Question.css';
 
-class Question extends Component {  // eslint-disable-line react/prefer-stateless-function
+export class Question extends Component {  // eslint-disable-line react/prefer-stateless-function
   state = {
     showPreview: false,
     previewImg: '',

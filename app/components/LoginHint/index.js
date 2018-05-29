@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Modal } from 'antd';
 // import styled from 'styled-components';
 
-function LoginHint({ visible, onCancel, onOk }) {
+export function LoginHint({ visible, onCancel, onOk }) {
   return (
     <Modal
       title="Try logging in first?"

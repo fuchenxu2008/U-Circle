@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import './MyAnswer.css';
 
-function MyAnswer({ answer, history }) {
+export function MyAnswer({ answer, history }) {
   const { content, question } = answer;
   const { _id, questioner, title, major, type, bestAnswer } = question;
   return (

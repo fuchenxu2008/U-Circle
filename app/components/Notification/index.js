@@ -11,7 +11,7 @@ import moment from 'moment';
 import { Icon } from 'antd';
 import './Notification.css';
 
-function Notification({ info, currentUser, history, onReadNoti }) {
+export function Notification({ info, currentUser, history, onReadNoti }) {
   const { created_at, fromUser, relatedQuestion } = info;
   const isOwner = currentUser._id === relatedQuestion.questioner._id;
 

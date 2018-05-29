@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AlumniCard from 'components/AlumniCard';
 
-function AlumniList({ alumnis, currentUser }) {
+export function AlumniList({ alumnis, currentUser }) {
   const alumniList = alumnis.map(alumni => (
     <AlumniCard
       key={alumni._id}

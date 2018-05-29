@@ -1,10 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
-import UserHeading from '../index';
+import { UserHeading } from '../index';
 
 describe('<UserHeading />', () => {
-  it('Expect to be rendered', () => {
-    expect(shallow(<UserHeading />)).toBeDefined();
+  it('Render without error.', () => {
+    expect(shallow(<UserHeading />).exists(<div className="user-heading"></div>)).toBe(true);
   });
 });

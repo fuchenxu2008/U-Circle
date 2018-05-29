@@ -10,7 +10,7 @@ import { Avatar } from 'antd';
 import { withRouter } from 'react-router-dom';
 import './UserHeading.css';
 
-function UserHeading({ avatar, nickname, time, onClick }) {
+export function UserHeading({ avatar, nickname, time, onClick }) {
   return (
     <div className="user-heading">
       <Avatar className="user-heading-avatar" src={avatar} onClick={onClick} />

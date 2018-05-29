@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Button, Icon } from 'antd';
 import './BackButton.css';
 
-class BackButton extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class BackButton extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = { scrollY: 0, backbtnClass: 'slideInUp' }
 
   componentDidMount() {

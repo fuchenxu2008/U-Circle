@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import Answer from 'components/Answer';
 // import styled from 'styled-components';
 
-class AnswersList extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class AnswersList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     const { answers, onDeleteAnswer, onPickAnswer, currentQuestion, currentUser, bestAnswer } = this.props;
     return (
