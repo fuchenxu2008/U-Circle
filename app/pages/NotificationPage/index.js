@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { sortBy } from 'lodash';
 import { Icon } from 'antd';
 import Notification from 'components/Notification';
 import { markNotiAsRead } from '../App/actions';
@@ -19,15 +18,14 @@ export class NotificationPage extends React.Component { // eslint-disable-line r
   render() {
     const { notifications, currentUser } = this.props;
     if (!currentUser) return <Redirect to="/auth" />;
-    const notis = sortBy(sortBy(notifications, 'markRead').reverse(), 'created_at');
-    const myNotifications = notis.map(noti => (
+    const myNotifications = notifications.map(noti => (
       <Notification
         key={noti._id}
         info={noti}
         currentUser={currentUser}
         onReadNoti={() => this.props.markNotiAsRead({ userId: currentUser._id, questionId: noti.relatedQuestion._id })}
       />
-    )).sort((x, y) => (x === y) ? 0 : x ? 1 : -1);  /* eslint no-nested-ternary: 0 */
+    ));
 
     return (
       <div className="body-container">
@@ -37,7 +35,7 @@ export class NotificationPage extends React.Component { // eslint-disable-line r
         </Helmet>
         <h2 className="big-title mb-20">Notification Center</h2>
         {
-          notis.length
+          notifications.length
             ? myNotifications
             : <div className="no-match-found"><Icon type="notification" /> No notification available.</div>
         }
