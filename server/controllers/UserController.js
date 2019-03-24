@@ -60,6 +60,7 @@ module.exports = {
     const { id } = req.params;
     Answer.find({ answerer: id })
       .populate({ path: 'question', populate: { path: 'questioner', select: ['avatar', 'nickname', 'role', 'id'] } })
+      .sort({ created_at: -1 })
       .then(answers => {
         if (!answers) return res.status(404).json({ message: 'No answer found!' });
         return res.json(answers);
@@ -72,6 +73,7 @@ module.exports = {
     Question.find({ subscribers: id })
       .populate('questioner', ['nickname', 'avatar', 'role', 'id'])
       .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
+      .sort({ created_at: -1 })
       .then(questions => {
         if (!questions) return res.status(404).json({ message: 'No question found!' });
         return res.json(questions);

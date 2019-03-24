@@ -4,7 +4,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
-// const sendMail = require('../middlewares/nodemailer');
 const config = require('../config');
 
 function signToken(user) {

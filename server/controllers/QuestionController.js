@@ -22,6 +22,7 @@ module.exports = {
     Question.find({ type: req.params.type })
     .populate('questioner', ['nickname', 'avatar', 'role', 'id'])
     .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname', 'role', 'id'] } })
+    .sort({ created_at: -1 })
     .exec((err, questions) => {
       if (err) return res.status(400).send(err);
       if (!questions) return res.status(404).json({ message: 'No question found!' });
@@ -224,13 +225,11 @@ module.exports = {
                     .populate({ path: 'bestAnswer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
                     .populate({ path: 'answer', populate: { path: 'answerer', select: ['avatar', 'nickname'] } })
                     .populate({ path: 'questioner', select: ['avatar', 'nickname', 'role', '_id'] })
-                    .then(populatedQuestion => res.json(populatedQuestion))
-                    .catch(err => res.status(400).send(err));
-                }).catch(err => res.status(400).send(err));
-              }).catch(err => res.status(400).send(err));
-            }).catch(err => res.status(400).send(err));
-          })
-          .catch(err => res.status(400).send(err));
+                    .then(populatedQuestion => res.json(populatedQuestion));
+                });
+              });
+            });
+          });
       })
       .catch(err => res.status(400).send(err));
   },

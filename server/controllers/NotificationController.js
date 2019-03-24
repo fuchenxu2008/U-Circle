@@ -31,6 +31,7 @@ module.exports = {
     return Notification.find({ targetUser: req.params.id })
       .populate('fromUser', ['nickname', 'avatar', 'role', 'id'])
       .populate({ path: 'relatedQuestion', populate: { path: 'questioner', select: ['avatar', 'nickname', 'id', 'role'] } })
+      .sort({ created_at: -1 })
       .then(notifications => {
         if (!notifications) return res.status(404).json({ message: 'No notification found!' });
         return res.json(notifications);
@@ -45,8 +46,7 @@ module.exports = {
         if (!notifications) return res.status(404).json({ message: 'No notification found!' });
         notifications.forEach(notification => {
           notification.set({ markRead: true });
-          notification.save()
-            .catch(err => res.status(400).send(err));
+          notification.save();
         });
         return res.json({ userId, questionId, notifications });
       })

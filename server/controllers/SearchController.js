@@ -9,9 +9,11 @@ module.exports = {
     const searchTerm = { type };
     if (major !== '') searchTerm.major = new RegExp(major, 'i');
     if (keyword !== '') searchTerm.$or = [{ body: new RegExp(keyword, 'i') }, { title: new RegExp(keyword, 'i') }];
-    Question.find(searchTerm, (err, questions) => {
-      if (err) return res.send(err);
-      return res.send(questions);
-    });
+    Question.find(searchTerm)
+      .sort({ created_at: -1 })
+      .exec((err, questions) => {
+        if (err) return res.send(err);
+        return res.send(questions);
+      });
   },
 };
