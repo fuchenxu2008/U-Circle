@@ -1,5 +1,7 @@
 # U-Circle
 
+> Steve
+
 U-Circle is a SPA based Progressive Web App which is built using MERN stack on top of React-Boilerplate. It is dedicated to providing a platform in XJTLU for answering your enquiries regarding academic studies and occupational queries. Users can share questions and answers with alumnus and students in XJTLU. The project is still under development and unfinished parts of it would be the future work of CSE208 group project.
 
 ## Instruction on local setup
